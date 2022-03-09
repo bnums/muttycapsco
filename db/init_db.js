@@ -45,6 +45,27 @@ async function buildTables() {
   }
 }
 
+async function populateInitialUsers() {
+  console.log("Starting to populate users...");
+  try {
+    const usersToPopulate = [
+      { username: "bigrubes", password: "fullstack1" , email: "bigrubes@gmail.com", isAdmin: false },
+      { username: "numnum", password: "fullstack2" , email: "numnum@gmail.com", isAdmin: false },
+      { username: "kaiser", password: "fullstack3" , email: "kaiser@gmail.com", isAdmin: false },
+      { username: "daisyduck", password: "fullstack4" , email: "daisyduck@gmail.com", isAdmin: false },
+      { username: "remote", password: "controllers" , email: "remotecontrollers@gmail.com", isAdmin: true },
+    ];
+    const users = await Promise.all(usersToPopulate.map(populateUser));
+
+    console.log("Users populated:");
+    console.log(users);
+    console.log("Finished populating users!");
+  } catch (error) {
+    console.error("Error populating users!");
+    throw error;
+  }
+}
+
 async function populateInitialData() {
   try {
     // create useful starting data by leveraging your
@@ -56,6 +77,7 @@ async function populateInitialData() {
 }
 
 buildTables()
+  .then(populateInitialUsers)
   .then(populateInitialData)
   .catch(console.error)
   .finally(() => client.end());
