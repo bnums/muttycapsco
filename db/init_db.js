@@ -31,9 +31,10 @@ async function buildTables() {
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
-      "userId" INTEGER REFERENCES user(id) NOT NULL, --will use the creator of comment as a ref
-      "productId" INTEGER REFERENCES products(id) NOT NULL, --will use the product id number as a ref
-      rating INTEGER,
+      "userId" INTEGER REFERENCES user(id) NOT NULL, 
+      "productId" INTEGER REFERENCES products(id) NOT NULL, 
+      title VARCHAR(255) UNIQUE DEFAULT NULL,
+      rating INTEGER DEFAULT 0,
       review TEXT NOT NULL
     );
     
@@ -49,11 +50,36 @@ async function populateInitialUsers() {
   console.log("Starting to populate users...");
   try {
     const usersToPopulate = [
-      { username: "bigrubes", password: "fullstack1" , email: "bigrubes@gmail.com", isAdmin: false },
-      { username: "numnum", password: "fullstack2" , email: "numnum@gmail.com", isAdmin: false },
-      { username: "kaiser", password: "fullstack3" , email: "kaiser@gmail.com", isAdmin: false },
-      { username: "daisyduck", password: "fullstack4" , email: "daisyduck@gmail.com", isAdmin: false },
-      { username: "remote", password: "controllers" , email: "remotecontrollers@gmail.com", isAdmin: true },
+      {
+        username: "bigrubes",
+        password: "fullstack1",
+        email: "bigrubes@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "numnum",
+        password: "fullstack2",
+        email: "numnum@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "kaiser",
+        password: "fullstack3",
+        email: "kaiser@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "daisyduck",
+        password: "fullstack4",
+        email: "daisyduck@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "remote",
+        password: "controllers",
+        email: "remotecontrollers@gmail.com",
+        isAdmin: true,
+      },
     ];
     const users = await Promise.all(usersToPopulate.map(populateUser));
 
