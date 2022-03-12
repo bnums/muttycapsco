@@ -1,6 +1,7 @@
 const {
   client,
   createProducts,
+  createUser,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -36,9 +37,9 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) UNIQUE NOT NULL,
       description TEXT NOT NULL,
-      price NUMERIC (3, 2),
+      price DECIMAL (10, 2),
       inventoryQTY INTEGER,
-      category VARCHAR(255) UNIQUE NOT NULL,
+      category VARCHAR(255) NOT NULL,
       productImg VARCHAR(255) not null
     );
 

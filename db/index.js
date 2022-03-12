@@ -1,7 +1,7 @@
-const client = require('./client');
-const models = require('./models');
+const client = require("./client");
 
 module.exports = {
   client,
-  ...models,
+  ...require("./user"),
+  ...require("./products"),
 };

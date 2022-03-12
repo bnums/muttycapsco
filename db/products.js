@@ -28,7 +28,7 @@ async function getProductById(productId) {
   }
 }
 
-async function createProduct({
+async function createProducts({
   name,
   description,
   price,
@@ -55,7 +55,7 @@ async function createProduct({
 
 module.exports = {
   getAllProducts,
-  createProduct,
+  createProducts,
   // updateProduct,
   // deleteProduct,
   getProductById,
