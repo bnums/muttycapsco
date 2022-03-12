@@ -42,9 +42,10 @@ async function buildTables() {
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
-      "userId" INTEGER REFERENCES users(id) NOT NULL, --will use the creator of comment as a ref
-      "productId" INTEGER REFERENCES products(id) NOT NULL, --will use the product id number as a ref
-      rating INTEGER,
+      "userId" INTEGER REFERENCES users(id) NOT NULL, 
+      "productId" INTEGER REFERENCES products(id) NOT NULL, 
+      title VARCHAR(255) UNIQUE DEFAULT NULL,
+      rating INTEGER DEFAULT 0,
       review TEXT NOT NULL
     );
     
