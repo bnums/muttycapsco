@@ -35,7 +35,7 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) UNIQUE NOT NULL,
       description TEXT NOT NULL,
-      price DECIMAL(10,2),
+      price NUMERIC (3, 2),
       inventoryQTY INTEGER,
       category VARCHAR(255) UNIQUE NOT NULL,
       productImg VARCHAR(255) not null
@@ -112,6 +112,50 @@ async function populateInitialUsers() {
   }
 }
 
+async function populateInitialProducts() {
+  try {
+    console.log("Starting to create products...");
+
+    const productsToCreate = [
+      {
+        name:" Winter Warm Knitted Hat "  ,
+        description:"Small Medium Dogs Pets Winter Warm Knitted Hat with Ear Holes"  ,
+        price:	16.99 ,
+        inventoryQTY: 40,
+        category:"Dog Hats" ,
+        productImg:"https://m.media-amazon.com/images/I/61jkrNhaRhL._AC_SX466_.jpg"  ,
+      },
+      {
+        name: "Christmas Dog Hat ",
+        description:"Christmas Dog Hat Crocheted Snood Funny Pet Cap with Pompon Red Green Warm Winter Dog Hat Knit Snood Headwear for Pets & Women & Men (Red, XS) ,
+        price: 14.89,
+        inventoryQTY: 50,
+        category:"Dog Hats" ,
+        productImg: "https://m.media-amazon.com/images/I/51F61OnYBwL._AC_SX466_.jpg" ,
+      },
+      {
+        name:"Mini Cute Pet Hat with Adjustable Elastic Chin Strap" ,
+        description: "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category:"Hamster Hats" ,
+        productImg:"https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg"  ,
+      },
+    ];
+    const products = await Promise.all(
+      productsToCreate.map(createProducts)
+    );
+
+    console.log("products created:");
+    console.log(products);
+
+    console.log("Finished creating products!");
+  } catch (error) {
+    console.error("Error creating products!");
+    throw error;
+  }
+}
+
 async function populateInitialData() {
   try {
     // create useful starting data by leveraging your
@@ -124,6 +168,7 @@ async function populateInitialData() {
 
 buildTables()
   .then(populateInitialUsers)
+  .then(populateInitialProducts)
   .then(populateInitialData)
   .catch(console.error)
   .finally(() => client.end());
