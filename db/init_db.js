@@ -12,6 +12,7 @@ async function buildTables() {
     console.log("Dropping all tables...");
     await client.query(`
     DROP TABLE IF EXISTS reviews ;
+    DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS products; 
     DROP TABLE IF EXISTS users;
     
@@ -39,6 +40,14 @@ async function buildTables() {
       category VARCHAR(255) UNIQUE NOT NULL,
       productImg VARCHAR(255) not null
     );
+
+    CREATE TABLE orders(
+      id SERIAL PRIMARY KEY,
+      "userId" INTEGER REFERENCES users(id) NOT NULL,
+      "productId" INTEGER REFERENCES products(id) NOT NULL,
+      productQuantity INTEGER,
+      orderSum DECIMAL(10, 2) NOT NULL
+    )
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
