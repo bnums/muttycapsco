@@ -47,7 +47,7 @@ async function buildTables() {
       "productId" INTEGER REFERENCES products(id) NOT NULL,
       productQuantity INTEGER,
       orderSum DECIMAL(10, 2) NOT NULL
-    )
+    );
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
