@@ -55,7 +55,7 @@ async function buildTables() {
       "productId" INTEGER REFERENCES products(id) NOT NULL, 
       title VARCHAR(255) UNIQUE DEFAULT NULL,
       rating INTEGER DEFAULT 0,
-      review TEXT NOT NULL
+      comment TEXT NOT NULL
     );
     
     `);
