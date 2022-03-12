@@ -1,5 +1,6 @@
 const {
   client,
+  createProducts,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -55,7 +56,7 @@ async function buildTables() {
       "productId" INTEGER REFERENCES products(id) NOT NULL, 
       title VARCHAR(255) UNIQUE DEFAULT NULL,
       rating INTEGER DEFAULT 0,
-      comment TEXT NOT NULL
+      review TEXT NOT NULL
     );
     
     `);
@@ -118,33 +119,37 @@ async function populateInitialProducts() {
 
     const productsToCreate = [
       {
-        name:" Winter Warm Knitted Hat "  ,
-        description:"Small Medium Dogs Pets Winter Warm Knitted Hat with Ear Holes"  ,
-        price:	16.99 ,
+        name: " Winter Warm Knitted Hat ",
+        description:
+          "Small Medium Dogs Pets Winter Warm Knitted Hat with Ear Holes",
+        price: 16.99,
         inventoryQTY: 40,
-        category:"Dog Hats" ,
-        productImg:"https://m.media-amazon.com/images/I/61jkrNhaRhL._AC_SX466_.jpg"  ,
+        category: "Dog Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/61jkrNhaRhL._AC_SX466_.jpg",
       },
       {
         name: "Christmas Dog Hat ",
-        description:"Christmas Dog Hat Crocheted Snood Funny Pet Cap with Pompon Red Green Warm Winter Dog Hat Knit Snood Headwear for Pets & Women & Men (Red, XS) ,
+        description:
+          "Christmas Dog Hat Crocheted Snood Funny Pet Cap with Pompon Red Green Warm Winter Dog Hat Knit Snood Headwear for Pets & Women & Men (Red, XS) ",
         price: 14.89,
         inventoryQTY: 50,
-        category:"Dog Hats" ,
-        productImg: "https://m.media-amazon.com/images/I/51F61OnYBwL._AC_SX466_.jpg" ,
+        category: "Dog Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/51F61OnYBwL._AC_SX466_.jpg",
       },
       {
-        name:"Mini Cute Pet Hat with Adjustable Elastic Chin Strap" ,
-        description: "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
         price: 10.99,
         inventoryQTY: 10,
-        category:"Hamster Hats" ,
-        productImg:"https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg"  ,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
     ];
-    const products = await Promise.all(
-      productsToCreate.map(createProducts)
-    );
+    const products = await Promise.all(productsToCreate.map(createProducts));
 
     console.log("products created:");
     console.log(products);
