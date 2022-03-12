@@ -1,5 +1,6 @@
 const {
   client,
+  createProducts,
   createUser,
   // declare your model imports here
   // for example, User
@@ -36,9 +37,9 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) UNIQUE NOT NULL,
       description TEXT NOT NULL,
-      price NUMERIC (3, 2),
+      price DECIMAL (10, 2),
       inventoryQTY INTEGER,
-      category VARCHAR(255) UNIQUE NOT NULL,
+      category VARCHAR(255) NOT NULL,
       productImg VARCHAR(255) not null
     );
 
@@ -56,7 +57,7 @@ async function buildTables() {
       "productId" INTEGER REFERENCES products(id) NOT NULL, 
       title VARCHAR(255) UNIQUE DEFAULT NULL,
       rating INTEGER DEFAULT 0,
-      comment TEXT NOT NULL
+      review TEXT NOT NULL
     );
     
     `);
