@@ -47,7 +47,7 @@ async function buildTables() {
       "productId" INTEGER REFERENCES products(id) NOT NULL,
       productQuantity INTEGER,
       orderSum DECIMAL(10, 2) NOT NULL
-    )
+    );
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
@@ -55,7 +55,7 @@ async function buildTables() {
       "productId" INTEGER REFERENCES products(id) NOT NULL, 
       title VARCHAR(255) UNIQUE DEFAULT NULL,
       rating INTEGER DEFAULT 0,
-      review TEXT NOT NULL
+      comment TEXT NOT NULL
     );
     
     `);
