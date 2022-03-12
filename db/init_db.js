@@ -92,7 +92,7 @@ async function populateInitialUsers() {
         isAdmin: true,
       },
     ];
-    const users = await Promise.all(usersToPopulate.map(populateUser));
+    const users = await Promise.all(usersToPopulate.map(createUser));
 
     console.log("Users populated:");
     console.log(users);
