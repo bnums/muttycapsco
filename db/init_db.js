@@ -1,5 +1,6 @@
 const {
   client,
+  createUser,
   // declare your model imports here
   // for example, User
 } = require("./");
