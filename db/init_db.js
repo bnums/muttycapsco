@@ -1,5 +1,6 @@
 const {
   client,
+  createUser,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -127,7 +128,7 @@ async function populateInitialProducts() {
       },
       {
         name: "Christmas Dog Hat ",
-        description:"Christmas Dog Hat Crocheted Snood Funny Pet Cap with Pompon Red Green Warm Winter Dog Hat Knit Snood Headwear for Pets & Women & Men (Red, XS) ,
+        description:"Christmas Dog Hat Crocheted Snood Funny Pet Cap with Pompon Red Green Warm Winter Dog Hat Knit Snood Headwear for Pets & Women & Men (Red, XS) ",
         price: 14.89,
         inventoryQTY: 50,
         category:"Dog Hats" ,
