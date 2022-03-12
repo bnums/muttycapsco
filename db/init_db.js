@@ -11,11 +11,13 @@ async function buildTables() {
     // drop tables in correct order
     console.log("Dropping all tables...");
     await client.query(`
-    DROP TABLE IF EXISTS reviews; 
+    DROP TABLE IF EXISTS reviews ;
+    DROP TABLE IF EXISTS products; 
     DROP TABLE IF EXISTS users;
+    
     `);
     console.log("Finished dropping tables...");
-
+    // DROP TABLE IF EXISTS users;
     // build tables in correct order
     console.log("Starting to build tables...");
     await client.query(`
@@ -23,15 +25,24 @@ async function buildTables() {
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
       username VARCHAR(255) UNIQUE NOT NULL,
-      password VARCHAR(255) NOT NULL
+      password VARCHAR(255) NOT NULL,
       email VARCHAR(255) UNIQUE NOT NULL,
       "isAdmin" BOOLEAN DEFAULT false
     );
 
+    CREATE TABLE products(
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) UNIQUE NOT NULL,
+      description TEXT NOT NULL,
+      price DECIMAL(10,2),
+      inventoryQTY INTEGER,
+      category VARCHAR(255) UNIQUE NOT NULL,
+      productImg VARCHAR(255) not null
+    );
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
-      "userId" INTEGER REFERENCES user(id) NOT NULL, 
+      "userId" INTEGER REFERENCES users(id) NOT NULL, 
       "productId" INTEGER REFERENCES products(id) NOT NULL, 
       title VARCHAR(255) UNIQUE DEFAULT NULL,
       rating INTEGER DEFAULT 0,
