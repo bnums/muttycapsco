@@ -58,6 +58,7 @@ async function buildTables() {
       "productId" INTEGER REFERENCES products(id) NOT NULL,
       UNIQUE("userId","productId"), 
       title VARCHAR(255) DEFAULT NULL,
+      UNIQUE("productId",title),
       rating INTEGER DEFAULT 0,
       comment TEXT NOT NULL
     );
@@ -173,7 +174,7 @@ async function populateInitialReviews() {
         comment: "This is a great set for all your adorable pets",
         rating: 5,
         productId: 3,
-        userId: 4,
+        userId: 5,
       },
       {
         title: "Highly recommend!",
@@ -183,8 +184,8 @@ async function populateInitialReviews() {
         userId: 3,
       },
       {
-        title: "Fantastic set!",
-        comment: "This is a great set for all your adorable pets",
+        title: "Got the job done",
+        comment: "Didn't wow me, but it did what I needed it to do",
         rating: 3,
         productId: 3,
         userId: 2,
@@ -193,13 +194,13 @@ async function populateInitialReviews() {
         title: "Fantastic set!",
         comment: "This is a great set for all your adorable pets",
         rating: 3,
-        productId: 2,
+        productId: 1,
         userId: 1,
       },
       {
         title: "Fantastic set!",
         comment: "This is a great set for all your adorable pets",
-        rating: 2,
+        rating: 5,
         productId: 2,
         userId: 5,
       },
