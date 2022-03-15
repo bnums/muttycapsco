@@ -1,12 +1,6 @@
-# Let's Build a Full Stack Application
+# Pupper Hats E-commerce Site!
 
-This full stack app boilerplate consists of:
-
-- an Express web server,
-- a PostgreSQL database instance,
-- and a React front-end
-
-You'll also find a bunch of convenient commands and workflows that will allow you to develop your app locally and deploy it to heroku. Let's dive in!
+This is a full stack app built by Aye Khine Bryan Num, Daisy Centeno, and Reuben Ramos!
 
 # Local Development
 
@@ -41,9 +35,6 @@ $ git init
 │   └── index.js
 │
 ├── db
-│   ├── models
-│   │   ├── index.js
-│   │   └── user.js
 │   ├── client.js
 │   ├── index.js
 │   └── init_db.js
