@@ -62,7 +62,6 @@ async function buildTables() {
       rating INTEGER DEFAULT 0,
       comment TEXT NOT NULL
     );
-    
     `);
 
     console.log("Finished building tables...");
