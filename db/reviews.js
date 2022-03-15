@@ -1,4 +1,4 @@
-const client = require("../client");
+const client = require("./client");
 
 async function getAllReviews() {
   try {
@@ -65,7 +65,7 @@ async function createReview({ userId, productId, title, rating, comment }) {
     } = await client.query(
       `
     INSERT INTO reviews("userId","productId",title, rating, comment)
-    VALUES($1,$2,$3,$4)
+    VALUES($1,$2,$3,$4,$5)
     RETURNING*;
     `,
       [userId, productId, title, rating, comment]
@@ -107,7 +107,7 @@ async function deleteReview(reviewId) {
       `
     DELETE FROM reviews
     WHERE id = $1
-    RETURNING *;
+    RETURNING reviews.id;
     `,
       [reviewId]
     );
