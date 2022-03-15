@@ -4,4 +4,5 @@ module.exports = {
   client,
   ...require("./user"),
   ...require("./products"),
+  ...require("./reviews"),
 };

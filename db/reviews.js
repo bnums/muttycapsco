@@ -1,4 +1,4 @@
-const client = require("../client");
+const client = require("./client");
 
 async function getAllReviews() {
   try {
@@ -6,7 +6,9 @@ async function getAllReviews() {
     SELECT * FROM reviews
     `);
     return reviews;
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function getAllProductReviews(productId) {
@@ -14,7 +16,7 @@ async function getAllProductReviews(productId) {
     const { rows: productReviews } = await client.query(
       `
     SELECT reviews.*, products.name FROM reviews
-    JOIN prodcuts ON products.id = reviews."productId"
+    JOIN products ON products.id = reviews."productId"
     WHERE "productId" = $1;
     `,
       [productId]
@@ -63,7 +65,7 @@ async function createReview({ userId, productId, title, rating, comment }) {
     } = await client.query(
       `
     INSERT INTO reviews("userId","productId",title, rating, comment)
-    VALUES($1,$2,$3,$4)
+    VALUES($1,$2,$3,$4,$5)
     RETURNING*;
     `,
       [userId, productId, title, rating, comment]
@@ -105,7 +107,7 @@ async function deleteReview(reviewId) {
       `
     DELETE FROM reviews
     WHERE id = $1
-    RETURNING *;
+    RETURNING reviews.id;
     `,
       [reviewId]
     );
