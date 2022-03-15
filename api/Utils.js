@@ -26,7 +26,6 @@ async function requireAdmin(req, res, next) {
       next(error);
     }
   }
-  
   module.exports = { 
     requireUser,
     requireAdmin
