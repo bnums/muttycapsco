@@ -2,8 +2,14 @@
 These will be our routes for our reviewsRouter
 All requests to this route must be supplied with a user authenticated token. 
 */
-import { Reviews } from "../db";
-Reviews.createReview();
+const express = require("express");
+const reviewsRouter = express();
+const { requireUser } = require("./utils");
+
+reviewsRouter.use((req, res, next) => {
+  console.log("A request is being made to /reviews");
+  next();
+});
 
 //GET /reviews
 // Request Parameters: none
@@ -93,3 +99,5 @@ Reviews.createReview();
   message: review successfully deleted! 
 }
 */
+
+module.exports = reviewsRouter;
