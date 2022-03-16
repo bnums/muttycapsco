@@ -1,7 +1,6 @@
 // This is the Web Server
 const express = require("express");
 const server = express();
-
 const cors = require("cors");
 server.use(cors());
 
@@ -32,7 +31,7 @@ const PORT = process.env.PORT || 4000;
 
 // define a server handle to close open tcp connection after unit tests have run
 const handle = server.listen(PORT, async () => {
-  console.log(`Server is running on ${PORT}!`);
+  console.log(`Server is running on ${PORT}`);
 
   // if server is running in github actions context skip db connection
   if (!process.env.CI) {

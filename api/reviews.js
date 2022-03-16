@@ -39,7 +39,7 @@ reviewsRouter.post("/:productId", requireUser, async (req, res, next) => {
     if (!req.body.comment) {
       return next({
         name: "NoCommentForReview",
-        message: "Please leave a comment for your review",
+        message: "Please leave a comment with your reviews",
       });
     }
 
@@ -54,6 +54,7 @@ reviewsRouter.post("/:productId", requireUser, async (req, res, next) => {
       productId: productId,
       ...req.body,
     });
+    res.send(newReview);
   } catch (error) {
     next({
       name: "FailedToAddReview",
