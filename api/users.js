@@ -1,12 +1,15 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET = 'neverTell' } = process.env;
+const { JWT_SECRET = "remote-controllers-secret" } = process.env;
 
 const {
   createUser,
   getUserByUsername,
+  getUser,
+  getAllUsers
 } = require("../db");
+const { requireUser } = require("./utils");
 
 usersRouter.post("/register", async (req, res, next) => {
   const { username, password, isAdmin } = req.body;
@@ -27,13 +30,6 @@ usersRouter.post("/register", async (req, res, next) => {
       return;
     }
     const user = await createUser({ username, password, isAdmin });
-    
-    // const token = jwt.sign({ 
-    //   id: user.id, 
-    //   username
-    // }, process.env.JWT_SECRET, {
-    //   expiresIn: '30d'
-    // });
     
     res.send({ 
       user,
@@ -56,7 +52,7 @@ usersRouter.post("/login", async (req, res, next) => {
   try {
     const user = await getUser(req.body);
     if (user) {
-      const token = jwt.sign({ user }, JWT_SECRET);
+      const token = jwt.sign( {user} , JWT_SECRET);
       res.send({ user, token, message: "you're logged in!" });
     } else {
       next({
@@ -78,18 +74,18 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   }
 });
 
-// usersRouter.get('/', async (req, res) => {
-//   try{
-//   const users = await getAllUsers();
+usersRouter.get('/', async (req, res) => {
+  try{
+  const users = await getAllUsers();
 
-// res.send({
-//   users,
-// });
+res.send({
+  users,
+});
 
-// } catch (error) {
-//   next(error);
-// }
+} catch (error) {
+  next(error);
+}
 
-// });
+});
 
 module.exports = usersRouter;
