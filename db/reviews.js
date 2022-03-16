@@ -58,24 +58,36 @@ async function getReviewById(reviewId) {
     throw error;
   }
 }
-async function createReview({ userId, productId, title, rating, comment }) {
+async function createReview(reviewFields) {
   try {
+    const columns = Object.keys(reviewFields)
+      .map((key) => `"${key}"`)
+      .join(", ");
+    const vals = Object.keys(reviewFields)
+      .map((key, index) => `$${index + 1}`)
+      .join(", ");
+    if (columns.length === 0) {
+      return;
+    }
+
     const {
       rows: [review],
     } = await client.query(
       `
-    INSERT INTO reviews("userId","productId",title, rating, comment)
-    VALUES($1,$2,$3,$4,$5)
+    INSERT INTO reviews(${columns})
+    VALUES(${vals})
     RETURNING*;
     `,
-      [userId, productId, title, rating, comment]
+      Object.values(reviewFields)
     );
     return review;
   } catch (error) {
     throw error;
   }
 }
-async function updateReview({ reviewId, ...reviewFields }) {
+async function updateReview(reviewFields) {
+  const reviewId = reviewFields.id;
+  delete reviewFields.id;
   const setString = Object.keys(reviewFields)
     .map((key, index) => `"${key}" = $${index + 1}`)
     .join(", ");

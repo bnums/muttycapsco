@@ -197,9 +197,7 @@ async function populateInitialReviews() {
         userId: 1,
       },
       {
-        title: "Fantastic set!",
         comment: "This is a great set for all your adorable pets",
-        rating: 5,
         productId: 2,
         userId: 5,
       },
@@ -215,17 +213,17 @@ async function populateInitialReviews() {
     throw error;
   }
 }
-async function populateInitialData() {
-  try {
-  } catch (error) {
-    throw error;
-  }
-}
+
+// async function populateInitialData() {
+//   try {
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
 buildTables()
   .then(populateInitialUsers)
   .then(populateInitialProducts)
   .then(populateInitialReviews)
-  .then(populateInitialData)
   .catch(console.error)
   .finally(() => client.end());
