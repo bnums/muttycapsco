@@ -4,6 +4,15 @@ All requests to this route must be supplied with a user authenticated token.
 */
 const express = require("express");
 const reviewsRouter = express();
+const {
+  getAllReviews,
+  getAllProductReviews,
+  getAllReviewsByUser,
+  createReview,
+  updateReview,
+  deleteReview,
+  getReviewById,
+} = require("../db");
 const { requireUser } = require("./utils");
 
 reviewsRouter.use((req, res, next) => {
@@ -11,43 +20,48 @@ reviewsRouter.use((req, res, next) => {
   next();
 });
 
-//GET /reviews
-// Request Parameters: none
-// Return Parameters:
-/*
-[
-  {
-    id: reviewId,
-    creatorId: user(id),
-    creatorName: username,
-    productId: product(id),
-    title: review title
-    review: "review of product"
-    rating: 1-5,
-  },
-  {
-    id: reviewId,
-    creatorId: user(id),
-    productId: product(id),
-    title: review title
-    review: "review of product"
-    rating: 1-5,
-  },
-  ....
-]
-*/
+//GET /reviews from db
+reviewsRouter.get("/", async (req, res, next) => {
+  try {
+    const reviews = await getAllReviews();
+    res.send(reviews);
+  } catch (error) {
+    next({ name: "UnableToGetReviews", message: "Unable to get all reviews" });
+  }
+});
 
-//POST /reviews
-// Request Parameters:
-/*
-{
-  userId: userId
-  productId: productId
-  title: "Headline for review"
-  review: "review of product"
-  rating: 1-5
-}
-*/
+//POST /reviews/:productId
+reviewsRouter.post("/:productId", requireUser, async (req, res, next) => {
+  const productId = req.params.productId;
+  const userId = req.user.id;
+
+  try {
+    if (!req.body.comment) {
+      return next({
+        name: "NoCommentForReview",
+        message: "Please leave a comment for your review",
+      });
+    }
+
+    if (req.body.comment.length > 2000 || req.body.title.length > 100) {
+      return next({
+        name: "CommentTooLong",
+        message: "Please shorten your comment/title",
+      });
+    }
+    const newReview = await createReview({
+      userId: userId,
+      productId: productId,
+      ...req.body,
+    });
+  } catch (error) {
+    next({
+      name: "FailedToAddReview",
+      message:
+        "Sorry but we were unable to add this review on this product right now",
+    });
+  }
+});
 
 // Return Parameters:
 /* 

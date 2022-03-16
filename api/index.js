@@ -1,4 +1,6 @@
 const apiRouter = require("express").Router();
+const userRouter = require("./users");
+const reviewsRouter = require("./reviews");
 const { getUserById } = require("../db/users");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -7,7 +9,7 @@ const { JWT_SECRET } = process.env;
 //const productRouter = require("./products");
 apiRouter.get("/", (req, res, next) => {
   res.send({
-    message: "API is under construction!",
+    healthy: true,
   });
 });
 
@@ -36,16 +38,9 @@ apiRouter.use(async (req, res, next) => {
   }
 });
 
-apiRouter.use((req, res, next) => {
-  if (req.user) {
-    console.log("User is set:", req.user);
-  }
-
-  next();
-});
 // place your routers here
-const userRouter = require("./users");
 apiRouter.use("/users", userRouter);
+apiRouter.use("/reviews", reviewsRouter);
 //apiRouter.use("/products", productRouter);
 
 module.exports = apiRouter;
