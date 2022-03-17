@@ -1,16 +1,11 @@
 const { server, handle } = require("../index");
 const { client, createReview, getAllReviews } = require("../db");
-const { buildTables } = require("../db/init_db");
 const supertest = require("supertest");
 const request = supertest(server); // http:/localhost/4000:
 
 describe("apiTests", () => {
   let token, registeredUser;
   // let orderToCreateAndUpdate;
-  // rebuild db
-  beforeAll(async () => {
-    await buildTables();
-  });
   // close db connection and supertest server tcp connection
   afterAll(async () => {
     await client.end();
@@ -23,30 +18,12 @@ describe("apiTests", () => {
   });
 
   describe("Users", () => {
-    let userToCreate = {
-      username: "testuser",
-      password: "password1234",
-      email: "randomemail@gmail.com",
-      isAdmin: true,
-    };
-    describe("POST /users/register", () => {
-      it("Registers a user", async () => {
-        const { body } = await request
-          .post("/api/users/register")
-          .send(userToCreate);
-        console.log(body);
-        expect(typeof body.user).toEqual("object");
-        expect(body.user.username).toEqual(userToCreate.username);
-        expect(body.token).toBeTruthy();
-      });
-    });
-
     describe("POST /users/login", () => {
       it("Logs a user in, requires both a username and password", async () => {
         const { body } = await request
           .post("/api/users/login")
-          .send({ username: "testuser", password: "password1234" });
-        expect(body.user.username).toBe("testuser");
+          .send({ username: "numnum", password: "fullstack2" });
+        expect(body.user.username).toBe("numnum");
         expect(body.message).toBe("you're logged in!");
         expect(body.token).toBeTruthy();
         token = body.token;
@@ -69,19 +46,37 @@ describe("apiTests", () => {
       });
     });
 
+    /* 
     describe("POST /reviews/:productId ", () => {
       let productToReviewId = 1;
       it("Creates a new review on a product", async () => {
-        const { body } = await request
+        const { body: newReview } = await request
           .post(`/api/reviews/${productToReviewId}`)
           .send(reviewToCreateAndUpdate)
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${token}`);
-        expect(body.productId).toBe(productToReviewId);
-        expect(body.title).toBe(reviewToCreateAndUpdate.title);
-        expect(body.review).toBe(reviewToCreateAndUpdate.comment);
-        expect(body.rating).toBe(reviewToCreateAndUpdate.rating);
-        expect(body.creatorName).toBe(registeredUser.username);
+        expect(newReview.productId).toBe(productToReviewId);
+        expect(newReview.title).toBe(reviewToCreateAndUpdate.title);
+        expect(newReview.comment).toBe(reviewToCreateAndUpdate.comment);
+        expect(newReview.rating).toBe(reviewToCreateAndUpdate.rating);
+        expect(newReview.creatorId)
+        reviewToCreateAndUpdate = newReview.id
+      });
+    */
+
+    describe("PATCH /reviews/reviewId ", () => {
+      let reviewUpdates = {
+        title: "Changed my mind after awhile",
+        comment:
+          "After further looking into this product, I decided I am not that thrilled about it",
+        rating: 3,
+      };
+      it("Updates a review that was previously made by the user", async () => {
+        const { body: updatedReview } = await request
+          .post(`/api/reviews/${reviewToCreateAndUpdate.id}`)
+          .send(reviewUpdates)
+          .set("Content-type", "application/json")
+          .set("Authorization", `Bearer ${token}`);
       });
     });
   });
