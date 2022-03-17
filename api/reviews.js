@@ -99,8 +99,8 @@ reviewsRouter.patch("/:reviewId", requireUser, async (req, res, next) => {
   const { title, comment, rating } = req.body;
 
   try {
-    const thisReview = await getReviewById(reviewId);
-    if (userId != thisReview.creatorId) {
+    const selectedReview = await getReviewById(reviewId);
+    if (userId != selectedReview.creatorId) {
       return next({
         name: "InvalidUser",
         message: "You cannot edit this review since you are not the owner",
@@ -109,9 +109,9 @@ reviewsRouter.patch("/:reviewId", requireUser, async (req, res, next) => {
 
     let updateFields = {
       id: reviewId,
-      title: thisReview.title,
-      comment: thisReview.comment,
-      rating: thisReview.rating,
+      title: selectedReview.title,
+      comment: selectedReview.comment,
+      rating: selectedReview.rating,
     };
 
     if (title) {
@@ -141,8 +141,8 @@ reviewsRouter.delete("/:reviewId", requireUser, async (req, res, next) => {
   const reviewId = req.params.reviewId;
   const user = req.user;
   try {
-    const thisReview = await getReviewById(reviewId);
-    if (user.id != thisReview.creatorId && !user.isAdmin) {
+    const selectedReview = await getReviewById(reviewId);
+    if (user.id != selectedReview.creatorId && !user.isAdmin) {
       return next({
         name: "InvalidUser",
         message: "You cannot edit this review since you are not the owner",
