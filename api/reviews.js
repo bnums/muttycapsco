@@ -30,6 +30,34 @@ reviewsRouter.get("/", async (req, res, next) => {
   }
 });
 
+//GET /reviews/:productId
+reviewsRouter.get("/product/:productId", async (req, res, next) => {
+  const productId = req.params.productId;
+  try {
+    const productReviews = await getAllProductReviews(productId);
+    res.send(productReviews);
+  } catch (error) {
+    next({
+      name: "UnableToGetProductReviews",
+      message: "Unable to get this products reviews",
+    });
+  }
+});
+
+//GET /reviews/:username
+reviewsRouter.get("/user", requireUser, async (req, res, next) => {
+  const userId = req.user.id;
+  try {
+    const allUserReviews = await getAllReviewsByUser(userId);
+    res.send(allUserReviews);
+  } catch (error) {
+    next({
+      name: "UnableToGetUserReviews",
+      message: "Unable to get this users reviews",
+    });
+  }
+});
+
 //POST /reviews/:productId
 reviewsRouter.post("/:productId", requireUser, async (req, res, next) => {
   const productId = req.params.productId;
