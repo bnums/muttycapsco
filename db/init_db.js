@@ -60,7 +60,7 @@ async function buildTables() {
       unitPrice DECIMAL(10, 2),
       createdAt TIMESTAMP
 
-    )
+    );
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
