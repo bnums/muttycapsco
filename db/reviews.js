@@ -76,7 +76,7 @@ async function createReview(reviewFields) {
       `
     INSERT INTO reviews(${columns})
     VALUES(${vals})
-    RETURNING*;
+    RETURNING *;
     `,
       Object.values(reviewFields)
     );

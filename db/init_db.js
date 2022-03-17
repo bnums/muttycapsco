@@ -54,9 +54,9 @@ async function buildTables() {
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
-      "userId" INTEGER REFERENCES users(id) NOT NULL, 
+      "creatorId" INTEGER REFERENCES users(id) NOT NULL, 
       "productId" INTEGER REFERENCES products(id) NOT NULL,
-      UNIQUE("userId","productId"), 
+      UNIQUE("creatorId","productId"), 
       title VARCHAR(255) DEFAULT NULL,
       UNIQUE("productId",title),
       rating INTEGER DEFAULT 0,
@@ -173,33 +173,33 @@ async function populateInitialReviews() {
         comment: "This is a great set for all your adorable pets",
         rating: 5,
         productId: 3,
-        userId: 5,
+        creatorId: 5,
       },
       {
         title: "Highly recommend!",
         comment: "Great christmas gift for friends",
         rating: 4,
         productId: 2,
-        userId: 3,
+        creatorId: 3,
       },
       {
         title: "Got the job done",
         comment: "Didn't wow me, but it did what I needed it to do",
         rating: 3,
         productId: 3,
-        userId: 2,
+        creatorId: 2,
       },
       {
         title: "Fantastic set!",
         comment: "This is a great set for all your adorable pets",
         rating: 3,
         productId: 1,
-        userId: 1,
+        creatorId: 1,
       },
       {
         comment: "This is a great set for all your adorable pets",
         productId: 2,
-        userId: 5,
+        creatorId: 5,
       },
     ];
 
