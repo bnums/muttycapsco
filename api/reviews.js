@@ -44,7 +44,7 @@ reviewsRouter.get("/product/:productId", async (req, res, next) => {
   }
 });
 
-//GET /reviews/:username
+//GET /reviews/user
 reviewsRouter.get("/user", requireUser, async (req, res, next) => {
   const userId = req.user.id;
   try {

@@ -1,7 +1,7 @@
 const axios = require("axios");
 const SERVER_ADDRESS = "http://localhost:4000";
 const API_URL = process.env.API_URL || SERVER_ADDRESS;
-const { client, createReview, getAllReviews } = require("../db");
+const { client } = require("../db");
 
 describe("apiTests", () => {
   let token, registeredUser;
