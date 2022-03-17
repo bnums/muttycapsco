@@ -50,7 +50,7 @@ reviewsRouter.post("/:productId", requireUser, async (req, res, next) => {
       });
     }
     const newReview = await createReview({
-      userId: userId,
+      creatorId: userId,
       productId: productId,
       ...req.body,
     });

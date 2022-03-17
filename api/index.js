@@ -2,8 +2,8 @@ const apiRouter = require("express").Router();
 const userRouter = require("./users");
 const reviewsRouter = require("./reviews");
 const { getUserById } = require("../db/users");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 
 //const productRouter = require("./products");

@@ -12,7 +12,7 @@ describe("apiTests", () => {
     handle.close();
   });
   it("should respond with { healthy: true }", async () => {
-    const response = await request.get("/api/");
+    const response = await request.get("/api");
     expect(response.status).toBe(200);
     expect(response.body.healthy).toBe(true);
   });
@@ -59,11 +59,12 @@ describe("apiTests", () => {
         expect(newReview.title).toBe(reviewToCreateAndUpdate.title);
         expect(newReview.comment).toBe(reviewToCreateAndUpdate.comment);
         expect(newReview.rating).toBe(reviewToCreateAndUpdate.rating);
-        expect(newReview.creatorId)
+        expect(newReview.creatorId).toBe(registeredUser.id);
         reviewToCreateAndUpdate = newReview.id
       });
     */
 
+    /*
     describe("PATCH /reviews/reviewId ", () => {
       let reviewUpdates = {
         title: "Changed my mind after awhile",
@@ -77,7 +78,11 @@ describe("apiTests", () => {
           .send(reviewUpdates)
           .set("Content-type", "application/json")
           .set("Authorization", `Bearer ${token}`);
+          expect(updatedReview.title).toBe(reviewUpdates.title);
+          expect(updatedReview.comment).toBe(reviewUpdates.comment);
+          expect(updatedReview.creatorId).toBe(registeredUser.id);
       });
     });
+    */
   });
 });
