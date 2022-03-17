@@ -15,7 +15,7 @@ async function buildTables() {
     console.log("Dropping all tables...");
     await client.query(`
     DROP TABLE IF EXISTS reviews ;
-    DROP TABLE IF EXISTS orderProducts;
+    DROP TABLE IF EXISTS orderDetails;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS products; 
     DROP TABLE IF EXISTS users;
@@ -60,7 +60,7 @@ async function buildTables() {
       unitPrice DECIMAL(10, 2),
       createdAt TIMESTAMP
 
-    )
+    );
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
@@ -118,7 +118,7 @@ async function populateInitialUsers() {
     const users = await Promise.all(usersToPopulate.map(createUser));
 
     console.log("Users populated:");
-    console.log(users);
+    // console.log(users);
     console.log("Finished populating users!");
   } catch (error) {
     console.error("Error populating users!");
@@ -165,7 +165,7 @@ async function populateInitialProducts() {
     const products = await Promise.all(productsToCreate.map(createProducts));
 
     console.log("products created:");
-    console.log(products);
+    // console.log(products);
 
     console.log("Finished creating products!");
   } catch (error) {
@@ -215,7 +215,7 @@ async function populateInitialReviews() {
 
     const reviews = await Promise.all(reviewsToCreate.map(createReview));
     console.log("reviews created: ");
-    console.log(reviews);
+    // console.log(reviews);
 
     console.log("Finished creating reviews");
   } catch (error) {
@@ -237,3 +237,7 @@ buildTables()
   .then(populateInitialReviews)
   .catch(console.error)
   .finally(() => client.end());
+
+module.exports = {
+  buildTables,
+};

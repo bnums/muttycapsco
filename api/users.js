@@ -1,7 +1,8 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET = "remote-controllers-secret" } = process.env;
+require("dotenv").config();
+const { JWT_SECRET } = process.env;
 
 const {
   createUser,
@@ -52,7 +53,7 @@ usersRouter.post("/login", async (req, res, next) => {
   try {
     const user = await getUser(req.body);
     if (user) {
-      const token = jwt.sign({ user }, JWT_SECRET);
+      const token = jwt.sign(user, JWT_SECRET);
       res.send({ user, token, message: "you're logged in!" });
     } else {
       next({

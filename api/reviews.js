@@ -64,55 +64,73 @@ reviewsRouter.post("/:productId", requireUser, async (req, res, next) => {
   }
 });
 
-// Return Parameters:
-/* 
-{
-  id:
-  creatorId: userId
-  creatorName: name 
-  productId: productId
-  title: "Headline for review"
-  review: "review of product"
-  rating: 1-5
-}
-*/
-
 //PATCH /reviews/:reviewId
-// Request Parameters:
-/*
-{
-  title: "updated headline",
-  review: "review of product",
-  rating: 1-5
-}
-*/
-// Return Parameters:
-/* 
-{
-  id:
-  creatorId: userId
-  creatorName: name 
-  productId: productId
-  title: "Headline for review"
-  review: "review of product"
-  rating: 1-5
-  message: review successfully updated!
-}
-*/
+reviewsRouter.patch("/:reviewId", requireUser, async (req, res, next) => {
+  const reviewId = req.params.reviewId;
+  const userId = req.user.id;
+  const { title, comment, rating } = req.body;
+
+  try {
+    const thisReview = await getReviewById(reviewId);
+    if (userId != thisReview.creatorId) {
+      return next({
+        name: "InvalidUser",
+        message: "You cannot edit this review since you are not the owner",
+      });
+    }
+
+    let updateFields = {
+      id: reviewId,
+      title: thisReview.title,
+      comment: thisReview.comment,
+      rating: thisReview.rating,
+    };
+
+    if (title) {
+      updateFields.title = title;
+    }
+
+    if (comment) {
+      updateFields.comment = comment;
+    }
+
+    if (rating) {
+      updateFields.rating = rating;
+    }
+
+    const updatedReview = await updateReview(updateFields);
+    res.send(updatedReview);
+  } catch (error) {
+    next({
+      name: "ReviewUpdatesFailed",
+      message: "Failed to update this review",
+    });
+  }
+});
+
 //DELETE /reviews/:reviewId
-// Request Parameters: none
-// Return Parameters:
-/* 
-{
-  id:
-  creatorId: userId
-  creatorName: name 
-  productId: productId
-  title: "Headline for review"
-  review: "review of product"
-  rating: 1-5
-  message: review successfully deleted! 
-}
-*/
+reviewsRouter.delete("/:reviewId", requireUser, async (req, res, next) => {
+  const reviewId = req.params.reviewId;
+  const user = req.user;
+  try {
+    const thisReview = await getReviewById(reviewId);
+    if (user.id != thisReview.creatorId && !user.isAdmin) {
+      return next({
+        name: "InvalidUser",
+        message: "You cannot edit this review since you are not the owner",
+      });
+    }
+    const { id } = await deleteReview(reviewId);
+    res.send({
+      id: id,
+      message: "This review has been succefully deleted",
+    });
+  } catch (error) {
+    next({
+      name: "ReviewDeleteFailed",
+      message: "Failed to delete this review",
+    });
+  }
+});
 
 module.exports = reviewsRouter;

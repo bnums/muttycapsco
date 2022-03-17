@@ -1,7 +1,7 @@
-const { server, handle } = require("../index");
+const axios = require("axios");
+const SERVER_ADDRESS = "http://localhost:4000";
+const API_URL = process.env.API_URL || SERVER_ADDRESS;
 const { client, createReview, getAllReviews } = require("../db");
-const supertest = require("supertest");
-const request = supertest(server); // http:/localhost/4000:
 
 describe("apiTests", () => {
   let token, registeredUser;
@@ -12,60 +12,62 @@ describe("apiTests", () => {
     handle.close();
   });
   it("should respond with { healthy: true }", async () => {
-    const response = await request.get("/api");
-    expect(response.status).toBe(200);
-    expect(response.body.healthy).toBe(true);
+    const response = await axios.get(`${API_URL}/api`);
+    expect(response).toBeTruthy();
   });
 
   describe("Users", () => {
     describe("POST /users/login", () => {
       it("Logs a user in, requires both a username and password", async () => {
-        const { body } = await request
-          .post("/api/users/login")
-          .send({ username: "numnum", password: "fullstack2" });
-        expect(body.user.username).toBe("numnum");
-        expect(body.message).toBe("you're logged in!");
-        expect(body.token).toBeTruthy();
-        token = body.token;
-        registeredUser = body.user;
+        const { data, status } = await axios.post(
+          `${API_URL}/api/users/login`,
+          {
+            username: "numnum",
+            password: "fullstack2",
+          }
+        );
+        expect(data.user.username).toBe("numnum");
+        expect(data.message).toBe("you're logged in!");
+        expect(data.token).toBeTruthy();
+        token = data.token;
+        registeredUser = data.user;
       });
     });
   });
 
   describe("Reviews", () => {
-    let reviewToCreateAndUpdate = {
+    let reviewToCreateUpdateAndDelete = {
       title: "Test Review",
       comment: "This is a test review",
       rating: 5,
     };
     describe("GET /reviews", () => {
-      it("Grab a list of all the reviews in our database", async () => {
-        const allReviewsFromDB = await getAllReviews();
-        const { body: allReviewsFromAPI } = await request.get("/api/reviews");
-        expect(allReviewsFromAPI).toEqual(allReviewsFromDB);
+      it("Grabs a list of all the reviews in our database", async () => {
+        const { data: allReviewsFromAPI, status } = await axios.get(
+          `${API_URL}/api/reviews`
+        );
+        expect(status).toBe(200);
       });
     });
 
-    /* 
     describe("POST /reviews/:productId ", () => {
       let productToReviewId = 1;
       it("Creates a new review on a product", async () => {
-        const { body: newReview } = await request
-          .post(`/api/reviews/${productToReviewId}`)
-          .send(reviewToCreateAndUpdate)
-          .set("Content-type", "application/json")
-          .set("Authorization", `Bearer ${token}`);
+        const { data: newReview } = await axios.post(
+          `${API_URL}/api/reviews/${productToReviewId}`,
+          reviewToCreateUpdateAndDelete,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
         expect(newReview.productId).toBe(productToReviewId);
-        expect(newReview.title).toBe(reviewToCreateAndUpdate.title);
-        expect(newReview.comment).toBe(reviewToCreateAndUpdate.comment);
-        expect(newReview.rating).toBe(reviewToCreateAndUpdate.rating);
+        expect(newReview.title).toBe(reviewToCreateUpdateAndDelete.title);
+        expect(newReview.comment).toBe(reviewToCreateUpdateAndDelete.comment);
+        expect(newReview.rating).toBe(reviewToCreateUpdateAndDelete.rating);
         expect(newReview.creatorId).toBe(registeredUser.id);
-        reviewToCreateAndUpdate = newReview.id
+        reviewToCreateUpdateAndDelete = newReview;
       });
-    */
+    });
 
-    /*
-    describe("PATCH /reviews/reviewId ", () => {
+    describe("PATCH /reviews/:reviewId ", () => {
       let reviewUpdates = {
         title: "Changed my mind after awhile",
         comment:
@@ -73,16 +75,28 @@ describe("apiTests", () => {
         rating: 3,
       };
       it("Updates a review that was previously made by the user", async () => {
-        const { body: updatedReview } = await request
-          .post(`/api/reviews/${reviewToCreateAndUpdate.id}`)
-          .send(reviewUpdates)
-          .set("Content-type", "application/json")
-          .set("Authorization", `Bearer ${token}`);
-          expect(updatedReview.title).toBe(reviewUpdates.title);
-          expect(updatedReview.comment).toBe(reviewUpdates.comment);
-          expect(updatedReview.creatorId).toBe(registeredUser.id);
+        const { data: updatedReview } = await axios.patch(
+          `${API_URL}/api/reviews/${reviewToCreateUpdateAndDelete.id}`,
+          reviewUpdates,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        expect(updatedReview.title).toBe(reviewUpdates.title);
+        expect(updatedReview.comment).toBe(reviewUpdates.comment);
+        expect(updatedReview.creatorId).toBe(registeredUser.id);
       });
     });
-    */
+
+    describe("DELETE /reviews/:reviewId ", () => {
+      it("Deletes a review that was previously made by the user", async () => {
+        const { data: deletedReview } = await axios.delete(
+          `${API_URL}/api/reviews/${reviewToCreateUpdateAndDelete.id}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        expect(deletedReview.id).toBe(reviewToCreateUpdateAndDelete.id);
+        expect(deletedReview.message).toBe(
+          "This review has been succefully deleted"
+        );
+      });
+    });
   });
 });
