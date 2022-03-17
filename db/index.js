@@ -2,6 +2,7 @@ const client = require("./client");
 
 module.exports = {
   client,
-  ...require("./user"),
+  ...require("./users"),
   ...require("./products"),
+  ...require("./reviews"),
 };

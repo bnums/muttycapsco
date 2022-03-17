@@ -2,6 +2,7 @@ const {
   client,
   createProducts,
   createUser,
+  createReview,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -64,12 +65,13 @@ async function buildTables() {
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id) NOT NULL, 
-      "productId" INTEGER REFERENCES products(id) NOT NULL, 
-      title VARCHAR(255) UNIQUE DEFAULT NULL,
+      "productId" INTEGER REFERENCES products(id) NOT NULL,
+      UNIQUE("userId","productId"), 
+      title VARCHAR(255) DEFAULT NULL,
+      UNIQUE("productId",title),
       rating INTEGER DEFAULT 0,
-      review TEXT NOT NULL
+      comment TEXT NOT NULL
     );
-    
     `);
 
     console.log("Finished building tables...");
@@ -172,11 +174,59 @@ async function populateInitialProducts() {
   }
 }
 
+async function populateInitialReviews() {
+  console.log("Starting to create reviews...");
+  try {
+    const reviewsToCreate = [
+      {
+        title: "Fantastic set!",
+        comment: "This is a great set for all your adorable pets",
+        rating: 5,
+        productId: 3,
+        userId: 5,
+      },
+      {
+        title: "Highly recommend!",
+        comment: "Great christmas gift for friends",
+        rating: 4,
+        productId: 2,
+        userId: 3,
+      },
+      {
+        title: "Got the job done",
+        comment: "Didn't wow me, but it did what I needed it to do",
+        rating: 3,
+        productId: 3,
+        userId: 2,
+      },
+      {
+        title: "Fantastic set!",
+        comment: "This is a great set for all your adorable pets",
+        rating: 3,
+        productId: 1,
+        userId: 1,
+      },
+      {
+        title: "Fantastic set!",
+        comment: "This is a great set for all your adorable pets",
+        rating: 5,
+        productId: 2,
+        userId: 5,
+      },
+    ];
+
+    const reviews = await Promise.all(reviewsToCreate.map(createReview));
+    console.log("reviews created: ");
+    console.log(reviews);
+
+    console.log("Finished creating reviews");
+  } catch (error) {
+    console.error("Error creating reviews");
+    throw error;
+  }
+}
 async function populateInitialData() {
   try {
-    // create useful starting data by leveraging your
-    // Model.method() adapters to seed your db, for example:
-    // const user1 = await User.createUser({ ...user info goes here... })
   } catch (error) {
     throw error;
   }
@@ -185,6 +235,7 @@ async function populateInitialData() {
 buildTables()
   .then(populateInitialUsers)
   .then(populateInitialProducts)
+  .then(populateInitialReviews)
   .then(populateInitialData)
   .catch(console.error)
   .finally(() => client.end());

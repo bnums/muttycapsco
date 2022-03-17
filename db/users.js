@@ -31,7 +31,8 @@ async function getAllUsers() {
       `SELECT *
       FROM users;
     `);
-  
+
+    delete user.password;
     return rows;
   }catch (error){
     throw error;
@@ -98,6 +99,8 @@ async function getUser({ username, password }) {
     if (isMatch) {
       delete user.password;
       return user;
+    }else {
+      console.log("password does not match!");
     }
   } catch (error) {
     throw error;
