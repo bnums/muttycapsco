@@ -31,7 +31,6 @@ $ git init
 │   └── heroku-deploy.yaml
 │  
 ├── api
-│   ├── apiRouter.test.js
 │   └── index.js
 │
 ├── db
