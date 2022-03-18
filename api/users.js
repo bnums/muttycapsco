@@ -1,13 +1,14 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET = "remote-controllers-secret" } = process.env;
+require("dotenv").config();
+const { JWT_SECRET } = process.env;
 
 const {
   createUser,
   getUserByUsername,
   getUser,
-  getAllUsers
+  getAllUsers,
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -29,15 +30,15 @@ usersRouter.post("/register", async (req, res, next) => {
       });
       return;
     }
-    const user = await createUser({ username, password, isAdmin });
-    
-    res.send({ 
+    const user = await createUser({ username, password, email, isAdmin });
+
+    res.send({
       user,
       message: "thank you for signing up",
-      token 
-     });
+      token,
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
 });
 
@@ -52,7 +53,7 @@ usersRouter.post("/login", async (req, res, next) => {
   try {
     const user = await getUser(req.body);
     if (user) {
-      const token = jwt.sign( {user} , JWT_SECRET);
+      const token = jwt.sign(user, JWT_SECRET);
       res.send({ user, token, message: "you're logged in!" });
     } else {
       next({
@@ -68,24 +69,22 @@ usersRouter.post("/login", async (req, res, next) => {
 
 usersRouter.get("/me", requireUser, async (req, res, next) => {
   try {
-      res.send(req.user);
+    res.send(req.user);
   } catch (error) {
     next(error);
   }
 });
 
-usersRouter.get('/', async (req, res) => {
-  try{
-  const users = await getAllUsers();
+usersRouter.get("/", async (req, res) => {
+  try {
+    const users = await getAllUsers();
 
-res.send({
-  users,
-});
-
-} catch (error) {
-  next(error);
-}
-
+    res.send({
+      users,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = usersRouter;
