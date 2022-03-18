@@ -1,0 +1,13 @@
+.homepage__container {
+  font-family: "Reem Kufi", sans-serif;
+  background-image: url("../imgs/homebanner.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.homepage__container-content {
+  height: 35vh;
+}
