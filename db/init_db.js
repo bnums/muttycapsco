@@ -15,7 +15,7 @@ async function buildTables() {
     console.log("Dropping all tables...");
     await client.query(`
     DROP TABLE IF EXISTS reviews ;
-    DROP TABLE IF EXISTS orderProducts;
+    DROP TABLE IF EXISTS orderDetails;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS products; 
     DROP TABLE IF EXISTS users;
@@ -64,9 +64,9 @@ async function buildTables() {
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
-      "userId" INTEGER REFERENCES users(id) NOT NULL, 
+      "creatorId" INTEGER REFERENCES users(id) NOT NULL, 
       "productId" INTEGER REFERENCES products(id) NOT NULL,
-      UNIQUE("userId","productId"), 
+      UNIQUE("creatorId","productId"), 
       title VARCHAR(255) DEFAULT NULL,
       UNIQUE("productId",title),
       rating INTEGER DEFAULT 0,
@@ -118,7 +118,7 @@ async function populateInitialUsers() {
     const users = await Promise.all(usersToPopulate.map(createUser));
 
     console.log("Users populated:");
-    console.log(users);
+    // console.log(users);
     console.log("Finished populating users!");
   } catch (error) {
     console.error("Error populating users!");
@@ -165,7 +165,7 @@ async function populateInitialProducts() {
     const products = await Promise.all(productsToCreate.map(createProducts));
 
     console.log("products created:");
-    console.log(products);
+    // console.log(products);
 
     console.log("Finished creating products!");
   } catch (error) {
@@ -183,41 +183,39 @@ async function populateInitialReviews() {
         comment: "This is a great set for all your adorable pets",
         rating: 5,
         productId: 3,
-        userId: 5,
+        creatorId: 5,
       },
       {
         title: "Highly recommend!",
         comment: "Great christmas gift for friends",
         rating: 4,
         productId: 2,
-        userId: 3,
+        creatorId: 3,
       },
       {
         title: "Got the job done",
         comment: "Didn't wow me, but it did what I needed it to do",
         rating: 3,
         productId: 3,
-        userId: 2,
+        creatorId: 2,
       },
       {
         title: "Fantastic set!",
         comment: "This is a great set for all your adorable pets",
         rating: 3,
         productId: 1,
-        userId: 1,
+        creatorId: 1,
       },
       {
-        title: "Fantastic set!",
         comment: "This is a great set for all your adorable pets",
-        rating: 5,
         productId: 2,
-        userId: 5,
+        creatorId: 5,
       },
     ];
 
     const reviews = await Promise.all(reviewsToCreate.map(createReview));
     console.log("reviews created: ");
-    console.log(reviews);
+    // console.log(reviews);
 
     console.log("Finished creating reviews");
   } catch (error) {
@@ -225,17 +223,21 @@ async function populateInitialReviews() {
     throw error;
   }
 }
-async function populateInitialData() {
-  try {
-  } catch (error) {
-    throw error;
-  }
-}
+
+// async function populateInitialData() {
+//   try {
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
 buildTables()
   .then(populateInitialUsers)
   .then(populateInitialProducts)
   .then(populateInitialReviews)
-  .then(populateInitialData)
   .catch(console.error)
   .finally(() => client.end());
+
+module.exports = {
+  buildTables,
+};
