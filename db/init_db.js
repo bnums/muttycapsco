@@ -59,7 +59,6 @@ async function buildTables() {
       quantity INTEGER, 
       unitPrice DECIMAL(10, 2),
       createdAt TIMESTAMP
-
     );
 
     CREATE TABLE reviews(
