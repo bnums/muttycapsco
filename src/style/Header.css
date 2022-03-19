@@ -1,0 +1,13 @@
+.header {
+  background: #557272;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+.header__company__name {
+  color: white;
+  font-style: normal;
+  font-family: "Reem Kufi", sans-serif;
+  font-size: 30px;
+}

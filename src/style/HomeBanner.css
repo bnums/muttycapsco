@@ -3,10 +3,10 @@
   height: 65vh;
   width: 100%;
   margin: 0;
-  background-position: top;
+  background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: contain;
+  background-size: cover;
   position: relative;
   font-family: "Reem Kufi", sans-serif;
 }
@@ -50,9 +50,6 @@
   transition: all 0.08s ease;
 }
 .homeBanner__container-button:hover {
-  -webkit-animation: shadow-drop-2-center 0.4s
-    cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  animation: shadow-drop-2-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   font-weight: 800;
 }
 
