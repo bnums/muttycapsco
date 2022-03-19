@@ -2,6 +2,7 @@ const {
   client,
   createProducts,
   createUser,
+  createReview,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -14,6 +15,7 @@ async function buildTables() {
     console.log("Dropping all tables...");
     await client.query(`
     DROP TABLE IF EXISTS reviews ;
+    DROP TABLE IF EXISTS orderDetails;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS products; 
     DROP TABLE IF EXISTS users;
@@ -38,28 +40,38 @@ async function buildTables() {
       name VARCHAR(255) UNIQUE NOT NULL,
       description TEXT NOT NULL,
       price DECIMAL (10, 2),
-      inventoryQTY INTEGER,
+      "inventoryQTY" INTEGER,
       category VARCHAR(255) NOT NULL,
-      productImg VARCHAR(255) not null
+      "productImg" VARCHAR(255) not null
     );
 
     CREATE TABLE orders(
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id) NOT NULL,
+      orderTotal DECIMAL(10, 2) NOT NULL,
+      createdAt TIMESTAMP
+    );
+
+    CREATE TABLE orderDetails(
+      id SERIAL PRIMARY KEY,
+      "orderId" INTEGER REFERENCES orders(id) NOT NULL,
       "productId" INTEGER REFERENCES products(id) NOT NULL,
-      productQuantity INTEGER,
-      orderSum DECIMAL(10, 2) NOT NULL
+      quantity INTEGER, 
+      unitPrice DECIMAL(10, 2),
+      createdAt TIMESTAMP
+
     );
 
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
-      "userId" INTEGER REFERENCES users(id) NOT NULL, 
-      "productId" INTEGER REFERENCES products(id) NOT NULL, 
-      title VARCHAR(255) UNIQUE DEFAULT NULL,
+      "creatorId" INTEGER REFERENCES users(id) NOT NULL, 
+      "productId" INTEGER REFERENCES products(id) NOT NULL,
+      UNIQUE("creatorId","productId"), 
+      title VARCHAR(255) DEFAULT NULL,
+      UNIQUE("productId",title),
       rating INTEGER DEFAULT 0,
-      review TEXT NOT NULL
+      comment TEXT NOT NULL
     );
-    
     `);
 
     console.log("Finished building tables...");
@@ -106,7 +118,7 @@ async function populateInitialUsers() {
     const users = await Promise.all(usersToPopulate.map(createUser));
 
     console.log("Users populated:");
-    console.log(users);
+    // console.log(users);
     console.log("Finished populating users!");
   } catch (error) {
     console.error("Error populating users!");
@@ -153,7 +165,7 @@ async function populateInitialProducts() {
     const products = await Promise.all(productsToCreate.map(createProducts));
 
     console.log("products created:");
-    console.log(products);
+    // console.log(products);
 
     console.log("Finished creating products!");
   } catch (error) {
@@ -162,19 +174,70 @@ async function populateInitialProducts() {
   }
 }
 
-async function populateInitialData() {
+async function populateInitialReviews() {
+  console.log("Starting to create reviews...");
   try {
-    // create useful starting data by leveraging your
-    // Model.method() adapters to seed your db, for example:
-    // const user1 = await User.createUser({ ...user info goes here... })
+    const reviewsToCreate = [
+      {
+        title: "Fantastic set!",
+        comment: "This is a great set for all your adorable pets",
+        rating: 5,
+        productId: 3,
+        creatorId: 5,
+      },
+      {
+        title: "Highly recommend!",
+        comment: "Great christmas gift for friends",
+        rating: 4,
+        productId: 2,
+        creatorId: 3,
+      },
+      {
+        title: "Got the job done",
+        comment: "Didn't wow me, but it did what I needed it to do",
+        rating: 3,
+        productId: 3,
+        creatorId: 2,
+      },
+      {
+        title: "Fantastic set!",
+        comment: "This is a great set for all your adorable pets",
+        rating: 3,
+        productId: 1,
+        creatorId: 1,
+      },
+      {
+        comment: "This is a great set for all your adorable pets",
+        productId: 2,
+        creatorId: 5,
+      },
+    ];
+
+    const reviews = await Promise.all(reviewsToCreate.map(createReview));
+    console.log("reviews created: ");
+    // console.log(reviews);
+
+    console.log("Finished creating reviews");
   } catch (error) {
+    console.error("Error creating reviews");
     throw error;
   }
 }
 
+// async function populateInitialData() {
+//   try {
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+
 buildTables()
   .then(populateInitialUsers)
   .then(populateInitialProducts)
-  .then(populateInitialData)
+  .then(populateInitialReviews)
   .catch(console.error)
   .finally(() => client.end());
+
+module.exports = {
+  buildTables,
+};
