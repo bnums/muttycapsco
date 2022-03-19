@@ -75,13 +75,13 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   }
 });
 
-usersRouter.get("/", async (req, res) => {
+usersRouter.get("/", async (req, res, next) => {
   try {
     const users = await getAllUsers();
 
-    res.send({
+    res.send(
       users,
-    });
+    );
   } catch (error) {
     next(error);
   }

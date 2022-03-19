@@ -7,5 +7,4 @@ module.exports = {
   ...require("./orders"),
   ...require("./orderDetails"),
   ...require("./reviews"),
-  ...require("./orders"),
 };
