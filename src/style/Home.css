@@ -1,1 +1,25 @@
+.homepage {
+  font-family: "Reem Kufi", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+}
 
+.homepage__products-title {
+  flex-basis: 100%;
+  text-align: left;
+  font-weight: 400;
+  font-size: 40px;
+}
+.homepage__products__container {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 3rem 5rem;
+  margin: 10rem;
+  margin-top: 15px;
+  justify-content: space-around;
+  max-width: 1500px;
+}

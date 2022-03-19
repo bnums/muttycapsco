@@ -1,11 +1,13 @@
 import React from "react";
 import "../style/HomeBanner.css";
-export const HomeBanner = () => {
+const HomeBanner = () => {
   return (
     <div className="homeBanner__container">
       <div className="homeBanner__container-content">
-        <h2 className="homeBanner__container-title">Title text here</h2>
-        <p className="homeBanner__container-subtitle">Catchy phrase here</p>
+        <h2 className="homeBanner__container-title">Welcome to MuttyCapsCo!</h2>
+        <p className="homeBanner__container-subtitle">
+          We have never been more ready for the outdoors
+        </p>
         <button className="homeBanner__container-button">Shop</button>
       </div>
       <div className="homeBanner__container-links">
@@ -17,3 +19,5 @@ export const HomeBanner = () => {
     </div>
   );
 };
+
+export default HomeBanner;

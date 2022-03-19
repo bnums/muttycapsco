@@ -14,18 +14,21 @@
 .homeBanner__container-content {
   display: flex;
   flex-direction: column;
-  text-align: left;
+  align-content: flex-start;
   position: absolute;
   color: #232323;
   margin-left: 10vw;
   margin-top: 25vh;
   align-items: left;
+  width: 450px;
 }
 
 .homeBanner__container-title {
   font-weight: 500;
-  font-size: 48px;
+  font-size: 40px;
   line-height: 72px;
+  display: flex;
+  flex-flow: wrap;
 }
 
 .homeBanner__container-subtitle {
