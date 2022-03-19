@@ -5,4 +5,5 @@ module.exports = {
   ...require("./users"),
   ...require("./products"),
   ...require("./reviews"),
+  ...require("./orders"),
 };
