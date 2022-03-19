@@ -1,12 +1,12 @@
 const client = require('./client');
 
-const createOrder = async({userId, productId, productQuantity, orderSum }) => {
+const createOrders = async({userId, orderTotal, createdAt }) => {
     try{
         const {rows: [order]} = await client.query(`
-        INSERT INTO orders("userId", "productId", productQuantity, orderSum)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO orders("userId", "orderTotal", "createdAt")
+        VALUES ($1, $2, $3)
         RETURNING *;
-        `, [userId, productId, productQuantity, orderSum]);
+        `, [userId, orderTotal, createdAt]);
         return order;
     }catch(error){
         throw error;
@@ -93,7 +93,7 @@ const deleteOrder = async(id) => {
 }
 
 module.exports ={ 
-    createOrder,
+    createOrders,
     getAllOrders,
     getOrderbyId,
     getOrderByUser,
