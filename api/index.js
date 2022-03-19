@@ -4,9 +4,8 @@ const reviewsRouter = require("./reviews");
 const { getUserById } = require("../db/users");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET = "neverTell" } = process.env;
 
-//const productRouter = require("./products");
 apiRouter.get("/", (req, res, next) => {
   res.send({
     healthy: true,
@@ -42,5 +41,8 @@ apiRouter.use(async (req, res, next) => {
 apiRouter.use("/users", userRouter);
 apiRouter.use("/reviews", reviewsRouter);
 //apiRouter.use("/products", productRouter);
+
+const productRouter = require("./products");
+apiRouter.use("/products", productRouter);
 
 module.exports = apiRouter;
