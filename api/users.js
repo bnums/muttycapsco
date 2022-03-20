@@ -9,6 +9,7 @@ const {
   getUserByUsername,
   getUser,
   getAllUsers,
+  getOrderByUser,
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -53,7 +54,7 @@ usersRouter.post("/login", async (req, res, next) => {
   try {
     const user = await getUser(req.body);
     if (user) {
-      const token = jwt.sign(user, "neverTell");
+      const token = jwt.sign(user, JWT_SECRET);
       res.send({ user, token, message: "you're logged in!" });
     } else {
       next({
@@ -75,6 +76,7 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   }
 });
 
+
 usersRouter.get("/", async (req, res, next) => {
   try {
     const users = await getAllUsers();
@@ -84,6 +86,17 @@ usersRouter.get("/", async (req, res, next) => {
     );
   } catch (error) {
     next(error);
+  }
+});
+
+usersRouter.get("/:userId/orders", async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const orders = await getOrderByUser(req.user.id);
+    console.log("this is the order", orders)
+    res.send(orders);
+  } catch ({ name, message }) {
+    next({ name, message });
   }
 });
 
