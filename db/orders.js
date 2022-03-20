@@ -13,13 +13,13 @@ async function createOrders({userId, orderTotal, createdAt }) {
     }
 }
 
-async function getAllOrders() {
+const getAllOrders = async() => {
     try{
-        const {rows} = await client.query(`
-        SELECT *
-        FROM orders
-        `);
-        return rows;
+        const {rows: order} = await client.query(`
+        SELECT orders.*, users.username AS "shopperName"
+        FROM orders, users
+        `, []);
+        return order;
     }catch(error){
         throw error;
     }
