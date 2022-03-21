@@ -28,11 +28,10 @@ async function createUser({ username, password, email, isAdmin }) {
 async function getAllUsers() {
   try{
   const { rows } = await client.query(
-      `SELECT *
+      `SELECT username, email, "isAdmin"
       FROM users;
     `);
 
-    delete user.password;
     return rows;
   }catch (error){
     throw error;

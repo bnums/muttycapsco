@@ -1,12 +1,12 @@
 const client = require('./client');
 
-const createOrder = async({userId, productId, productQuantity, orderSum }) => {
+async function createOrders({userId, orderTotal, createdAt }) {
     try{
         const {rows: [order]} = await client.query(`
-        INSERT INTO orders("userId", "productId", productQuantity, orderSum)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO orders("userId", "orderTotal", "createdAt")
+        VALUES ($1, $2, $3)
         RETURNING *;
-        `, [userId, productId, productQuantity, orderSum]);
+        `, [userId, orderTotal, createdAt]);
         return order;
     }catch(error){
         throw error;
@@ -17,7 +17,7 @@ const getAllOrders = async() => {
     try{
         const {rows: order} = await client.query(`
         SELECT orders.*, users.username AS "shopperName"
-        FROM products, users
+        FROM orders, users
         `, []);
         return order;
     }catch(error){
@@ -25,7 +25,7 @@ const getAllOrders = async() => {
     }
 }
 
-const getOrderbyId = async(id) => {
+async function getOrderbyId (id) {
     try{
         const {rows: order} = await client.query(`
             SELECT * 
@@ -39,7 +39,7 @@ const getOrderbyId = async(id) => {
     }
 }
 
-const getOrderByUser = async(userId) => {
+async function getOrderByUser (userId){
     try{
         const {rows: order} = await client.query(`
             SELECT * 
@@ -53,7 +53,7 @@ const getOrderByUser = async(userId) => {
     }
 }
 
-const updateOrder = async({id, ...fields}) => {
+async function updateOrder ({id, ...fields}) {
     const setString = Object.keys(fields).map(
         (key, index) => `"${key}" = $${index + 1}`
       ).join(', ');
@@ -77,7 +77,7 @@ const updateOrder = async({id, ...fields}) => {
       }
 }
 
-const deleteOrder = async(id) => {
+async function deleteOrder (id) {
     try{
         const {rows: [order]} = await client.query(`
             DELETE FROM orders
@@ -93,11 +93,11 @@ const deleteOrder = async(id) => {
 }
 
 module.exports ={ 
-    createOrder,
+    createOrders,
     getAllOrders,
     getOrderbyId,
     getOrderByUser,
     updateOrder,
     deleteOrder
 
-}
+};

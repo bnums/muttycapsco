@@ -11,3 +11,9 @@
   font-family: "Reem Kufi", sans-serif;
   font-size: 30px;
 }
+
+@media screen and (max-width: 320px) {
+  .header__company__name {
+    font-size: 15px;
+  }
+}
