@@ -84,6 +84,19 @@
   }
 }
 
+@media (max-width: 400px) {
+  .homeBanner__container-link {
+    display: none;
+  }
+  .homeBanner__container-title {
+    font-size: 25px;
+  }
+
+  .homeBanner__container-subtitle {
+    font-size: 15px;
+  }
+}
+
 @-webkit-keyframes shadow-drop-2-center {
   0% {
     -webkit-transform: translateZ(0);
