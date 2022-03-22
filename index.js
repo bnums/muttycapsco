@@ -29,11 +29,6 @@ const { client } = require("./db");
 // connect to the server
 const PORT = process.env.PORT || 4000;
 
-//custom error handlers
-server.get("*", (req, res, next) => {
-  res.status(404).send("This route does not exist");
-});
-
 server.use(({ name, message }, req, res, next) => {
   res.status(500).send({ name: name, message: message });
 });
