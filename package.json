@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run client:build",
     "client:dev": "react-scripts start",
-    "client:build": "react-scripts build",
     "server:dev": "nodemon index.js",
     "db:build": "node ./db/init_db",
-    "start:dev": "concurrently \"npm run client:build\" \"npm run client:dev\" \"npm run server:dev\"",
+    "start:dev": "concurrently \"npm run build\" \"npm run client:dev\" \"npm run server:dev\"",
+    "build": "react-script build",
     "start": "node index.js",
     "test:unit": "jest"
   },

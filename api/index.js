@@ -45,4 +45,8 @@ apiRouter.use("/reviews", reviewsRouter);
 const productRouter = require("./products");
 apiRouter.use("/products", productRouter);
 
+//custom error handlers
+server.get("*", (req, res, next) => {
+  res.status(404).send("This route does not exist");
+});
 module.exports = apiRouter;
