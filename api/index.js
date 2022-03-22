@@ -1,6 +1,7 @@
 const apiRouter = require("express").Router();
-const userRouter = require("./users");
+const usersRouter = require("./users");
 const reviewsRouter = require("./reviews");
+const ordersRouter = require("./orders");
 const { getUserById } = require("../db/users");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
@@ -38,11 +39,16 @@ apiRouter.use(async (req, res, next) => {
 });
 
 // place your routers here
-apiRouter.use("/users", userRouter);
+apiRouter.use("/users", usersRouter);
 apiRouter.use("/reviews", reviewsRouter);
+apiRouter.use("/orders", ordersRouter);
 //apiRouter.use("/products", productRouter);
 
 const productRouter = require("./products");
 apiRouter.use("/products", productRouter);
 
+//custom error handlers
+server.get("*", (req, res, next) => {
+  res.status(404).send("This route does not exist");
+});
 module.exports = apiRouter;

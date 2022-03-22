@@ -2,6 +2,8 @@ const {
   client,
   createProducts,
   createUser,
+  createOrders,
+  addProductToOrder,
   createReview,
   // declare your model imports here
   // for example, User
@@ -48,8 +50,8 @@ async function buildTables() {
     CREATE TABLE orders(
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id) NOT NULL,
-      orderTotal DECIMAL(10, 2) NOT NULL,
-      createdAt TIMESTAMP
+      "orderTotal" DECIMAL(10, 2) NOT NULL,
+      "createdAt" TIMESTAMP
     );
 
     CREATE TABLE orderDetails(
@@ -57,9 +59,8 @@ async function buildTables() {
       "orderId" INTEGER REFERENCES orders(id) NOT NULL,
       "productId" INTEGER REFERENCES products(id) NOT NULL,
       quantity INTEGER, 
-      unitPrice DECIMAL(10, 2),
-      createdAt TIMESTAMP
-
+      "unitPrice" DECIMAL(10, 2),
+      "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE reviews(
@@ -174,6 +175,89 @@ async function populateInitialProducts() {
   }
 }
 
+async function populateInitialOrders() {
+  try {
+    console.log("Starting to create orders...");
+
+    const ordersToCreate = [
+      {
+        userId: 2,
+        orderTotal: 16.99,
+        createdAt: "2009-04-30 09:44:35",
+      },
+      {
+        userId: 4,
+        orderTotal: 48.87,
+        createdAt: "2020-04-30 06:34:35",
+      },
+      {
+        userId: 1,
+        orderTotal: 32.97,
+        createdAt: "2021-12-01 03:14:55",
+      },
+    ];
+
+    const orders = await Promise.all(ordersToCreate.map(createOrders));
+
+    console.log("Orders created:");
+    // console.log(orders);
+
+    console.log("Finished creating orders!");
+  } catch (error) {
+    console.error("Error creating orders");
+    throw error;
+  }
+}
+
+async function populateInitialOrderDetails() {
+  try {
+    console.log("Starting to create orderDeatails...");
+
+    const orderDetailsToCreate = [
+      {
+        orderId: 1,
+        productId: 1,
+        quantity: 1,
+        unitPrice: 16.99,
+        createdAt: "2009-04-30 09:44:35",
+      },
+      {
+        orderId: 2,
+        productId: 1,
+        quantity: 2,
+        unitPrice: 16.99,
+        createdAt: "2020-04-30 06:32:15",
+      },
+      {
+        orderId: 2,
+        productId: 2,
+        quantity: 1,
+        unitPrice: 14.89,
+        createdAt: "2020-04-30 06:33:25",
+      },
+      {
+        orderId: 3,
+        productId: 3,
+        quantity: 3,
+        unitPrice: 10.99,
+        createdAt: "2021-12-01 03:14:55",
+      },
+    ];
+
+    const orderDetails = await Promise.all(
+      orderDetailsToCreate.map(addProductToOrder)
+    );
+
+    console.log("OrderDetails created:");
+    // console.log(orderDetails);
+
+    console.log("Finished creating orderDetails!");
+  } catch (error) {
+    console.error("Error creating orderDetails");
+    throw error;
+  }
+}
+
 async function populateInitialReviews() {
   console.log("Starting to create reviews...");
   try {
@@ -234,6 +318,8 @@ async function populateInitialReviews() {
 buildTables()
   .then(populateInitialUsers)
   .then(populateInitialProducts)
+  .then(populateInitialOrders)
+  .then(populateInitialOrderDetails)
   .then(populateInitialReviews)
   .catch(console.error)
   .finally(() => client.end());

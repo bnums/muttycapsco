@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm run client:build",
     "client:dev": "react-scripts start",
-    "client:build": "react-scripts build",
     "server:dev": "nodemon index.js",
     "db:build": "node ./db/init_db",
-    "start:dev": "concurrently \"npm run client:build\" \"npm run client:dev\" \"npm run server:dev\"",
+    "start:dev": "concurrently \"npm run build\" \"npm run client:dev\" \"npm run server:dev\"",
+    "build": "react-script build",
     "start": "node index.js",
     "test:unit": "jest"
   },
@@ -29,7 +28,7 @@
     "pg": "^8.7.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^0.0.0-experimental-compat.1",
     "react-scripts": "^3.4.1"
   },
   "devDependencies": {

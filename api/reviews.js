@@ -15,11 +15,6 @@ const {
 } = require("../db");
 const { requireUser } = require("./utils");
 
-reviewsRouter.use((req, res, next) => {
-  console.log("A request is being made to /reviews");
-  next();
-});
-
 //GET /reviews from db
 reviewsRouter.get("/", async (req, res, next) => {
   try {
