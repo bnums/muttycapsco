@@ -18,7 +18,7 @@
   position: absolute;
   color: #232323;
   margin-left: 10vw;
-  margin-top: 25vh;
+  margin-top: 20vh;
   align-items: left;
   width: 450px;
 }
@@ -29,6 +29,7 @@
   line-height: 72px;
   display: flex;
   flex-flow: wrap;
+  color: #232323;
 }
 
 .homeBanner__container-subtitle {
@@ -85,6 +86,9 @@
 }
 
 @media (max-width: 400px) {
+  .homeBanner__container-content {
+    margin-top: 5px;
+  }
   .homeBanner__container-link {
     display: none;
   }
@@ -93,7 +97,11 @@
   }
 
   .homeBanner__container-subtitle {
-    font-size: 15px;
+    display: none;
+  }
+
+  .homeBanner__container-button {
+    font-size: 20px;
   }
 }
 
