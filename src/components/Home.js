@@ -7,7 +7,6 @@ const Home = () => {
   return (
     <div className="homepage">
       <HomeBanner />
-
       <div className="homepage__products__container">
         <h1 className="homepage__products-title">Shop Hats</h1>
         <ProductCard />
@@ -15,7 +14,6 @@ const Home = () => {
         <ProductCard />
         <ProductCard />
         <ProductCard />
-
         <ProductCard />
         <ProductCard />
         <ProductCard />
