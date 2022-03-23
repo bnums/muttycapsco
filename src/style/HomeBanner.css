@@ -1,135 +1,43 @@
-.homeBanner__container {
-  background-image: url("../imgs/homebanner.svg");
-  height: 65vh;
-  width: 100%;
-  margin: 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  position: relative;
+.homebanner {
   font-family: "Reem Kufi", sans-serif;
+  font-size: 20px;
+  background-image: linear-gradient(
+      rgba(196, 196, 196, 0.178),
+      rgba(49, 49, 49, 0.2)
+    ),
+    url("../imgs/homebanner.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 60vh;
+  color: white;
 }
 
-.homeBanner__container-content {
-  display: flex;
-  flex-direction: column;
-  align-content: flex-start;
-  position: absolute;
-  color: #232323;
-  margin-left: 10vw;
-  margin-top: 20vh;
-  align-items: left;
-  width: 450px;
+.homebanner-title {
+  font-size: 36px;
+  overflow-wrap: break-word;
+  min-width: 50%;
+  margin-top: 10%;
+  margin-left: 8vw;
 }
 
-.homeBanner__container-title {
-  font-weight: 500;
-  font-size: 40px;
-  line-height: 72px;
-  display: flex;
-  flex-flow: wrap;
-  color: #232323;
+.homebanner-subtitle {
+  overflow-wrap: break-word;
+  margin-left: 8vw;
 }
 
-.homeBanner__container-subtitle {
-  font-size: 23px;
-  margin: 0px 0px 0px 5px;
-}
-
-.homeBanner__container-button {
-  border: none;
+.homebanner-button {
   background: #557272;
   border-radius: 18.5px;
-  text-align: center;
+  font-size: 15px;
+  width: 100px;
+  margin-top: 2.5rem;
+  margin-left: 8vw;
   color: white;
-  font-size: 20px;
-  font-family: "Reem Kufi", sans-serif;
-  width: 110px;
-  height: 41px;
-  margin: 30px 0px 0px 5px;
-  transition: all 0.08s ease;
-}
-.homeBanner__container-button:hover {
-  font-weight: 800;
 }
 
-.homeBanner__container-links {
-  display: flex;
-  flex-direction: row;
-  flex-flow: wrap;
-  position: absolute;
-  padding: 1rem;
-  margin-left: 80vw;
-}
-
-.homeBanner__container-link {
-  padding: 16px;
-  font-size: 24px;
-  font-weight: 400;
-}
-
-/*Media Queries*/
-@media screen and (max-width: 2000px) {
-  .homeBanner__container-links {
-    margin-left: 65vw;
-  }
-}
-
-@media screen and (orientation: portrait) {
-  .homeBanner__container {
-    height: 25vh;
-  }
-  .homeBanner__container-content {
-    margin-top: 10vh;
-  }
-}
-
-@media (max-width: 400px) {
-  .homeBanner__container-content {
-    margin-top: 5px;
-  }
-  .homeBanner__container-link {
-    display: none;
-  }
-  .homeBanner__container-title {
-    font-size: 25px;
-  }
-
-  .homeBanner__container-subtitle {
-    display: none;
-  }
-
-  .homeBanner__container-button {
-    font-size: 20px;
-  }
-}
-
-@-webkit-keyframes shadow-drop-2-center {
-  0% {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  }
-  100% {
-    -webkit-transform: translateZ(50px);
-    transform: translateZ(50px);
-    -webkit-box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
-    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
-  }
-}
-@keyframes shadow-drop-2-center {
-  0% {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-  }
-  100% {
-    -webkit-transform: translateZ(50px);
-    transform: translateZ(50px);
-    -webkit-box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
-    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+@media screen and (max-width: 1000px) {
+  .homebanner {
+    color: white;
   }
 }
