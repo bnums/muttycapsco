@@ -29,8 +29,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^0.0.0-experimental-compat.1",
-    "react-scripts": "^3.4.1",
-    "react-simple-star-rating": "^4.0.5"
+    "react-scripts": "^3.4.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4",
