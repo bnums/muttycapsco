@@ -1,4 +1,5 @@
 import React from "react";
+import { ProductCard } from ".";
 import cardplaceholder from "../imgs/cardplaceholder.png";
 import "../style/ProductImage.css";
 import "../style/SimilarProducts.css";
@@ -26,13 +27,7 @@ const SimilarProducts = ({ similarProducts }) => {
       <h3> You Might Also Like</h3>
       <div className="similar-products-container">
         {mockData?.map((item) => (
-          <div className="product-img-container">
-            <img
-              className="product__card-img"
-              src={item.imgURL}
-              alt={item.descrioption}
-            />
-          </div>
+          <ProductCard />
         ))}
       </div>
     </div>
