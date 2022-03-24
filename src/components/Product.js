@@ -1,9 +1,19 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import "../style/Product.css";
+import { ProductReviews, SimilarProducts } from ".";
 
-return (
-  <div className="product-container">
-    <div className="product-header"></div>
-  </div>
-);
+const Product = (props) => {
+  return (
+    <div className="product-container">
+      <div className="product-card-container">
+        <ProductImage></ProductImage>
+        <ProductInfo {...props}></ProductInfo>
+      </div>
+      <SimilarProducts></SimilarProducts>
+      <ProductReviews></ProductReviews>
+    </div>
+  );
+};
+
+export default Product;
