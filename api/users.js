@@ -9,12 +9,12 @@ const {
   getUserByUsername,
   getUser,
   getAllUsers,
-  getOrderByUser,
+  getOrdersByUserId,
 } = require("../db");
 const { requireUser } = require("./utils");
 
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, isAdmin } = req.body;
+  const { username, password, email, isAdmin } = req.body;
   try {
     if (password.length < 8) {
       next({
@@ -32,10 +32,11 @@ usersRouter.post("/register", async (req, res, next) => {
       return;
     }
     const user = await createUser({ username, password, email, isAdmin });
+    const token = jwt.sign(user, JWT_SECRET);
 
     res.send({
       user,
-      message: "thank you for signing up",
+      message: "Thank you for signing up",
       token,
     });
   } catch (error) {
@@ -89,7 +90,7 @@ usersRouter.get("/", async (req, res, next) => {
 usersRouter.get("/:userId/orders", async (req, res, next) => {
   const { userId } = req.params;
   try {
-    const orders = await getOrderByUser(req.user.id);
+    const orders = await getOrdersByUserId(userId);
     console.log("this is the order", orders);
     res.send(orders);
   } catch ({ name, message }) {
