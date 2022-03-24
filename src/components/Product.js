@@ -1,5 +1,4 @@
 import React from "react";
-import ProductCard from "./ProductCard";
 import "../style/Product.css";
 import { ProductReviews, SimilarProducts } from ".";
 import { ProductImage, ProductInfo } from ".";
