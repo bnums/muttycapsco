@@ -61,6 +61,7 @@ ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
       next(error);
     }
   });
+
 ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
     try {
       const { orderId } = req.params;
@@ -74,5 +75,19 @@ ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
       next({ name, message });
     }
   });
+
+ordersRouter.post("/:orderId/products", requireUser ,async (req, res, next) => {
+  const { orderId } = req.params;
+  const productOrder = {...req.body, orderId}
+
+  try{
+    const orderProductPair = await addProductToOrder(productOrder);
+
+    res.send(orderProductPair)
+  }catch({ name, message}) {
+    next({ name, message });
+  }
+})
+
 
 module.exports = ordersRouter;
