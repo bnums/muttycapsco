@@ -3,10 +3,10 @@
   height: 65vh;
   width: 100%;
   margin: 0;
-  background-position: top;
+  background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: contain;
+  background-size: cover;
   position: relative;
   font-family: "Reem Kufi", sans-serif;
 }
@@ -18,7 +18,7 @@
   position: absolute;
   color: #232323;
   margin-left: 10vw;
-  margin-top: 25vh;
+  margin-top: 20vh;
   align-items: left;
   width: 450px;
 }
@@ -29,6 +29,7 @@
   line-height: 72px;
   display: flex;
   flex-flow: wrap;
+  color: #232323;
 }
 
 .homeBanner__container-subtitle {
@@ -50,9 +51,6 @@
   transition: all 0.08s ease;
 }
 .homeBanner__container-button:hover {
-  -webkit-animation: shadow-drop-2-center 0.4s
-    cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  animation: shadow-drop-2-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   font-weight: 800;
 }
 
@@ -84,6 +82,26 @@
   }
   .homeBanner__container-content {
     margin-top: 10vh;
+  }
+}
+
+@media (max-width: 400px) {
+  .homeBanner__container-content {
+    margin-top: 5px;
+  }
+  .homeBanner__container-link {
+    display: none;
+  }
+  .homeBanner__container-title {
+    font-size: 25px;
+  }
+
+  .homeBanner__container-subtitle {
+    display: none;
+  }
+
+  .homeBanner__container-button {
+    font-size: 20px;
   }
 }
 

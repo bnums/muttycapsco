@@ -11,8 +11,6 @@ const HomeBanner = () => {
         <button className="homeBanner__container-button">Shop</button>
       </div>
       <div className="homeBanner__container-links">
-        <p className="homeBanner__container-link">Hot 1</p>
-        <p className="homeBanner__container-link">Hot 2</p>
         <p className="homeBanner__container-link">About Us</p>
         <p className="homeBanner__container-link">Contact Us</p>
       </div>
