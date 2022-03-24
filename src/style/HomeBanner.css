@@ -8,9 +8,9 @@
     url("../imgs/homebanner.svg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
-  height: 60vh;
+  background-position: 50% 5%;
   color: white;
+  height: 60vh;
 }
 
 .homebanner-title {
