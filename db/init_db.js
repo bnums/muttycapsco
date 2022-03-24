@@ -49,9 +49,10 @@ async function buildTables() {
 
     CREATE TABLE orders(
       id SERIAL PRIMARY KEY,
-      "userId" INTEGER REFERENCES users(id) NOT NULL,
+      "userId" INTEGER REFERENCES users(id),
       "orderTotal" DECIMAL(10, 2) NOT NULL,
-      "createdAt" TIMESTAMP
+      "createdAt" TIMESTAMP,
+      "isActive" BOOLEAN DEFAULT false
     );
 
     CREATE TABLE orderDetails(
@@ -184,23 +185,32 @@ async function populateInitialOrders() {
         userId: 2,
         orderTotal: 16.99,
         createdAt: "2009-04-30 09:44:35",
+        isActive: true,
       },
       {
         userId: 4,
         orderTotal: 48.87,
         createdAt: "2020-04-30 06:34:35",
+        isActive: false,
       },
       {
         userId: 1,
         orderTotal: 32.97,
         createdAt: "2021-12-01 03:14:55",
+        isActive: true,
+      },
+      {
+        userId: null,
+        orderTotal: 32.97,
+        createdAt: "2022-03-03 07:44:55",
+        isActive: true,
       },
     ];
 
     const orders = await Promise.all(ordersToCreate.map(createOrders));
 
     console.log("Orders created:");
-    // console.log(orders);
+    console.log(orders);
 
     console.log("Finished creating orders!");
   } catch (error) {
