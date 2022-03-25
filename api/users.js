@@ -96,7 +96,6 @@ usersRouter.get("/:userId/orders", async (req, res, next) => {
   const { userId } = req.params;
   try {
     const orders = await getOrdersByUserId(userId);
-    console.log("this is the order", orders);
     res.send(orders);
   } catch ({ name, message }) {
     next({ name, message });

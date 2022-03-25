@@ -57,44 +57,40 @@ const getProductByOrderId = async ({ orderId }) => {
 //     }
 // }
 
-const updateQuantity = async ({ quantity, ...fields }) => {
+//updates the quantity/amount of a product for orderDetails
+const updateQuantity = async (id, quanity) => {
   try {
-    const setString = Object.keys(fields)
-      .map((key, idx) => `"${key}"=$${idx + 1}`)
-      .join(", ");
-
-    if (setString.length === 0) return;
-
     const {
       rows: [updatedQuantity],
     } = await client.query(
       `
-                UPDATE orderDetails
-                SET ${setString}
-                WHERE id = ${quantity}
-                RETURNING *;
-            `,
-      Object.values(fields)
+        UPDATE orderDetails
+        SET quantity = ${quanity}
+        WHERE id = ${id}
+        RETURNING *;
+      `
     );
-
     return updatedQuantity;
   } catch (err) {
     throw err;
   }
 };
 
-const deleteItem = async ({ id }) => {
+//deletes an item off an order
+const deleteItem = async (id) => {
   try {
-    const { rows: order } = await client.query(
+    const {
+      rows: [deletedItem],
+    } = await client.query(
       `
             DELETE FROM orderDetails
             WHERE "id" = $1
-            RETURNING *;
+            RETURNING orderDetails.id;
         `,
       [id]
     );
 
-    return order;
+    return deletedItem;
   } catch (error) {
     throw error;
   }

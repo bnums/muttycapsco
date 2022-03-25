@@ -8,7 +8,7 @@ const addCurrentItemsToOrder = async (orders) => {
     });
 
     const { rows: products } = await client.query(`
-      SELECT products.id AS "productId", products.name, orderDetails.quantity, orderDetails."unitPrice", orderDetails."orderId" FROM products 
+      SELECT products.id AS "productId", products.name, orderDetails.id AS "orderDetailId", orderDetails.quantity, orderDetails."unitPrice", orderDetails."orderId" FROM products 
       JOIN orderDetails ON products.id = orderDetails."productId"
       WHERE orderDetails."orderId" IN (${orderIdArray});
       `);
@@ -128,7 +128,7 @@ async function updateOrder({ id, ...fields }) {
   }
 }
 
-// removes an order from the database table admin use only
+// removes an order from the database table admin use
 async function deleteOrder(id) {
   try {
     const {

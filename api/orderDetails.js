@@ -2,106 +2,39 @@ const express = require("express");
 const orderDetailsRouter = express.Router();
 const { requireUser } = require("./utils");
 
-const {
-  addProductToOrder,
-  getProductByOrderId,
-  // getOrderByDate,
-  updateQuantity,
-  deleteItem,
-} = require("../db");
+const { updateQuantity, deleteItem } = require("../db");
 
+//PATCH /orderDetails/:orderDetailId
+// updates the quantity amount of a product on an order
 orderDetailsRouter.patch(
-  "/:orderDetailsId",
+  "/:orderDetailId",
   requireUser,
   async (req, res, next) => {
-    const { orderDetailsId: id } = req.params;
-    const { quantity, unitPrice, createdAt } = req.body;
-    const updateFields = { id };
-
-    if (quantity) {
-      updateFields.quantity = quantity;
-    }
-    if (unitPrice) {
-      updateFields.unitPrice = unitPrice;
-    }
-    if (createdAt) {
-      updateFields.createdAt = createdAt;
-    }
-
     try {
-      const order_detail = await getProductByOrderId(id);
-      if (!order_detail)
-        throw {
-          name: `OrderDetailsIdError`,
-          message: `id provided does not match with any existing user account`,
-        };
-      const order = await getProductByOrderId(order_detail.orderId);
-      if (req.user.id === order.userId) {
-        const newOrderDetail = await updateOrderDetail(updateFields);
-        res.send(newOrderDetail);
-      } else {
-        next({
-          name: `AuthorizationError`,
-          message: `User must be logged in to update`,
-        });
-      }
+      const { orderDetailId } = req.params;
+      const { quantity } = req.body;
+      const updatedItem = await updateQuantity(orderDetailId, quantity);
+      res.send(updatedItem);
     } catch (error) {
       next(error);
     }
   }
 );
 
-orderDetailsRouter.patch(
-  "/:orderDetailsId",
-  requireUser,
-  async (req, res, next) => {
-    const { orderDetailId } = req.params;
-    const { quantity, unitPrice, createdAt } = req.body;
-
-    try {
-      const orderDetail = await getProductByOrderId(orderDetailId);
-      if (orderDetail.userId === req.user.id) {
-        const updatedOrderDetail = await updateOrderDetail({
-          id: orderId,
-          quantity,
-          unitPrice,
-          createdAt,
-        });
-        res.send(updatedOrderDetail);
-        return;
-      } else {
-        next({
-          name: "updateOrderDetailError",
-          message: "You must be logged in",
-        });
-      }
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
+//DELETE removes an item entirely from an order, returns id for filter
 orderDetailsRouter.delete(
-  "/:orderDetailsId",
+  "/:orderDetailId",
   requireUser,
   async (req, res, next) => {
-    const { orderDetailsId } = req.params;
-
     try {
-      const { orderId } = await addProductToOrder(orderDetailsId);
-      const order = await addProductToOrder(orderId);
-      if (req.user.id !== order.userId) {
-        next({
-          name: "InvalidUser",
-          message: "You are not logged in",
-        });
-        return;
-      }
-      const deletedOrders = await deleteItem(orderDetailsId);
-
-      res.send(deletedOrders);
-    } catch ({ name, message }) {
-      next({ name, message });
+      const { orderDetailId } = req.params;
+      const deletedItemId = await deleteItem(orderDetailId);
+      res.send(deletedItemId);
+    } catch (error) {
+      next({
+        name: "DeleteError",
+        message: "Unable to delete this item from your cart",
+      });
     }
   }
 );
