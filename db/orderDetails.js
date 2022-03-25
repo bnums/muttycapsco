@@ -13,6 +13,20 @@ const addProductToOrder = async({orderId, productId, quantity, unitPrice, create
     }
 }
 
+const getProductByOrderId = async({orderId}) => {
+    try{
+        const {rows: [orderDetail]} = await client.query(`
+        SELECT * 
+        FROM orderDetails 
+        WHERE "orderId" = $1
+        `,[orderId])
+
+        return orderDetail;
+    }catch(error){
+        throw error;
+    }
+}
+
 const getOrderByDate = async({createdAt}) => {
     try{
         const {rows }= await client.query(`
@@ -26,7 +40,6 @@ const getOrderByDate = async({createdAt}) => {
     }
 }
 
-//update quantity, delete item
 const updateQuantity = async({quantity, ...fields}) => {
     try {
             const setString = Object.keys(fields)
@@ -67,6 +80,7 @@ const deleteItem = async({id}) => {
 
 module.exports ={ 
     addProductToOrder,
+    getProductByOrderId,
     getOrderByDate,
     updateQuantity,
     deleteItem
