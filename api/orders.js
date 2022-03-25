@@ -8,6 +8,7 @@ const {
   updateOrder,
   deleteOrder,
   getOrderbyId,
+  addProductToOrder,
 } = require("../db");
 
 // maybe think about making this get route available to ony admins
@@ -20,6 +21,7 @@ ordersRouter.get("/", async (req, res, next) => {
   }
 });
 
+//POST creates a new order for a logged in user
 ordersRouter.post("/", requireUser, async (req, res, next) => {
   const { orderTotal, createdAt } = req.body;
   try {
@@ -35,6 +37,7 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
   }
 });
 
+//PATCH updates an order for a logged in user who is the owner of the order
 ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
   const { orderId } = req.params;
   const { orderTotal, createdAt } = req.body;
@@ -44,8 +47,8 @@ ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
     if (order.userId === req.user.id) {
       const updatedOrder = await updateOrder({
         id: orderId,
-        orderTotal,
-        createdAt,
+        orderTotal: orderTotal,
+        createdAt: createdAt,
       });
       res.send(updatedOrder);
       return;
@@ -60,6 +63,7 @@ ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
   }
 });
 
+// deletes an order from the db currently requiring a user logged in
 ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
   try {
     const { orderId } = req.params;
@@ -74,6 +78,7 @@ ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
   }
 });
 
+// POST adds a product to an order /order/:orderId/product
 ordersRouter.post("/:orderId/products", requireUser, async (req, res, next) => {
   const { orderId } = req.params;
   const productOrder = { ...req.body, orderId };
