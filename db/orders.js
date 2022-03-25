@@ -1,13 +1,14 @@
 const client = require("./client");
 
-const addItemsToOrder = async (orders) => {
+//adds current products that is in the cart
+const addCurrentItemsToOrder = async (orders) => {
   try {
     const orderIdArray = orders.map((order) => {
       return order.id;
     });
 
     const { rows: products } = await client.query(`
-      SELECT products.id, products.name, orderDetails.quantity, orderDetails."unitPrice", orderDetails."orderId" FROM products 
+      SELECT products.id AS "productId", products.name, orderDetails.quantity, orderDetails."unitPrice", orderDetails."orderId" FROM products 
       JOIN orderDetails ON products.id = orderDetails."productId"
       WHERE orderDetails."orderId" IN (${orderIdArray});
       `);
@@ -22,6 +23,7 @@ const addItemsToOrder = async (orders) => {
   }
 };
 
+//createOrders creates an order
 async function createOrders({ userId, orderTotal, createdAt, isActive }) {
   try {
     const {
@@ -41,7 +43,8 @@ async function createOrders({ userId, orderTotal, createdAt, isActive }) {
 }
 
 // getsAllOrders
-// selects and returns all order on db, including their items
+// selects and returns all order on db,  not including their items
+// maybe for an admin to look over all previous orders
 const getAllOrders = async () => {
   try {
     const { rows: orders } = await client.query(
@@ -51,15 +54,18 @@ const getAllOrders = async () => {
         `,
       []
     );
-    return await addItemsToOrder(orders);
+    return orders;
   } catch (error) {
     throw error;
   }
 };
 
-async function getOrderbyId(id) {
+//getOrderByIdgets a single order by id
+async function getOrderById(id) {
   try {
-    const { rows: order } = await client.query(
+    const {
+      rows: [order],
+    } = await client.query(
       `
             SELECT * 
             FROM orders
@@ -68,7 +74,7 @@ async function getOrderbyId(id) {
       [id]
     );
 
-    return order;
+    return await addCurrentItemsToOrder(order);
   } catch (error) {
     throw error;
   }
@@ -78,7 +84,7 @@ async function getOrderbyId(id) {
 // gets all orders made by a user, includes items on the order itself
 async function getOrdersByUserId(userId) {
   try {
-    const { rows: order } = await client.query(
+    const { rows: orders } = await client.query(
       `
             SELECT * 
             FROM orders
@@ -87,7 +93,7 @@ async function getOrdersByUserId(userId) {
       [userId]
     );
 
-    return order;
+    return await addCurrentItemsToOrder(orders);
   } catch (error) {
     throw error;
   }
@@ -122,6 +128,7 @@ async function updateOrder({ id, ...fields }) {
   }
 }
 
+// removes an order from the database table admin use only
 async function deleteOrder(id) {
   try {
     const {
@@ -144,7 +151,7 @@ async function deleteOrder(id) {
 module.exports = {
   createOrders,
   getAllOrders,
-  getOrderbyId,
+  getOrderById,
   getOrdersByUserId,
   updateOrder,
   deleteOrder,

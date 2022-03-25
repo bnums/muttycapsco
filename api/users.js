@@ -13,6 +13,7 @@ const {
 } = require("../db");
 const { requireUser } = require("./utils");
 
+//POST registers a user
 usersRouter.post("/register", async (req, res, next) => {
   const { username, password, email, isAdmin } = req.body;
   try {
@@ -44,6 +45,7 @@ usersRouter.post("/register", async (req, res, next) => {
   }
 });
 
+//POST logs a user in
 usersRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -69,6 +71,7 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 });
 
+//GET a users info
 usersRouter.get("/me", requireUser, async (req, res, next) => {
   try {
     res.send(req.user);
@@ -77,6 +80,7 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   }
 });
 
+//GET all registered users
 usersRouter.get("/", async (req, res, next) => {
   try {
     const users = await getAllUsers();
@@ -87,6 +91,7 @@ usersRouter.get("/", async (req, res, next) => {
   }
 });
 
+//GET gets a user's orders
 usersRouter.get("/:userId/orders", async (req, res, next) => {
   const { userId } = req.params;
   try {

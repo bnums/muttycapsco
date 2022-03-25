@@ -11,7 +11,8 @@ const {
   addProductToOrder,
 } = require("../db");
 
-// maybe think about making this get route available to ony admins
+//GET gets all orders
+//TODO maybe think about making this get route available to only admins
 ordersRouter.get("/", async (req, res, next) => {
   try {
     const orders = await getAllOrders();
@@ -78,17 +79,16 @@ ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
   }
 });
 
-// POST adds a product to an order /order/:orderId/product
+// POST adds a product to an order /orders/:orderId/product
 ordersRouter.post("/:orderId/products", requireUser, async (req, res, next) => {
   const { orderId } = req.params;
-  const productOrder = { ...req.body, orderId };
+  const productOrder = { ...req.body, orderId: orderId };
 
   try {
     const orderProductPair = await addProductToOrder(productOrder);
-
     res.send(orderProductPair);
-  } catch ({ name, message }) {
-    next({ name, message });
+  } catch (error) {
+    next(error);
   }
 });
 
