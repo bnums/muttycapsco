@@ -21,7 +21,8 @@ html {
   touch-action: manipulation;
 }
 
-a {
+a,
+a:hover {
   color: unset;
   text-decoration: none;
 }

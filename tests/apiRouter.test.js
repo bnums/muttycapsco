@@ -5,7 +5,6 @@ const { client } = require("../db");
 
 describe("apiTests", () => {
   let token, registeredUser;
-  // let orderToCreateAndUpdate;
   // close db connection and supertest server tcp connection
   afterAll(async () => {
     await client.end();
@@ -19,13 +18,10 @@ describe("apiTests", () => {
   describe("Users", () => {
     describe("POST /users/login", () => {
       it("Logs a user in, requires both a username and password", async () => {
-        const { data, status } = await axios.post(
-          `${API_URL}/api/users/login`,
-          {
-            username: "numnum",
-            password: "fullstack2",
-          }
-        );
+        const { data } = await axios.post(`${API_URL}/api/users/login`, {
+          username: "numnum",
+          password: "fullstack2",
+        });
         expect(data.user.username).toBe("numnum");
         expect(data.message).toBe("you're logged in!");
         expect(data.token).toBeTruthy();
@@ -43,9 +39,7 @@ describe("apiTests", () => {
     };
     describe("GET /reviews", () => {
       it("Grabs a list of all the reviews in our database", async () => {
-        const { data: allReviewsFromAPI, status } = await axios.get(
-          `${API_URL}/api/reviews`
-        );
+        const { status } = await axios.get(`${API_URL}/api/reviews`);
         expect(status).toBe(200);
       });
     });
