@@ -14,7 +14,6 @@ async function buildTables() {
     client.connect();
 
     // drop tables in correct order
-    console.log("Dropping all tables...");
     await client.query(`
     DROP TABLE IF EXISTS reviews ;
     DROP TABLE IF EXISTS orderDetails;
@@ -23,10 +22,6 @@ async function buildTables() {
     DROP TABLE IF EXISTS users;
     
     `);
-    console.log("Finished dropping tables...");
-    // DROP TABLE IF EXISTS users;
-    // build tables in correct order
-    console.log("Starting to build tables...");
     await client.query(`
     
     CREATE TABLE users(
@@ -49,15 +44,17 @@ async function buildTables() {
 
     CREATE TABLE orders(
       id SERIAL PRIMARY KEY,
-      "userId" INTEGER REFERENCES users(id) NOT NULL,
+      "userId" INTEGER REFERENCES users(id),
       "orderTotal" DECIMAL(10, 2) NOT NULL,
-      "createdAt" TIMESTAMP
+      "createdAt" TIMESTAMP,
+      "isActive" BOOLEAN DEFAULT false
     );
 
     CREATE TABLE orderDetails(
       id SERIAL PRIMARY KEY,
       "orderId" INTEGER REFERENCES orders(id) NOT NULL,
       "productId" INTEGER REFERENCES products(id) NOT NULL,
+      UNIQUE("orderId","productId"),
       quantity INTEGER, 
       "unitPrice" DECIMAL(10, 2),
       "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -74,53 +71,88 @@ async function buildTables() {
       comment TEXT NOT NULL
     );
     `);
-
-    console.log("Finished building tables...");
   } catch (error) {
     throw error;
   }
 }
 
 async function populateInitialUsers() {
-  console.log("Starting to populate users...");
   try {
     const usersToPopulate = [
       {
         username: "bigrubes",
         password: "fullstack1",
         email: "bigrubes@gmail.com",
-        isAdmin: false,
+        isAdmin: true,
       },
       {
         username: "numnum",
         password: "fullstack2",
         email: "numnum@gmail.com",
-        isAdmin: false,
+        isAdmin: true,
       },
       {
         username: "kaiser",
         password: "fullstack3",
         email: "kaiser@gmail.com",
-        isAdmin: false,
+        isAdmin: true,
       },
       {
         username: "daisyduck",
         password: "fullstack4",
         email: "daisyduck@gmail.com",
+        isAdmin: true,
+      },
+      {
+        username: "sugi",
+        password: "controllers",
+        email: "remotecontrollers1@gmail.com",
         isAdmin: false,
       },
       {
-        username: "remote",
+        username: "brad",
         password: "controllers",
-        email: "remotecontrollers@gmail.com",
-        isAdmin: true,
+        email: "remotecontrollers2@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "stephen",
+        password: "controllers",
+        email: "remotecontrollers3@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "lily",
+        password: "controllers",
+        email: "remotecontrollers4@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "daniel",
+        password: "controllers",
+        email: "remotecontrollers5@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "monica",
+        password: "controllers",
+        email: "remotecontrollers6@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "carly",
+        password: "controllers",
+        email: "remotecontrollers7@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "kristen",
+        password: "controllers",
+        email: "remotecontrollers8@gmail.com",
+        isAdmin: false,
       },
     ];
-    const users = await Promise.all(usersToPopulate.map(createUser));
-
-    console.log("Users populated:");
-    // console.log(users);
-    console.log("Finished populating users!");
+    await Promise.all(usersToPopulate.map(createUser));
   } catch (error) {
     console.error("Error populating users!");
     throw error;
@@ -129,8 +161,6 @@ async function populateInitialUsers() {
 
 async function populateInitialProducts() {
   try {
-    console.log("Starting to create products...");
-
     const productsToCreate = [
       {
         name: " Winter Warm Knitted Hat ",
@@ -153,7 +183,177 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/51F61OnYBwL._AC_SX466_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap",
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap1",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap2",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap3",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap4",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap5",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap6",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap7",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap8",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap9",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap10",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap11",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap12",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap13",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap14",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap15",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap16",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap17k",
+        description:
+          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        price: 10.99,
+        inventoryQTY: 10,
+        category: "Hamster Hats",
+        productImg:
+          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
+      },
+      {
+        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap18",
         description:
           "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
         price: 10.99,
@@ -163,12 +363,7 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
     ];
-    const products = await Promise.all(productsToCreate.map(createProducts));
-
-    console.log("products created:");
-    // console.log(products);
-
-    console.log("Finished creating products!");
+    await Promise.all(productsToCreate.map(createProducts));
   } catch (error) {
     console.error("Error creating products!");
     throw error;
@@ -177,32 +372,34 @@ async function populateInitialProducts() {
 
 async function populateInitialOrders() {
   try {
-    console.log("Starting to create orders...");
-
     const ordersToCreate = [
       {
         userId: 2,
         orderTotal: 16.99,
         createdAt: "2009-04-30 09:44:35",
+        isActive: true,
       },
       {
         userId: 4,
         orderTotal: 48.87,
         createdAt: "2020-04-30 06:34:35",
+        isActive: false,
       },
       {
         userId: 1,
         orderTotal: 32.97,
         createdAt: "2021-12-01 03:14:55",
+        isActive: true,
+      },
+      {
+        userId: null,
+        orderTotal: 32.97,
+        createdAt: "2022-03-03 07:44:55",
+        isActive: true,
       },
     ];
 
-    const orders = await Promise.all(ordersToCreate.map(createOrders));
-
-    console.log("Orders created:");
-    // console.log(orders);
-
-    console.log("Finished creating orders!");
+    await Promise.all(ordersToCreate.map(createOrders));
   } catch (error) {
     console.error("Error creating orders");
     throw error;
@@ -211,8 +408,6 @@ async function populateInitialOrders() {
 
 async function populateInitialOrderDetails() {
   try {
-    console.log("Starting to create orderDeatails...");
-
     const orderDetailsToCreate = [
       {
         orderId: 1,
@@ -244,14 +439,7 @@ async function populateInitialOrderDetails() {
       },
     ];
 
-    const orderDetails = await Promise.all(
-      orderDetailsToCreate.map(addProductToOrder)
-    );
-
-    console.log("OrderDetails created:");
-    // console.log(orderDetails);
-
-    console.log("Finished creating orderDetails!");
+    await Promise.all(orderDetailsToCreate.map(addProductToOrder));
   } catch (error) {
     console.error("Error creating orderDetails");
     throw error;
@@ -259,7 +447,6 @@ async function populateInitialOrderDetails() {
 }
 
 async function populateInitialReviews() {
-  console.log("Starting to create reviews...");
   try {
     const reviewsToCreate = [
       {
@@ -297,23 +484,12 @@ async function populateInitialReviews() {
       },
     ];
 
-    const reviews = await Promise.all(reviewsToCreate.map(createReview));
-    console.log("reviews created: ");
-    // console.log(reviews);
-
-    console.log("Finished creating reviews");
+    await Promise.all(reviewsToCreate.map(createReview));
   } catch (error) {
     console.error("Error creating reviews");
     throw error;
   }
 }
-
-// async function populateInitialData() {
-//   try {
-//   } catch (error) {
-//     throw error;
-//   }
-// }
 
 buildTables()
   .then(populateInitialUsers)
