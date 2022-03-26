@@ -42,7 +42,7 @@ async function buildTables() {
       name VARCHAR(255) UNIQUE NOT NULL,
       description TEXT NOT NULL,
       price DECIMAL (10, 2),
-      "inventoryQTY" INTEGER,
+      "inventoryQTY" DECIMAL (10, 2),
       category VARCHAR(255) NOT NULL,
       "productImg" VARCHAR(255) not null
     );

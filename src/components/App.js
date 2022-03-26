@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { Home, Header, Footer } from "./";
 import "../style/App.css";
 import Temp from "./Temp";
-import Product from "./Product";
+import { Products, Product } from ".";
 
 const App = () => {
   return (
@@ -12,11 +12,10 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/testpage" element={<Temp />} />
-        <Route
-          path="/product"
-          element={<Product name={"Testing"} price={100} />}
-        />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:productId" element={<Product />} />
       </Routes>
+
       <Footer />
     </div>
   );

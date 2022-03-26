@@ -1,7 +1,7 @@
 import React from "react";
 import "../style/ProductReviews.css";
 
-const ProductReviews = (props) => {
+const ProductReviews = ({ reviews }) => {
   const mockData = [
     {
       title: "Amazing",
@@ -13,25 +13,26 @@ const ProductReviews = (props) => {
     },
   ];
   return (
-    <div className="product-reviews-container">
+    <>
       <h3>Reviews</h3>
       <div className="reviews-wrapper">
-        {mockData?.map((item) => (
-          <div className="review">
-            <div>
-              <strong>{item.title}</strong>
-            </div>
-            <div>{item.rating}</div>
-            <div>{item.review}</div>
-            <div>{item.author}</div>
-            <div>{item.color}</div>
-          </div>
-        ))}
+        {reviews?.length
+          ? reviews?.map((item) => (
+              <div className="review" key={item?.id}>
+                <div>
+                  <strong>title: {item.title}</strong>
+                </div>
+                <div> rating: {item.rating}</div>
+                <div> comment: {item.comment}</div>
+                <div> author: {item.creatorId}</div>
+              </div>
+            ))
+          : ""}
       </div>
       <div className="more-reviews-wrapper">
         <div> Show More Reviews</div>
       </div>
-    </div>
+    </>
   );
 };
 

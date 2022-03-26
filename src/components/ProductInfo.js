@@ -1,11 +1,14 @@
 import React from "react";
 import "../style/ProductInfo.css";
-const ProductInfo = (props) => {
+const ProductInfo = ({ description, name, price, ...props }) => {
   return (
     <div className="product-info-container">
-      <h3 className="product__card-title">{props.name || "Mustard Beanie"}</h3>
-      <p className="product__card-options">3 Colors</p>
-      <p className="product__card-price">${props.price || 10}</p>
+      <h3 className="product-name">{name}</h3>
+      {/* <p className="product__card-options">3 Colors</p> */}
+      <p className="product-price">${price}</p>
+      <p className="product-description">{description}</p>
+      <div className="product-btn active-btn"> Add to cart</div>
+      <div className="product-btn secondary-btn"> Favorite </div>
     </div>
   );
 };
