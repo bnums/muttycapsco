@@ -29,7 +29,11 @@ orderDetailsRouter.delete(
     try {
       const { orderDetailId } = req.params;
       const deletedItemId = await deleteItem(orderDetailId);
-      res.send(deletedItemId);
+      res.send({
+        success: true,
+        message: "Item successfully removed from your cart",
+        deletedItemId,
+      });
     } catch (error) {
       next({
         name: "DeleteError",

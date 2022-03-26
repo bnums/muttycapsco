@@ -8,7 +8,7 @@ const addCurrentItemsToOrder = async (orders) => {
     });
 
     const { rows: products } = await client.query(`
-      SELECT products.id AS "productId", products.name, orderDetails.id AS "orderDetailId", orderDetails.quantity, orderDetails."unitPrice", orderDetails."orderId" FROM products 
+      SELECT products.id AS "productId", orderDetails.id AS "orderDetailId", orderDetails.quantity, products.name, orderDetails."unitPrice", orderDetails."orderId" FROM products 
       JOIN orderDetails ON products.id = orderDetails."productId"
       WHERE orderDetails."orderId" IN (${orderIdArray});
       `);
@@ -60,7 +60,7 @@ const getAllOrders = async () => {
   }
 };
 
-//getOrderByIdgets a single order by id
+//getOrderById gets a single order by id, does not include products
 async function getOrderById(id) {
   try {
     const {
@@ -74,7 +74,7 @@ async function getOrderById(id) {
       [id]
     );
 
-    return await addCurrentItemsToOrder(order);
+    return order;
   } catch (error) {
     throw error;
   }
@@ -99,27 +99,17 @@ async function getOrdersByUserId(userId) {
   }
 }
 
-async function updateOrder({ id, ...fields }) {
-  const setString = Object.keys(fields)
-    .map((key, index) => `"${key}" = $${index + 1}`)
-    .join(", ");
-
-  if (setString.length === 0) {
-    return;
-  }
-  const valuesArray = [...Object.values(fields), id];
-
+async function updateOrder(id, orderTotal) {
   try {
     const {
       rows: [updatedOrder],
     } = await client.query(
       `
           UPDATE orders
-          SET ${setString}
-          WHERE id = $${valuesArray.length}
+          SET "orderTotal" = ${orderTotal}
+          WHERE id = ${id}
           RETURNING *;
-        `,
-      valuesArray
+        `
     );
 
     return updatedOrder;
@@ -131,18 +121,14 @@ async function updateOrder({ id, ...fields }) {
 // removes an order from the database table admin use
 async function deleteOrder(id) {
   try {
-    const {
-      rows: [order],
-    } = await client.query(
+    await client.query(
       `
             DELETE FROM orders
-            WHERE id = $1
-            RETURNING *;
-        `,
-      [id]
+            WHERE id = ${id}
+        `
     );
 
-    return order;
+    return;
   } catch (error) {
     throw error;
   }

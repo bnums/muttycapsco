@@ -4,6 +4,7 @@ const { requireUser } = require("./utils");
 
 const {
   getAllOrders,
+  getOrderById,
   createOrders,
   updateOrder,
   deleteOrder,
@@ -38,25 +39,22 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
   }
 });
 
-//PATCH updates an order for a logged in user who is the owner of the order
+//PATCH orders/:orderId
+//updates an order for a logged in user who is the owner of the order
 ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
   const { orderId } = req.params;
-  const { orderTotal, createdAt } = req.body;
+  const { orderTotal } = req.body;
 
   try {
-    const order = await getOrderbyId(orderId);
+    const order = await getOrderById(orderId);
     if (order.userId === req.user.id) {
-      const updatedOrder = await updateOrder({
-        id: orderId,
-        orderTotal: orderTotal,
-        createdAt: createdAt,
-      });
+      const updatedOrder = await updateOrder(orderId, orderTotal);
       res.send(updatedOrder);
       return;
     } else {
       next({
-        name: "updateOrderError",
-        message: "You must be logged in",
+        name: "UpdateOrderError",
+        message: "You are not the owner of this order",
       });
     }
   } catch (error) {
@@ -64,22 +62,32 @@ ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
   }
 });
 
+// DELETE /orders/:orderId
 // deletes an order from the db currently requiring a user logged in
 ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
   try {
     const { orderId } = req.params;
-    const order = await getOrderbyId(orderId);
+    const order = await getOrderById(orderId);
     if (order.userId === req.user.id) {
-      const updatedOrder = await deleteOrder(orderId);
-      res.send(updatedOrder);
-      return;
+      await deleteOrder(orderId);
+      res.send({
+        success: true,
+        message: "Order successfully deleted",
+        orderId: orderId,
+      });
+    } else {
+      next({
+        name: "DeleteOrderError",
+        message: "You are not the owner of this order",
+      });
     }
   } catch ({ name, message }) {
     next({ name, message });
   }
 });
 
-// POST adds a product to an order /orders/:orderId/product
+// POST /orders/:orderId/products
+// adds a product to an order /orders/:orderId/product
 ordersRouter.post("/:orderId/products", requireUser, async (req, res, next) => {
   const { orderId } = req.params;
   const productOrder = { ...req.body, orderId: orderId };

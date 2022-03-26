@@ -24,7 +24,7 @@ const addProductToOrder = async ({
   }
 };
 
-const getProductByOrderId = async ({ orderId }) => {
+const getDetailsByOrderDetailId = async (orderDetailId) => {
   try {
     const {
       rows: [orderDetail],
@@ -32,9 +32,9 @@ const getProductByOrderId = async ({ orderId }) => {
       `
         SELECT * 
         FROM orderDetails 
-        WHERE "orderId" = $1
+        WHERE id = $1
         `,
-      [orderId]
+      [orderDetailId]
     );
 
     return orderDetail;
@@ -98,7 +98,7 @@ const deleteItem = async (id) => {
 
 module.exports = {
   addProductToOrder,
-  getProductByOrderId,
+  getDetailsByOrderDetailId,
   //   getOrderByDate,
   updateQuantity,
   deleteItem,
