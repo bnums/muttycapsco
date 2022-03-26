@@ -9,12 +9,13 @@ const {
   getUserByUsername,
   getUser,
   getAllUsers,
-  getOrderByUser,
+  getOrdersByUserId,
 } = require("../db");
 const { requireUser } = require("./utils");
 
+//POST registers a user
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, isAdmin } = req.body;
+  const { username, password, email, isAdmin } = req.body;
   try {
     if (password.length < 8) {
       next({
@@ -32,10 +33,11 @@ usersRouter.post("/register", async (req, res, next) => {
       return;
     }
     const user = await createUser({ username, password, email, isAdmin });
+    const token = jwt.sign(user, JWT_SECRET);
 
     res.send({
       user,
-      message: "thank you for signing up",
+      message: "Thank you for signing up",
       token,
     });
   } catch (error) {
@@ -43,6 +45,7 @@ usersRouter.post("/register", async (req, res, next) => {
   }
 });
 
+//POST logs a user in
 usersRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -68,6 +71,7 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 });
 
+//GET a users info
 usersRouter.get("/me", requireUser, async (req, res, next) => {
   try {
     res.send(req.user);
@@ -76,6 +80,7 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   }
 });
 
+//GET all registered users
 usersRouter.get("/", async (req, res, next) => {
   try {
     const users = await getAllUsers();
@@ -86,11 +91,11 @@ usersRouter.get("/", async (req, res, next) => {
   }
 });
 
+//GET gets a user's orders
 usersRouter.get("/:userId/orders", async (req, res, next) => {
   const { userId } = req.params;
   try {
-    const orders = await getOrderByUser(req.user.id);
-    console.log("this is the order", orders);
+    const orders = await getOrdersByUserId(userId);
     res.send(orders);
   } catch ({ name, message }) {
     next({ name, message });
