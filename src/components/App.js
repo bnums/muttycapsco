@@ -3,9 +3,11 @@ import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import { Home, Header, Footer } from "./";
 import "../style/App.css";
 import Temp from "./Temp";
-import Product from "./Product";
+// import Product from "./Product";
 import AccountForm from "./AccountForm";
 // import { callApi } from "../axios-services";
+import { Products, Product } from ".";
+
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -53,11 +55,10 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/account/:method" element={ <AccountForm user={user} setUser={setUser} setToken={setToken} /> } />
         <Route path="/testpage" element={<Temp />} />
-        <Route
-          path="/product"
-          element={<Product name={"Testing"} price={100} />}
-        />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:productId" element={<Product />} />
       </Routes>
+
       <Footer />
     </div>
   );
