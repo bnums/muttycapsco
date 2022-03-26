@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import { Home, Header, Footer } from "./";
 import "../style/App.css";
-import Temp from "./Temp";
+// import Temp from "./Temp";
 // import Product from "./Product";
 import AccountForm from "./AccountForm";
 // import { callApi } from "../axios-services";
@@ -45,16 +45,16 @@ const App = () => {
   return (
     <div className="app_container">
       <Header />
-      {!token && <Link to="/account/login">Login</Link>}
+      {/* {!token && <Link to="/account/login">Login</Link>}
       {token && <button onClick={() => {
       setToken('');
       localStorage.removeItem('token');
       navigate('/');
-    }}>Log Out</button>}
+    }}>Log Out</button>} */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/account/:method" element={ <AccountForm user={user} setUser={setUser} setToken={setToken} /> } />
-        <Route path="/testpage" element={<Temp />} />
+        {/* <Route path="/testpage" element={<Temp />} /> */}
         <Route path="/products" element={<Products />} />
         <Route path="/products/:productId" element={<Product />} />
       </Routes>

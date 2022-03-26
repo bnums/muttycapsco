@@ -7,24 +7,25 @@ const AccountForm = ({ setToken, setUser }) => {
   const params = useParams();
   let { method } = params;
   const accountTitle = method === "login" ? "Log in" : "Register";
+//   const emailTitle = method === 
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-//   const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   const handleSubmit = async (event) => {
     try{
     event.preventDefault();
     const user = await callApi({
-      url: `/users/me`,
+      url: `/users/${method}`,
       method: "POST",
-      body: { username, password, email},
+      body: { username, password, email },
     });
     const token = user && user.token;
     console.log("this is the token", token);
-    // setErrors(user.message)
-    // console.log(user.message)
+    setErrors(user.message)
+    console.log(user.message)
     if (token) {
       const username = await callApi({
         url: `/users/me`,
@@ -50,7 +51,7 @@ const AccountForm = ({ setToken, setUser }) => {
   return (
     <>
       <div>
-        {/* {errors &&<div>{errors}</div>} */}
+        {errors &&<div>{errors}</div>}
         <h1 className = "Login-Register-title">{accountTitle}</h1>
         <form onSubmit={handleSubmit}>
           <input className = "Username-box"
