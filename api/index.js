@@ -2,6 +2,8 @@ const apiRouter = require("express").Router();
 const usersRouter = require("./users");
 const reviewsRouter = require("./reviews");
 const ordersRouter = require("./orders");
+const orderDetailsRouter = require("./orderDetails");
+const productRouter = require("./products");
 const { getUserById } = require("../db/users");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
@@ -40,12 +42,10 @@ apiRouter.use(async (req, res, next) => {
 
 // place your routers here
 apiRouter.use("/users", usersRouter);
-apiRouter.use("/reviews", reviewsRouter);
-apiRouter.use("/orders", ordersRouter);
-//apiRouter.use("/products", productRouter);
-
-const productRouter = require("./products");
 apiRouter.use("/products", productRouter);
+apiRouter.use("/orders", ordersRouter);
+apiRouter.use("/orderDetails", orderDetailsRouter);
+apiRouter.use("/reviews", reviewsRouter);
 
 //custom error handlers
 apiRouter.get("*", (req, res, next) => {
