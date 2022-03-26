@@ -33,4 +33,3 @@ export const callApi = async ({
     }
   }
 };
->>>>>>> a834d98c913773ebd0ee7da58aaac9953defcf98
