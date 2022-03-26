@@ -14,7 +14,7 @@ const {
 const { requireUser } = require("./utils");
 
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, isAdmin } = req.body;
+  const { username, password, email, isAdmin } = req.body;
   try {
     if (password.length < 8) {
       next({
