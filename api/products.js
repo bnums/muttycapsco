@@ -4,6 +4,7 @@ const {
   updateProduct,
   removeProduct,
   getAllProducts,
+  getProductByCategory,
 } = require("../db");
 const { requireUser } = require("./utils");
 const productRouter = require("express").Router();
@@ -24,6 +25,20 @@ productRouter.get("/:productId", async (req, res, next) => {
   try {
     const product = await getProductById(productId);
     res.send(product);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+// GET/products/:category
+productRouter.post("/category", async (req, res, next) => {
+  try {
+    const { category, productId } = req.body;
+    const products = await getProductByCategory();
+    const data = products.filter(
+      (item) => item.category === category && item.id !== productId
+    );
+    res.send(data);
   } catch ({ name, message }) {
     next({ name, message });
   }

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Home, Header, Footer } from "./";
 import "../style/App.css";
-import Product from "./Product";
+import Temp from "./Temp";
+import { Products, Product } from ".";
 
 const App = () => {
   return (
@@ -10,11 +11,11 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/product"
-          element={<Product name={"Testing"} price={100} />}
-        />
+        <Route path="/testpage" element={<Temp />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:productId" element={<Product />} />
       </Routes>
+
       <Footer />
     </div>
   );
