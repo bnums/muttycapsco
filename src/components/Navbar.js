@@ -1,17 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import "../style/Navbar.css";
+import { callApi } from "../axios-services";
 
 const Navbar = () => {
   const [token, setToken] = useState("");
-  // const [user, setUser] = useState({});
+  const [user, setUser] = useState("");
   const navigate = useNavigate();
+
+  const handleUser = async () => {
+    const user = await callApi({
+      url: `/users/me`,
+      method: "GET",
+      token,
+    });
+    setUser(user);
+  };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
     }
   }, []);
+
+  const handleLogOut = () => {
+    setToken("");
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (token) {
+      handleUser();
+    }
+  }, [token]);
 
   return (
     <div className="navbar__container">
@@ -24,25 +46,12 @@ const Navbar = () => {
       <Link to="/shopping-cart">
         <div className="navbar-shopping-cart">Bag Icon</div>
       </Link>
-      {/* <Link to="/">
+      {token && <div>{`Welcome ${user.username}`}</div>}
+      {!token && (<Link to="/account/login"><div className="navbar-login">Login</div>
+      </Link>)}
+      {token && (<Link to="/account/login"onClick={handleLogOut}>
         <div className="navbar-logout">Logout</div>
-      </Link> */}
-      {!token && <Link to="/account/login">Login</Link>}
-      {token && <button onClick={() => {
-      setToken('');
-      localStorage.removeItem('token');
-      navigate('/');
-    }}>Log Out</button>}
-      {/* {token && (
-              <NavDropdown
-                title={`Hi ${user.username}`}
-                id="basic-nav-dropdown"
-              >
-                <NavDropdown.Item id="sign-out" onClick={handleLogOut}>
-                  SIGN OUT
-                </NavDropdown.Item>
-              </NavDropdown>
-            )} */}
+      </Link>)}
     </div>
   );
 };
