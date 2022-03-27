@@ -26,7 +26,6 @@ const Navbar = () => {
   const handleLogOut = () => {
     setToken("");
     localStorage.removeItem("token");
-    navigate("/");
   };
 
   useEffect(() => {
@@ -46,12 +45,12 @@ const Navbar = () => {
       <Link to="/shopping-cart">
         <div className="navbar-shopping-cart">Bag Icon</div>
       </Link>
-      {token && <div>{`Welcome ${user.username}`}</div>}
-      {!token && (<Link to="/account/login"><div className="navbar-login">Login</div>
-      </Link>)}
-      {token && (<Link to="/account/login"onClick={handleLogOut}>
+      {token && <div className="welcome">{`Welcome ${user.username}`}</div>}
+      {!token && <Link to="/account/login"><div className="navbar-login">Login</div>
+      </Link>}
+      {token && <Link to="/account/login"onClick={handleLogOut}>
         <div className="navbar-logout">Logout</div>
-      </Link>)}
+      </Link>}
     </div>
   );
 };

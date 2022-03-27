@@ -43,7 +43,7 @@ const AccountForm = ({ setToken, setUser }) => {
         setPassword("");
         setToken(token);
         setUser(users);
-        navigate("/");
+        navigate("/products");
         localStorage.setItem("token", token);
       }
     }
