@@ -8,7 +8,6 @@ const {
   createOrders,
   updateOrder,
   deleteOrder,
-  getOrderbyId,
   addProductToOrder,
 } = require("../db");
 
@@ -23,7 +22,7 @@ ordersRouter.get("/", async (req, res, next) => {
   }
 });
 
-//POST creates a new order for a logged in user
+//POST /orders creates a new order for a logged in user
 ordersRouter.post("/", requireUser, async (req, res, next) => {
   const { orderTotal, createdAt } = req.body;
   try {

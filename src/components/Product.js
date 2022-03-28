@@ -18,7 +18,6 @@ const Product = (props) => {
 
   const getReviewsByProductId = async () => {
     const data = await callApi({ url: `/reviews/${productId}` });
-    console.log("reviews", data);
     setReviews(data);
   };
 
