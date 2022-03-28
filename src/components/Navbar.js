@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import useUser from "../hooks/useUser";
 import "../style/Navbar.css";
 
-const Navbar = ({ token, user, setUser, setToken }) => {
+const Navbar = () => {
+  const { user, setUser } = useUser();
   const handleLogOut = () => {
-    setUser("");
-    setToken("");
+    setUser({});
     localStorage.clear();
   };
 
   return (
     <div className="navbar__container">
-      {user && user.username ? (
+      {user.token && user.username ? (
         <div className="welcome">{`Welcome ${user.username}`}</div>
       ) : null}
       <Link to="/">
@@ -23,12 +24,12 @@ const Navbar = ({ token, user, setUser, setToken }) => {
       <Link to="/shopping-cart">
         <div className="navbar-shopping-cart">Bag Icon</div>
       </Link>
-      {!token && (
+      {!user.token && (
         <Link to="/account/login">
           <div className="navbar-login">Login</div>
         </Link>
       )}
-      {token && (
+      {user.token && (
         <Link to="/account/login" onClick={handleLogOut}>
           <div className="navbar-logout">Logout</div>
         </Link>

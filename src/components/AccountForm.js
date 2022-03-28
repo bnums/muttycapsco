@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { callApi } from "../axios-services";
+import useUser from "../hooks/useUser";
 import { Form } from "react-bootstrap";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "../style/index.css";
 
-const AccountForm = ({ setToken, setUser }) => {
+const AccountForm = () => {
   const params = useParams();
+  const { setUser } = useUser();
   let { method } = params;
   const loginRegister = method === "login" ? "Log in" : "Register";
   const accountTitle =
@@ -36,11 +38,11 @@ const AccountForm = ({ setToken, setUser }) => {
         if (users) {
           setUsername("");
           setPassword("");
-          setToken(token);
-          setUser(users);
+          setUser({ userId: users.id, username: users.username, token: token });
           navigate("/products");
           localStorage.setItem("token", token);
-          localStorage.setItem("user", users);
+          localStorage.setItem("user", users.username);
+          localStorage.setItem("userId", users.id);
         }
       }
     } catch (error) {

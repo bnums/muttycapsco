@@ -1,43 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Home, Header, Footer } from "./";
+import { Home, Header, Footer, Products, Product, AccountForm } from "./";
 import "../style/App.css";
-import AccountForm from "./AccountForm";
-import { Products, Product } from ".";
+import useUser from "../hooks/useUser";
+import { callApi } from "../axios-services";
 
 const App = () => {
-  const [token, setToken] = useState("");
-  const [user, setUser] = useState({});
+  const { user, setUser, setUserOrder } = useUser();
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-      setUser(localStorage.getItem("user"));
+      setUser({
+        username: localStorage.getItem("user"),
+        userId: localStorage.getItem("userId"),
+        token: localStorage.getItem("token"),
+      });
     }
   }, []);
 
   return (
     <div className="app_container">
-      <Header
-        className="header"
-        token={token}
-        user={user}
-        setToken={setToken}
-        setUser={setUser}
-      />
+      <Header className="header" />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/account/:method"
-          element={
-            <AccountForm user={user} setUser={setUser} setToken={setToken} />
-          }
-        />
+        <Route path="/account/:method" element={<AccountForm />} />
         <Route path="/products" element={<Products />} />
-        <Route
-          path="/products/:productId"
-          element={<Product token={token} />}
-        />
+        <Route path="/products/:productId" element={<Product />} />
       </Routes>
       <Footer className="footer" />
     </div>
