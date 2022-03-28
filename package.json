@@ -28,12 +28,11 @@
     "morgan": "^1.10.0",
     "pg": "^8.7.3",
     "react": "^16.13.1",
-    "react-bootstrap": "^2.2.1",
+    "react-bootstrap": "^2.2.2",
     "react-dom": "^16.13.1",
-    "react-jwt": "^1.1.4",
-    "react-query": "^3.34.18",
-    "react-router-dom": "^0.0.0-experimental-compat.1",
-    "react-scripts": "^3.4.1"
+    "react-router-dom": "^6.2.2",
+    "react-scripts": "^3.4.1",
+    "react-toastify": "^8.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4",
