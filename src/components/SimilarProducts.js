@@ -45,7 +45,7 @@ const SimilarProducts = ({ category, currentProductId }) => {
     <>
       <h3> You Might Also Like</h3>
       <div className="similar-products-container">
-        {similarProducts?.map((item) => (
+        {mockData?.map((item) => (
           <ProductCard {...item} key={item.id} />
         ))}
       </div>

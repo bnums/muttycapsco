@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { callApi } from "../axios-services";
 
-const Product = (props) => {
+const Product = ({ token }) => {
   const { productId } = useParams();
   const [product, setProduct] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -29,7 +29,7 @@ const Product = (props) => {
     <div className="product-container">
       <div className="product-detail-container">
         <ProductImage {...product}></ProductImage>
-        <ProductInfo {...product}></ProductInfo>
+        <ProductInfo {...product} token={token}></ProductInfo>
       </div>
       <div className="similar-products-wrapper">
         <SimilarProducts

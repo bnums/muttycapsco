@@ -12,7 +12,6 @@ const ProductCard = ({ id, productImg, name, price }) => {
         className="product__card"
         onClick={(e) => {
           e.preventDefault();
-          console.log(e);
           navigate(`/products/${id}`);
         }}
       >
