@@ -52,6 +52,8 @@ const Navbar = () => {
         <div className="navbar-shopping-cart">Bag Icon</div>
       </Link>
       {token && <div className="welcome">{`Welcome ${user.username}`}</div>}
+      {!token && <Link to="/account/login"><div className="navbar-login">Login</div>
+      </Link>}
       {token && <Link to="/account/login"onClick={handleLogOut}>
         <div className="navbar-logout">Logout</div>
       </Link>}
