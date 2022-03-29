@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, Link } from "react-router-dom";
+import { Routes, Route, useNavigate, Link, useParams } from "react-router-dom";
 import "../style/Navbar.css";
 import { callApi } from "../axios-services";
 
 const Navbar = () => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState("");
+  const [isAdmin, setIsAdmin] = useState("");
   const navigate = useNavigate();
+
 
   const handleUser = async () => {
     const user = await callApi({
@@ -17,16 +19,16 @@ const Navbar = () => {
     setUser(user);
   };
 
+  const handleLogOut = () => {
+    setToken("");
+    localStorage.removeItem("token");
+  };
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
     }
   }, []);
-
-  const handleLogOut = () => {
-    setToken("");
-    localStorage.removeItem("token");
-  };
 
   useEffect(() => {
     if (token) {
@@ -35,7 +37,11 @@ const Navbar = () => {
   }, [token]);
 
   return (
+    <>
     <div className="navbar__container">
+      {token && user.isAdmin ? <Link to="/admin-page">
+        <div className="navbar-admin">Administrator</div>
+      </Link>: null}
       <Link to="/">
         <div className="navbar-search">Search Icon</div>
       </Link>
@@ -46,12 +52,13 @@ const Navbar = () => {
         <div className="navbar-shopping-cart">Bag Icon</div>
       </Link>
       {token && <div className="welcome">{`Welcome ${user.username}`}</div>}
-      {!token && <Link to="/account/login"><div className="navbar-login">Login</div>
-      </Link>}
       {token && <Link to="/account/login"onClick={handleLogOut}>
         <div className="navbar-logout">Logout</div>
       </Link>}
+      {!token && <Link to="/account/login"><div className="navbar-login">Login</div>
+      </Link>}
     </div>
+    </>
   );
 };
 

@@ -19,6 +19,7 @@
   border: 1px solid hsl(180, 15%, 39%);
   height: 400px;
   cursor: pointer;
+  background: #557272;
 }
 
 .product__card-img {

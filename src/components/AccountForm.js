@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { callApi } from "../axios-services";
-import { Form } from "react-bootstrap";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import "../style/index.css";
 
 const AccountForm = ({ setToken, setUser }) => {
   
   const params = useParams();
-  let { method } = params;
+  const { method } = params;
   const loginRegister = method === "login" ? "Log in" : "Register";
   const accountTitle = method === "login" ? "Lets Explore Together" : "Join the Adventure";
   const navigate = useNavigate();
@@ -43,7 +42,7 @@ const AccountForm = ({ setToken, setUser }) => {
         setPassword("");
         setToken(token);
         setUser(users);
-        navigate("/products");
+        navigate("/");
         localStorage.setItem("token", token);
       }
     }
@@ -58,7 +57,7 @@ const AccountForm = ({ setToken, setUser }) => {
     <Container>
         {errors &&<div>{errors}</div>}
         <Row className="window1 m-auto">
-        <Col lg={5} md={6} sm={12} className="window p-5 m-auto shadow-lg">
+        <Col lg={4} md={6} sm={12} className="window p-5 m-auto shadow-lg">
         <h3 className="text-title text-center">{accountTitle}</h3>
         <Form className = "login-register-form" onSubmit={handleSubmit}>
             <Form.Group className="form-Basic-Username"

@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import { Home, Header, Footer } from "./";
 import "../style/App.css";
 import AccountForm from "./AccountForm";
-import { Products, Product } from ".";
+import { Products, Product, AdminPage } from ".";
 
 
 const App = () => {
@@ -19,6 +19,7 @@ const App = () => {
         <Route path="/account/:method" element={ <AccountForm user={user} setUser={setUser} setToken={setToken} /> } />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:productId" element={<Product />} />
+        <Route path="/admin-page" element={<AdminPage />} />
       </Routes>
       <Footer className="footer"/>
     </div>

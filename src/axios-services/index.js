@@ -35,7 +35,7 @@ export const callApi = async ({
 };
 export async function login(username, password) {
   try {
-    const { data } = await axios.post(`${BASE_URL}/api/users/login`, {
+    const { data } = await axios.post(`${BASE_URL}/users/login`, {
       username,
       password,
     });
@@ -51,7 +51,7 @@ export async function register({
   email,
 }) {
   try {
-    const { data } = await axios.post(`${BASE_URL}/api/users/register`, {
+    const { data } = await axios.post(`${BASE_URL}/users/register`, {
       username,
       password,
       email,
@@ -64,12 +64,30 @@ export async function register({
 
 export async function getUser(token) {
   try {
-    const { data: user } = await axios.get(`${BASE_URL}/api/users/me`, {
+    const { data: user } = await axios.get(`${BASE_URL}/users/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return user;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getAllUsers() {
+  try {
+    const { data } = await axios.get(`${BASE_URL}/users`);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getAllProducts() {
+  try {
+    const { data } = await axios.get(`${BASE_URL}/products`);
+    return data;
   } catch (error) {
     throw error;
   }
