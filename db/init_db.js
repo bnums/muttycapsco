@@ -377,7 +377,7 @@ async function populateInitialOrders() {
         userId: 2,
         orderTotal: 16.99,
         createdAt: "2009-04-30 09:44:35",
-        isActive: true,
+        isActive: false,
       },
       {
         userId: 4,
@@ -389,13 +389,13 @@ async function populateInitialOrders() {
         userId: 1,
         orderTotal: 32.97,
         createdAt: "2021-12-01 03:14:55",
-        isActive: true,
+        isActive: false,
       },
       {
         userId: null,
         orderTotal: 32.97,
         createdAt: "2022-03-03 07:44:55",
-        isActive: true,
+        isActive: false,
       },
     ];
 

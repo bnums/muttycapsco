@@ -15,10 +15,16 @@ const Navbar = () => {
       {user.token && user.username ? (
         <div className="welcome">{`Welcome ${user.username}`}</div>
       ) : null}
-      <Link to="/">
+      <Link to="/products">
         <div className="navbar-search">Search Icon</div>
       </Link>
-      <Link to="/login-register">
+      <Link
+        to={
+          user.token
+            ? `/${user.username}/profile/${user.userId}`
+            : "/account/login"
+        }
+      >
         <div className="navbar-user">User Icon</div>
       </Link>
       <Link to="/shopping-cart">

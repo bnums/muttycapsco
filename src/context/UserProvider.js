@@ -4,10 +4,20 @@ const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({});
-  const [userOrder, setUserOrder] = useState({});
+  const [userOrders, setUserOrders] = useState([]);
+  const [shoppingCart, setShoppingCart] = useState({});
 
   return (
-    <UserContext.Provider value={{ user, setUser, userOrder, setUserOrder }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        userOrders,
+        setUserOrders,
+        shoppingCart,
+        setShoppingCart,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

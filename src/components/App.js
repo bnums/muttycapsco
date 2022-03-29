@@ -1,12 +1,19 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Home, Header, Footer, Products, Product, AccountForm } from "./";
+import {
+  Home,
+  Header,
+  Footer,
+  Products,
+  Product,
+  AccountForm,
+  UserProfile,
+} from "./";
 import "../style/App.css";
 import useUser from "../hooks/useUser";
-import { callApi } from "../axios-services";
 
 const App = () => {
-  const { user, setUser, setUserOrder } = useUser();
+  const { setUser } = useUser();
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -24,6 +31,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/account/:method" element={<AccountForm />} />
+        <Route path="/:username/profile/:userId" element={<UserProfile />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:productId" element={<Product />} />
       </Routes>

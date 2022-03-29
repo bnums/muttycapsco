@@ -93,6 +93,10 @@ async function getOrdersByUserId(userId) {
       [userId]
     );
 
+    if (orders.length === 0) {
+      return;
+    }
+
     return await addCurrentItemsToOrder(orders);
   } catch (error) {
     throw error;

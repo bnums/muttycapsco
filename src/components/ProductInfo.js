@@ -1,24 +1,30 @@
 import React from "react";
+import useUser from "../hooks/useUser";
 import { useParams } from "react-router";
 import { callApi } from "../axios-services";
 import "../style/ProductInfo.css";
-const ProductInfo = ({ description, name, price, token, ...props }) => {
+const ProductInfo = ({ description, name, price, ...props }) => {
   const params = useParams();
+  const { shoppingCart } = useUser();
   const { productId } = params;
+
   const handleAddItem = async () => {
     try {
-      const createdOrder = await callApi({
-        url: "/orders",
-        method: "post",
-        body: {
-          orderTotal: 0,
-          createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
-        },
-        token,
-      });
-      console.log("Order created", createdOrder);
-      const addedItem = callApi({
-        url: `/orders/${createdOrder.id}/products`,
+      // if (!shoppingCart.id) {
+      //   const createdOrder = await callApi({
+      //     url: "/orders",
+      //     method: "post",
+      //     body: {
+      //       orderTotal: 0,
+      //       createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
+      //     },
+      //     token,
+      //   });
+      //   console.log("Order created", shoppingCart.id);
+      // }
+
+      const addedItem = await callApi({
+        url: `/orders/${shoppingCart.id}/products`,
         method: "POST",
         body: {
           productId: productId,
@@ -32,6 +38,7 @@ const ProductInfo = ({ description, name, price, token, ...props }) => {
       console.log("Unable to create order");
     }
   };
+
   return (
     <div className="product-info-container">
       <h3 className="product-name">{name}</h3>
