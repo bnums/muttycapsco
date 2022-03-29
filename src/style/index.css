@@ -33,3 +33,59 @@ body {
   height: 100vh;
   width: 100vw;
 }
+
+.login-register-button{
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top:40px;
+}
+
+.login-register-text{
+  display:flex;
+  justify-content:center;
+  font-family: "Reem Kufi", sans-serif;
+  margin-top:40px;
+}
+
+.text-title{
+  font-family: "Reem Kufi", sans-serif;
+  margin-bottom:50px;
+  font: black;
+}
+
+.email-box, .password-box{
+  margin-top:20px;
+}
+
+.signup-text, .login-text{
+  border-radius: 10%;
+}
+
+.login-register-form{
+  font-family: "Reem Kufi", sans-serif;
+}
+
+.window{
+  border-radius: 7%;
+  background: white;
+}
+
+.register-login-backdrop{
+  
+  background-image: linear-gradient(
+      rgba(196, 196, 196, 0.178),
+      rgba(49, 49, 49, 0.2)
+    ),
+    url("../imgs/homebanner.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 20%;
+  height: 60vh;
+}
+
+.welcome{
+color:white;
+}
+
+
