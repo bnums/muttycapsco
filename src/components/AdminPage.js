@@ -5,7 +5,8 @@ import { callApi, getAllUsers, getAllProducts } from "../axios-services";
 import { ProductImage, ProductInfo, ProductCard } from ".";
 import { Button} from "react-bootstrap";
 
-const AdminPage = () =>{
+const AdminPage = (props) =>{
+  const {user} = props
   const [users, setUsers] = useState([])
   const [products, setProducts] = useState([])
   
@@ -19,6 +20,10 @@ const handleUsers = async () =>{
     }
   }
 
+  useEffect(() => {
+    handleUsers()
+    },[setUsers]);
+
 const handleProducts = async () =>{
   try{
     const products = await getAllProducts()
@@ -28,10 +33,6 @@ const handleProducts = async () =>{
         console.log(error)
       }
     }
-
-    useEffect(() => {
-      handleUsers()
-      },[setUsers]);
       
     useEffect(() => {
       handleProducts()
