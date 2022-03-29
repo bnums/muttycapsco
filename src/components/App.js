@@ -4,6 +4,7 @@ import { Home, Header, Footer } from "./";
 import "../style/App.css";
 import Temp from "./Temp";
 import Cart from "./Cart";
+import Product from "./Product";
 
 const App = () => {
   return (
@@ -13,6 +14,10 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/testpage" element={<Temp />} />
         <Route path="/shoppingcart" element={<Cart />} />
+        <Route
+          path="/product"
+          element={<Product name={"Testing"} price={100} />}
+        />
       </Routes>
       <Footer />
     </div>

@@ -1,0 +1,141 @@
+:root {
+    /* colors    */
+    --headerGreen: #557272;
+    --lighterGreen: #94abac;
+    --descriptionColor: #949494;
+
+
+    /* fonts */
+    --descriptionFont: Urbanist;
+    --headerFont: Reem Kufi;
+}
+
+* {
+    margin: 0;
+    font-family: var(--descriptionFont);
+    color: #333;
+}
+
+.row{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    margin: 100px 0;
+}
+
+.col1{
+    flex-basis:70%;
+    position: relative;
+    margin: 0 25px 0 50px;
+    padding-bottom: 50px;
+    /* border-bottom: 2px solid #C7C7C7; */
+}
+
+.col2 {
+    margin: 0 50px 0 25px;
+    flex-basis: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    height: 72px;
+    top: 215px;
+    left: 117px;
+    font-weight: 400;
+    Font-family: var(--headerFont);
+    Font-size: 48px;
+    Line-height: 72px;
+}
+
+.single-product-line {
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--descriptionColor);
+    border-bottom: 2px solid #C7C7C7;
+
+}
+
+.single-product-line .icons svg{
+    justify-content: space-between;
+}
+
+.single-product-line .icons svg path {
+    color: #232323;
+}
+
+.single-product-line .icons svg path:hover {
+    color: var(--lighterGreen);
+    cursor: pointer;
+}
+
+.product-price {
+    float: right;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 35px;
+    border-width: 1px;
+    background-image: linear-gradient(to right, var(--headerGreen) 50%,  var(--lighterGreen));
+    background-size: 200%;
+    background-position: 0%;
+    transition:0.4s;
+    color: #ffff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background-position: 100% 0%;
+}
+
+button a {
+    text-decoration: none;
+    font-family: var(--descriptionFont);
+    font-weight: 400;
+    font-size: 24px;
+    align-items: center;
+}
+
+.summary {
+    display: flex;
+    flex-direction: column;
+}
+
+.summary .product-description {
+    padding-bottom: 15px;
+}
+
+.summary .pricing-breakdown , .orderTotal{
+    border-bottom: 2px solid #C7C7C7;
+    padding-bottom: 30px;
+    justify-content: space-between;
+}
+
+.summary .orderTotal {
+    padding-top: 30px;
+}
+  
+.summary .pricing-breakdown .subtotal, .estimated-shipping, .estimated-tax {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+
+.summary .pricing-breakdown span {
+    flex-basis: 30%;
+    text-align: right;
+}
+
+
+
+
+
+
