@@ -81,7 +81,7 @@ h3 {
     color: #232323;
 }
 
-.single-product-line .icons svg path:hover {
+.single-product-line .icons svg path:hover , .estimated-shipping svg path:hover {
     color: var(--lighterGreen);
     cursor: pointer;
 }
