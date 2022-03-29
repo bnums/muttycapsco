@@ -26,7 +26,7 @@ reviewsRouter.get("/", async (req, res, next) => {
 });
 
 //GET /reviews/:productId
-reviewsRouter.get("/product/:productId", async (req, res, next) => {
+reviewsRouter.get("/:productId", async (req, res, next) => {
   const productId = req.params.productId;
   try {
     const productReviews = await getAllProductReviews(productId);

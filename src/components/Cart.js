@@ -7,14 +7,12 @@ import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import { ProductImage, ProductInfo } from ".";
 import "../style/Cart.css";
 
-const { JWT_SECRET = "neverTell" } = process.env;
-
 
 const Cart = () => {
 
     // const commerce = new Commerce(JWT_SECRET);
 
-    const [cart, setCart] = useState(3)
+    const [cart, setCart] = useState()
 
     // useEffect(() => {
     //     commerce.cart.retrieve()
@@ -49,8 +47,10 @@ const Cart = () => {
                                 <div className='product-image'>
                                      <ProductImage></ProductImage>
                                 </div>
-                               <div className="product-description">
-                                    <ProductInfo ></ProductInfo>
+                               <div className="productOrder-description">
+                                    <div className='productOrder-name'>
+                                        <h3>Product Name</h3>
+                                    </div>
                                     <div className="product-quantity">
                                         <p>Quantity: 4</p>
                                     </div>
@@ -60,8 +60,8 @@ const Cart = () => {
                                     </div>
                                </div>
                                <div className="product-price">
-                                        <p>$10</p>
-                                    </div>
+                                    <p>$10</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@ const Cart = () => {
 
                             </div>
                             <div className="orderTotal">
-                                <p>Total: $65.99</p>
+                                <p>Total: </p><span>$65.99</span>
                             </div>
                             <button className=""><Link to="">Checkout</Link></button>
                     </div>    

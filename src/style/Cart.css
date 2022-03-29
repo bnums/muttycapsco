@@ -18,13 +18,14 @@
 
 .row{
     display: flex;
+    flex-direction: row;
     justify-content:space-between;
     align-items: center;
     margin: 100px 0;
 }
 
 .col1{
-    flex-basis:70%;
+    flex-basis:50%;
     position: relative;
     margin: 0 25px 0 50px;
     padding-bottom: 50px;
@@ -47,6 +48,17 @@ h1 {
     Font-family: var(--headerFont);
     Font-size: 48px;
     Line-height: 72px;
+}
+
+.productOrder-name {
+    margin-bottom: 0px;
+}
+
+h3 {
+    Font-family: var(--headerFont);
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 45px;
 }
 
 .single-product-line {
@@ -80,6 +92,7 @@ h1 {
 
 button {
     display: inline-block;
+    margin: 15;
     padding: 10px 15px;
     border-radius: 35px;
     border-width: 1px;
@@ -109,10 +122,6 @@ button a {
     flex-direction: column;
 }
 
-.summary .product-description {
-    padding-bottom: 15px;
-}
-
 .summary .pricing-breakdown , .orderTotal{
     border-bottom: 2px solid #C7C7C7;
     padding-bottom: 30px;
@@ -122,8 +131,20 @@ button a {
 .summary .orderTotal {
     padding-top: 30px;
 }
+
+.summary .orderTotal span {
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 43px;
+    color: #232323;
+}
+
+.summary .orderTotal p {
+    justify-content: center;
+    align-items: center;
+}
   
-.summary .pricing-breakdown .subtotal, .estimated-shipping, .estimated-tax {
+.summary .pricing-breakdown .subtotal, .estimated-shipping, .estimated-tax, .orderTotal {
     display: flex;
     justify-content: space-between;
     padding-bottom: 10px;
@@ -132,7 +153,9 @@ button a {
 .summary .pricing-breakdown span {
     flex-basis: 30%;
     text-align: right;
+    align-items: center;
 }
+
 
 
 
