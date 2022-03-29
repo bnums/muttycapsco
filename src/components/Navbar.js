@@ -30,6 +30,7 @@ const Navbar = () => {
       <Link to="/shopping-cart">
         <div className="navbar-shopping-cart">Bag Icon</div>
       </Link>
+<<<<<<< HEAD
       {!user.token && (
         <Link to="/account/login">
           <div className="navbar-login">Login</div>
@@ -40,6 +41,14 @@ const Navbar = () => {
           <div className="navbar-logout">Logout</div>
         </Link>
       )}
+=======
+      {/* {token && <div className="welcome">{`Welcome ${user.username}`}</div>} */}
+      {!token && <Link to="/account/login"><div className="navbar-login">Login</div>
+      </Link>}
+      {token && <Link to="/account/login"onClick={handleLogOut}>
+        <div className="navbar-logout">Logout</div>
+      </Link>}
+>>>>>>> f1ae621445919514768b67a394dcdf6c85ec91c9
     </div>
   );
 };
