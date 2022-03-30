@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import {
   Home,
@@ -13,9 +13,11 @@ import {
 import "../style/App.css";
 import { callApi } from "../axios-services";
 import useUser from "../hooks/useUser";
+import CheckoutDev from "./CheckoutDev";
 
 const App = () => {
-  const { user, setUser, shoppingCart, setShoppingCart } = useUser();
+  const { setUser, setShoppingCart, setUserOrder } = useUser();
+  const [orderTotal, setOrderTotal] = useState(0);
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
@@ -23,6 +25,9 @@ const App = () => {
     }
     if (localStorage.getItem("shoppingCart")) {
       setShoppingCart(JSON.parse(localStorage.getItem("shoppingCart")));
+    }
+    if (localStorage.getItem("userOrder")) {
+      setUserOrder(JSON.parse(localStorage.getItem("userOrder")));
     }
   }, []);
 
@@ -34,7 +39,16 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/account/:method" element={<AccountForm />} />
           <Route path="/:username/profile/:userId" element={<UserProfile />} />
-          <Route path="/shopping-cart" element={<Cart />} />
+          {/* <Route path="/shopping-cart" element={<Cart />} /> */}
+          <Route
+            path="/shopping-cart"
+            element={
+              <CheckoutDev
+                orderTotal={orderTotal}
+                setOrderTotal={setOrderTotal}
+              />
+            }
+          />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<Product />} />
         </Routes>

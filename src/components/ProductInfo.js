@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useUser from "../hooks/useUser";
 import "../style/ProductInfo.css";
-const ProductInfo = ({ id, description, name, price, ...props }) => {
+const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
   const { shoppingCart } = useUser();
+  const [errMsg, setErrMsg] = useState("");
+  const [disable, setDisable] = useState(false);
+  let inCart = shoppingCart.filter((item) => item.productId === id);
 
   const handleAddItem = async () => {
-    let inCart = shoppingCart.filter((item) => item.productId === id);
-    if (inCart.length === 0) {
-      shoppingCart.push({ productId: id, name: name, unitPrice: price });
-      console.log("Item Successfully added to cart!");
-      localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
-      return;
-    }
-    console.log("Unable to add item to cart");
+    shoppingCart.push({
+      productId: id,
+      name: name,
+      unitPrice: price,
+      quantity: 1,
+    });
+    setShow(true);
+    setDisable(true);
+    localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+    return;
   };
+
+  useEffect(() => {
+    if (inCart.length !== 0) {
+      setDisable(true);
+    }
+  }, [inCart]);
 
   return (
     <div className="product-info-container">
@@ -21,10 +32,14 @@ const ProductInfo = ({ id, description, name, price, ...props }) => {
       {/* <p className="product__card-options">3 Colors</p> */}
       <p className="product-price">${price}</p>
       <p className="product-description">{description}</p>
-      <button onClick={handleAddItem} className="product-btn active-btn">
-        Add to cart
+      <button
+        onClick={handleAddItem}
+        disabled={disable}
+        className="product-btn active-btn"
+      >
+        {disable ? `Item already in cart` : "Add Item "}
       </button>
-      <div className="product-btn secondary-btn"> Favorite </div>
+      <div className="product-btn secondary-btn">Favorite</div>
     </div>
   );
 };

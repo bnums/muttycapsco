@@ -6,9 +6,9 @@ import { Form } from "react-bootstrap";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "../style/index.css";
 
-const AccountForm = () => {
+const AccountForm = ({ fetchUserOrders }) => {
   const params = useParams();
-  const { setUser } = useUser();
+  const { setUser, setUserOrder, setShoppingCart } = useUser();
   let { method } = params;
   const loginRegister = method === "login" ? "Log in" : "Register";
   const accountTitle =

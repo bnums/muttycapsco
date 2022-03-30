@@ -3,13 +3,13 @@ import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import "../style/Header.css";
 
-const Header = ({ token, setToken, user, setUser }) => {
+const Header = () => {
   return (
-    <div className="header">
+    <div className="header container-fluid ">
       <Link to={"/"}>
-        <div className="header__company__name">MuttyCapsCo.</div>
+        <div className="header__company__name ">MuttyCapsCo.</div>
       </Link>
-      <Navbar token={token} setToken={setToken} user={user} setUser={setUser} />
+      <Navbar />
     </div>
   );
 };

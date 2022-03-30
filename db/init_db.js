@@ -57,7 +57,7 @@ async function buildTables() {
       UNIQUE("orderId","productId"),
       quantity INTEGER, 
       "unitPrice" DECIMAL(10, 2),
-      "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+      "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE reviews(

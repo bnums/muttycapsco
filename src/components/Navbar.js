@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar__container">
+    <div className="navbar__container ">
       {user.token && user.username ? (
         <div className="welcome">{`Welcome ${user.username}`}</div>
       ) : null}
