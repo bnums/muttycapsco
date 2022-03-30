@@ -8,36 +8,39 @@ import {
   Product,
   AccountForm,
   UserProfile,
+  Cart,
 } from "./";
 import "../style/App.css";
+import { callApi } from "../axios-services";
 import useUser from "../hooks/useUser";
 
 const App = () => {
-  const { setUser } = useUser();
+  const { user, setUser, shoppingCart, setShoppingCart } = useUser();
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setUser({
-        username: localStorage.getItem("user"),
-        userId: localStorage.getItem("userId"),
-        token: localStorage.getItem("token"),
-      });
+    if (localStorage.getItem("user")) {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    }
+    if (localStorage.getItem("shoppingCart")) {
+      setShoppingCart(JSON.parse(localStorage.getItem("shoppingCart")));
     }
   }, []);
 
   return (
-    <div className="app_container">
-      <Header className="header" />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/account/:method" element={<AccountForm />} />
-        <Route path="/:username/profile/:userId" element={<UserProfile />} />
-        <Route path="/shoppingcart" element={<Cart />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:productId" element={<Product />} />
-      </Routes>
+    <>
+      <div className="app_container">
+        <Header className="header" />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/account/:method" element={<AccountForm />} />
+          <Route path="/:username/profile/:userId" element={<UserProfile />} />
+          <Route path="/shopping-cart" element={<Cart />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:productId" element={<Product />} />
+        </Routes>
+      </div>
       <Footer className="footer" />
-    </div>
+    </>
   );
 };
 

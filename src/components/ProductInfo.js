@@ -1,42 +1,18 @@
 import React from "react";
 import useUser from "../hooks/useUser";
-import { useParams } from "react-router";
-import { callApi } from "../axios-services";
 import "../style/ProductInfo.css";
-const ProductInfo = ({ description, name, price, ...props }) => {
-  const params = useParams();
+const ProductInfo = ({ id, description, name, price, ...props }) => {
   const { shoppingCart } = useUser();
-  const { productId } = params;
 
   const handleAddItem = async () => {
-    try {
-      // if (!shoppingCart.id) {
-      //   const createdOrder = await callApi({
-      //     url: "/orders",
-      //     method: "post",
-      //     body: {
-      //       orderTotal: 0,
-      //       createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
-      //     },
-      //     token,
-      //   });
-      //   console.log("Order created", shoppingCart.id);
-      // }
-
-      const addedItem = await callApi({
-        url: `/orders/${shoppingCart.id}/products`,
-        method: "POST",
-        body: {
-          productId: productId,
-          quantity: 1,
-          unitPrice: price,
-          createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
-        },
-      });
-      console.log("Item Successfully added", addedItem);
-    } catch (error) {
-      console.log("Unable to create order");
+    let inCart = shoppingCart.filter((item) => item.productId === id);
+    if (inCart.length === 0) {
+      shoppingCart.push({ productId: id, name: name, unitPrice: price });
+      console.log("Item Successfully added to cart!");
+      localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+      return;
     }
+    console.log("Unable to add item to cart");
   };
 
   return (

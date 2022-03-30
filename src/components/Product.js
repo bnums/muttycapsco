@@ -25,6 +25,7 @@ const Product = ({ token }) => {
     getProductByProductId();
     getReviewsByProductId();
   }, [productId]);
+
   return (
     <div className="product-container">
       <div className="product-detail-container">

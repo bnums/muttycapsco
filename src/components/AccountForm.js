@@ -38,11 +38,10 @@ const AccountForm = () => {
         if (users) {
           setUsername("");
           setPassword("");
-          setUser({ userId: users.id, username: users.username, token: token });
-          navigate("/products");
-          localStorage.setItem("token", token);
-          localStorage.setItem("user", users.username);
-          localStorage.setItem("userId", users.id);
+          users.token = token;
+          setUser(users);
+          navigate(`/${users.username}/profile/${users.id}`);
+          localStorage.setItem("user", JSON.stringify(users));
         }
       }
     } catch (error) {

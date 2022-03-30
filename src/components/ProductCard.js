@@ -9,7 +9,7 @@ const ProductCard = ({ id, productImg, name, price }) => {
   return (
     <>
       <span
-        className="product__card"
+        className="product__card col-4 d-flex justify-content-center"
         onClick={(e) => {
           e.preventDefault();
           navigate(`/products/${id}`);

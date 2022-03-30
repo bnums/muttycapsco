@@ -23,11 +23,11 @@ ordersRouter.get("/", async (req, res, next) => {
 });
 
 //POST /orders creates a new order for a logged in user
-ordersRouter.post("/", requireUser, async (req, res, next) => {
-  const { orderTotal, createdAt } = req.body;
+ordersRouter.post("/", async (req, res, next) => {
+  const { orderTotal, createdAt, userId } = req.body;
   try {
     const createdOrder = await createOrders({
-      userId: req.user.id,
+      userId: userId,
       orderTotal: orderTotal,
       createdAt: createdAt,
       isActive: true,
