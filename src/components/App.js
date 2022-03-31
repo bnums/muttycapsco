@@ -12,7 +12,6 @@ import {
 } from "./";
 import "../style/App.css";
 import useUser from "../hooks/useUser";
-import CheckoutDev from "./CheckoutDev";
 
 const App = () => {
   const { setUser, setShoppingCart, setUserOrder } = useUser();
@@ -41,7 +40,6 @@ const App = () => {
           <Route path="/account/:method" element={<AccountForm />} />
           <Route path="/:username/profile/:userId" element={<UserProfile />} />
           <Route path="/shopping-cart" element={<Cart />} />
-          {/* <Route path="/shopping-cart" element={<CheckoutDev />} /> */}
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<Product />} />
         </Routes>

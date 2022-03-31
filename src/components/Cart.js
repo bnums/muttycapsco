@@ -5,30 +5,93 @@ import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import "../style/Cart.css";
 import CartItem from "./CartItem";
 import useUser from "../hooks/useUser";
+import { callApi } from "../axios-services";
+import { useMutation, useQueryClient } from "react-query";
 
 const Cart = () => {
-  const { shoppingCart, userOrder } = useUser();
-  // const createCart = async () => {
-  //   if (!userOrder.id) {
-  //     const createdOrder = await callApi({
-  //       url: "/orders",
-  //       method: "post",
-  //       body: {
-  //         orderTotal: 0,
-  //         createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
-  //       },
-  //     });
-  //     setShoppingCart(createdOrder);
-  //     localStorage.setItem("shoppingCart", JSON.stringify(createdOrder));
-  //     console.log("Order created", createdOrder);
-  //   }
-  // };
+  const {
+    user,
+    user: { token },
+    userOrder,
+    setUserOrder,
+    shoppingCart,
+    setShoppingCart,
+  } = useUser();
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(callApi, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries("getUserOrders");
+      userOrder.items = userOrder.items.filter(
+        (item) => item.productId !== data.productId
+      );
+      setUserOrder(userOrder);
+      localStorage.setItem("userOrder", JSON.stringify(userOrder));
+    },
+  });
+
+  const handleUpdate = async ({ productId, method, orderDetailId, fields }) => {
+    if (user.username) {
+      try {
+        mutate({
+          url:
+            method === "post" ? "updating" : `/orderDetails/${orderDetailId}`,
+          method: method,
+          body: fields,
+          token,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      if (method === "delete") {
+        const updatedCart = shoppingCart.filter(
+          (item) => item.productId !== productId
+        );
+        setShoppingCart(updatedCart);
+        localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
+      }
+    }
+  };
+
   return (
-    <div className="content">
+    <div className="content container">
       <div className="row">
-        <CartItem />
+        {user.username ? (
+          <div className="col-6">
+            {userOrder.items.length > 0 ? (
+              userOrder.items.map((item, index) => {
+                return (
+                  <CartItem
+                    key={index}
+                    item={item}
+                    handleUpdate={handleUpdate}
+                  />
+                );
+              })
+            ) : (
+              <div>Cart is empty</div>
+            )}
+          </div>
+        ) : (
+          <div className="col-6">
+            {shoppingCart.length > 0 ? (
+              shoppingCart.map((item, index) => {
+                return (
+                  <CartItem
+                    key={index}
+                    item={item}
+                    handleUpdate={handleUpdate}
+                  />
+                );
+              })
+            ) : (
+              <div>Cart is empty</div>
+            )}
+          </div>
+        )}
+
         {/* ===== RIGHT SIDE: SUMMARY DETAILS ===== */}
-        <div className="col">
+        <div className="col-6">
           <div className="summary">
             <h1>Summary</h1>
             <div className="pricing-breakdown">
@@ -39,8 +102,8 @@ const Cart = () => {
               <div className="estimated-shipping">
                 <p>
                   Estimated Shipping
-                  <FontAwesomeIcon icon={faCircleQuestion} />:{" "}
-                </p>{" "}
+                  <FontAwesomeIcon icon={faCircleQuestion} />
+                </p>
                 <span className="">$1.50</span>
               </div>
               <div className="estimated-tax">
