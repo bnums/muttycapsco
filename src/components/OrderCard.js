@@ -4,8 +4,7 @@ const OrderCard = ({ order }) => {
   return (
     <div className="user-order container">
       {order.isActive ? (
-        <div>
-          Active Order
+        <div className="row">
           <div className="user-order-id ">Order Id: {order.id}</div>
           <div className="user-order-items "> Items: {order.items.length}</div>
         </div>

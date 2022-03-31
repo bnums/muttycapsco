@@ -1,113 +1,95 @@
 import React, { useEffect, useState } from "react";
 import useUser from "../hooks/useUser";
 import { callApi } from "../axios-services";
+import { useMutation, useQueryClient } from "react-query";
 import CheckoutItemDev from "./CheckoutItemDev";
 
-const CheckoutDev = ({ orderTotal, setOrderTotal }) => {
+const CheckoutDev = () => {
   const {
     user,
     user: { token },
-    shoppingCart,
-    setShoppingCart,
     userOrder,
     setUserOrder,
+    shoppingCart,
+    setShoppingCart,
   } = useUser();
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation(callApi, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries("getUserOrders");
+      userOrder.items = userOrder.items.filter(
+        (item) => item.productId !== data.productId
+      );
+      setUserOrder(userOrder);
+      localStorage.setItem("userOrder", JSON.stringify(userOrder));
+    },
+  });
 
-  const createOrder = async () => {
-    const createdOrder = await callApi({
-      url: "/orders",
-      method: "post",
-      body: {
-        orderTotal: orderTotal,
-        createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
-        userId: user.id,
-      },
-    });
-    localStorage.setItem("userOrder", JSON.stringify(createdOrder));
-    setUserOrder(createdOrder);
-    return createdOrder.id;
-  };
-
-  const addItemsToOrder = async (shoppingCart, orderId) => {
-    console.log("ORDER ID", orderId);
-    await shoppingCart.map((item) => {
-      callApi({
-        url: `/orders/${orderId}/products`,
-        method: "post",
-        body: {
-          productId: item.productId,
-          quantity: item.quantity,
-          unitPrice: item.unitPrice,
-          createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
-        },
-        token,
-      });
-    });
-  };
-
-  const updateItemsOrder = async () => {
-    console.log("UPDATE");
-  };
-
-  const handleCheckout = async () => {
-    // console.log("SHOPPING CART", shoppingCart);
-  };
-
-  const handleSave = async () => {
-    if (!localStorage.getItem("userOrder")) {
-      const orderId = await createOrder();
-      addItemsToOrder(shoppingCart, orderId);
+  const handleUpdate = async ({ productId, method, orderDetailId, fields }) => {
+    if (user.username) {
+      try {
+        mutate({
+          url:
+            method === "post" ? "updating" : `/orderDetails/${orderDetailId}`,
+          method: method,
+          body: fields,
+          token,
+        });
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      updateItemsOrder(shoppingCart, userOrder.id);
+      if (method === "delete") {
+        const updatedCart = shoppingCart.filter(
+          (item) => item.productId !== productId
+        );
+        setShoppingCart(updatedCart);
+        localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
+      }
     }
   };
-
-  const handleItemDelete = async (id) => {
-    let updatedCart = shoppingCart.filter((item) => item.productId !== id);
-    setShoppingCart(updatedCart);
-    localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
-  };
-
-  const calcTotal = () => {
-    let sum = 0;
-    if (shoppingCart.length > 0) {
-      shoppingCart.map((item) => {
-        let itemTotal = item.unitPrice * item.quantity;
-        sum += itemTotal;
-      });
-      userOrder.orderTotal = sum;
-    }
-    setOrderTotal(sum.toFixed(2));
-  };
-
-  useEffect(() => {
-    calcTotal();
-  }, [shoppingCart]);
 
   return (
-    <div className="container">
-      {shoppingCart && shoppingCart.length > 0 ? (
-        shoppingCart.map((item, index) => {
-          return (
-            <div className="row" key={index}>
-              <CheckoutItemDev
-                item={item}
-                handleItemDelete={handleItemDelete}
-                calcTotal={calcTotal}
-              />
-            </div>
-          );
-        })
+    <div className="container-fluid">
+      {user.username ? (
+        <div className="row">
+          <div className="col">
+            {userOrder.items.length > 0 ? (
+              userOrder.items.map((item, index) => {
+                return (
+                  <CheckoutItemDev
+                    key={index}
+                    item={item}
+                    handleUpdate={handleUpdate}
+                  />
+                );
+              })
+            ) : (
+              <div>Cart is empty</div>
+            )}
+          </div>
+          <div className="col">Order Total col</div>
+        </div>
       ) : (
-        <div className="row">Cart is Empty</div>
+        <div className="row">
+          <div className="col">
+            {shoppingCart.length > 0 ? (
+              shoppingCart.map((item, index) => {
+                return (
+                  <CheckoutItemDev
+                    key={index}
+                    item={item}
+                    handleUpdate={handleUpdate}
+                  />
+                );
+              })
+            ) : (
+              <div>Cart is empty</div>
+            )}
+          </div>
+          <div className="col">Order Total col</div>
+        </div>
       )}
-      {user.id && shoppingCart.length > 0 ? (
-        <button onClick={handleSave}>Save For Later</button>
-      ) : null}
-      {shoppingCart.length > 0 ? (
-        <button onClick={handleCheckout}>Checkout</button>
-      ) : null}
-      <div>ORDER TOTAL: {orderTotal}</div>
     </div>
   );
 };

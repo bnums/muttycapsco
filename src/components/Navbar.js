@@ -4,10 +4,11 @@ import useUser from "../hooks/useUser";
 import "../style/Navbar.css";
 
 const Navbar = () => {
-  const { user, setUser, setShoppingCart } = useUser();
+  const { user, setUser, setShoppingCart, setUserOrder } = useUser();
   const handleLogOut = () => {
     setUser({});
     setShoppingCart([]);
+    setUserOrder([]);
     localStorage.clear();
   };
 

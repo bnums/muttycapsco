@@ -8,7 +8,7 @@ import "../style/index.css";
 
 const AccountForm = ({ fetchUserOrders }) => {
   const params = useParams();
-  const { setUser, setUserOrder, setShoppingCart } = useUser();
+  const { setUser } = useUser();
   let { method } = params;
   const loginRegister = method === "login" ? "Log in" : "Register";
   const accountTitle =
@@ -22,6 +22,7 @@ const AccountForm = ({ fetchUserOrders }) => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
+      localStorage.clear();
       const user = await callApi({
         url: `/users/${method}`,
         method: "POST",

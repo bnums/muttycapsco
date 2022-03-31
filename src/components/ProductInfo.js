@@ -1,22 +1,63 @@
 import React, { useEffect, useState } from "react";
 import useUser from "../hooks/useUser";
+import { useMutation, useQueryClient } from "react-query";
 import "../style/ProductInfo.css";
+import { callApi } from "../axios-services";
 const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
-  const { shoppingCart } = useUser();
-  const [errMsg, setErrMsg] = useState("");
+  const { user, shoppingCart, userOrder, setUserOrder } = useUser();
   const [disable, setDisable] = useState(false);
+  const queryClient = useQueryClient();
   let inCart = shoppingCart.filter((item) => item.productId === id);
 
+  const { mutate } = useMutation(callApi, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries("getUserOrders");
+      const { id, productId, quantity, unitPrice, orderId } = data;
+      if (
+        userOrder.items.push({
+          name,
+          orderDetailId: id,
+          productId,
+          quantity,
+          unitPrice,
+          orderId,
+        })
+      ) {
+        localStorage.setItem("userOrder", JSON.stringify(userOrder));
+      }
+    },
+  });
+
   const handleAddItem = async () => {
-    shoppingCart.push({
-      productId: id,
-      name: name,
-      unitPrice: price,
-      quantity: 1,
-    });
+    if (user.username) {
+      try {
+        mutate({
+          url: `/orders/${userOrder.id}/products`,
+          method: "post",
+          body: {
+            productId: id,
+            quantity: 1,
+            unitPrice: price,
+            createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      if (
+        shoppingCart.push({
+          productId: id,
+          name: name,
+          unitPrice: price,
+          quantity: 1,
+        })
+      ) {
+        localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+      }
+    }
     setShow(true);
     setDisable(true);
-    localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
     return;
   };
 

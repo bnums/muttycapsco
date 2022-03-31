@@ -85,7 +85,7 @@ const deleteItem = async (id) => {
       `
             DELETE FROM orderDetails
             WHERE "id" = $1
-            RETURNING orderDetails.id;
+            RETURNING orderDetails."productId";
         `,
       [id]
     );
