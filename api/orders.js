@@ -8,7 +8,6 @@ const {
   createOrders,
   updateOrder,
   deleteOrder,
-  getOrderbyId,
   addProductToOrder,
 } = require("../db");
 
@@ -23,12 +22,12 @@ ordersRouter.get("/", async (req, res, next) => {
   }
 });
 
-//POST creates a new order for a logged in user
-ordersRouter.post("/", requireUser, async (req, res, next) => {
-  const { orderTotal, createdAt } = req.body;
+//POST /orders creates a new order for a logged in user
+ordersRouter.post("/", async (req, res, next) => {
+  const { orderTotal, createdAt, userId } = req.body;
   try {
     const createdOrder = await createOrders({
-      userId: req.user.id,
+      userId: userId,
       orderTotal: orderTotal,
       createdAt: createdAt,
       isActive: true,
@@ -88,7 +87,7 @@ ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
 
 // POST /orders/:orderId/products
 // adds a product to an order /orders/:orderId/product
-ordersRouter.post("/:orderId/products", requireUser, async (req, res, next) => {
+ordersRouter.post("/:orderId/products", async (req, res, next) => {
   const { orderId } = req.params;
   const productOrder = { ...req.body, orderId: orderId };
 
