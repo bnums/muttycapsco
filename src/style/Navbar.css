@@ -6,6 +6,10 @@
   line-height: 50px;
 }
 
+.navbar__container a {
+  padding-left: 15px;
+}
+
 .navbar-logout {
   color: #ffffff;
   font-size: 24px;
@@ -16,4 +20,18 @@
   color: #ffffff;
   font-size: 24px;
   font-weight: 500;
+}
+
+svg path {
+  color: #ADC3C3;
+}
+
+svg path:hover {
+  color: white;
+}
+
+.fa-cart-shopping, .fa-user, .fa-magnifying-glass {
+  width: 25px;
+  height: 25px;
+  color: #ADC3C3;
 }
