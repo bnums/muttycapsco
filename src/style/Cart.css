@@ -62,7 +62,9 @@ h3 {
   color: var(--lighterGreen);
   cursor: pointer;
 }
-
+.product-quantity label {
+  margin-right: 5px;
+}
 .product-price {
   float: right;
 }

@@ -6,7 +6,7 @@ import { callApi } from "../axios-services";
 import { useMutation, useQueryClient } from "react-query";
 import CartSummary from "./CartSummary";
 
-const Cart = () => {
+const Cart = ({ tax, total, subTotal, setSubtotal, setTotal, setTax }) => {
   const {
     user,
     user: { token },
@@ -16,9 +16,6 @@ const Cart = () => {
     setShoppingCart,
   } = useUser();
   const queryClient = useQueryClient();
-  const [subtotal, setSubTotal] = useState(0);
-  const [tax, setTax] = useState(subtotal * 0.1);
-  const [total, setTotal] = useState(subtotal + 1.5 + tax);
 
   const { mutate } = useMutation(callApi, {
     onSuccess: (data) => {
@@ -28,18 +25,24 @@ const Cart = () => {
           (item) => item.productId !== data.productId
         );
       }
-
       setUserOrder(userOrder);
       localStorage.setItem("userOrder", JSON.stringify(userOrder));
     },
   });
 
-  const handleUpdate = async ({ productId, method, orderDetailId, fields }) => {
+  const calcTotal = (itemTotal) => {};
+
+  const handleUpdate = async ({
+    productId,
+    method,
+    orderDetailId,
+    index,
+    fields,
+  }) => {
     if (user.username) {
       try {
         mutate({
-          url:
-            method === "post" ? "updating" : `/orderDetails/${orderDetailId}`,
+          url: `/orderDetails/${orderDetailId}`,
           method: method,
           body: fields,
           token,
@@ -55,6 +58,8 @@ const Cart = () => {
         setShoppingCart(updatedCart);
         localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
       }
+      shoppingCart[index].quantity = fields.quantity;
+      localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
     }
   };
 
@@ -70,6 +75,7 @@ const Cart = () => {
                     key={index}
                     handleUpdate={handleUpdate}
                     item={item}
+                    calcTotal={calcTotal}
                   />
                 );
               })
@@ -79,8 +85,10 @@ const Cart = () => {
                 return (
                   <CartItem
                     key={index}
+                    index={index}
                     handleUpdate={handleUpdate}
                     item={item}
+                    calcTotal={calcTotal}
                   />
                 );
               })

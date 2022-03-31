@@ -8,7 +8,7 @@ import "../style/index.css";
 
 const AccountForm = ({ fetchUserOrders }) => {
   const params = useParams();
-  const { setUser, setShoppinCart } = useUser();
+  const { setUser, setShoppingCart } = useUser();
   let { method } = params;
   const loginRegister = method === "login" ? "Log in" : "Register";
   const accountTitle =
@@ -41,7 +41,7 @@ const AccountForm = ({ fetchUserOrders }) => {
           setPassword("");
           users.token = token;
           setUser(users);
-          setShoppinCart([]);
+          setShoppingCart([]);
           navigate(`/${users.username}/profile/${users.id}`);
           localStorage.setItem("user", JSON.stringify(users));
         }
