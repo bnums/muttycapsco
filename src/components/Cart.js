@@ -21,9 +21,12 @@ const Cart = () => {
   const { mutate } = useMutation(callApi, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("getUserOrders");
-      userOrder.items = userOrder.items.filter(
-        (item) => item.productId !== data.productId
-      );
+      if (data.success) {
+        userOrder.items = userOrder.items.filter(
+          (item) => item.productId !== data.productId
+        );
+      }
+
       setUserOrder(userOrder);
       localStorage.setItem("userOrder", JSON.stringify(userOrder));
     },

@@ -10,7 +10,8 @@ const addCurrentItemsToOrder = async (orders) => {
     const { rows: products } = await client.query(`
       SELECT products.id AS "productId", 
       orderDetails.id AS "orderDetailId", 
-      orderDetails.quantity, products.name, orderDetails."unitPrice", orderDetails."orderId" 
+      orderDetails.quantity, products.name, orderDetails."unitPrice", orderDetails."orderId",
+      products."productImg" 
       FROM products 
       JOIN orderDetails ON products.id = orderDetails."productId"
       WHERE orderDetails."orderId" IN (${orderIdArray});

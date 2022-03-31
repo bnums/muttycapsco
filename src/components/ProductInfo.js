@@ -12,7 +12,7 @@ const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
   const { mutate } = useMutation(callApi, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("getUserOrders");
-      const { id, productId, quantity, unitPrice, orderId } = data;
+      const { id, productId, quantity, unitPrice, orderId, productImg } = data;
       if (
         userOrder.items.push({
           name,
@@ -21,6 +21,7 @@ const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
           quantity,
           unitPrice,
           orderId,
+          productImg,
         })
       ) {
         localStorage.setItem("userOrder", JSON.stringify(userOrder));

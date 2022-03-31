@@ -12,7 +12,7 @@ const CartItem = ({ item, handleUpdate, calcTotal }) => {
         <div className="description">
           <div className="single-product-line">
             <div className="product-image">
-              <ProductImage></ProductImage>
+              <ProductImage productImg={item.productImg}></ProductImage>
             </div>
             <div className="productOrder-description container">
               <div className="productOrder-name">
@@ -22,6 +22,7 @@ const CartItem = ({ item, handleUpdate, calcTotal }) => {
                 <p>Quantity: {item.quantity}</p>
               </div>
               <div className="icons">
+                <p>{item.unitPrice}</p>
                 <FontAwesomeIcon icon={faHeart} />
                 <FontAwesomeIcon
                   icon={faTrashCan}
@@ -34,9 +35,6 @@ const CartItem = ({ item, handleUpdate, calcTotal }) => {
                     });
                   }}
                 />
-                <div className="product-price">
-                  <p>{item.unitPrice}</p>
-                </div>
               </div>
             </div>
           </div>
