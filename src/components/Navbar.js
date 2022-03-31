@@ -57,8 +57,6 @@ const Navbar = () => {
       {token && <Link to="/account/login"onClick={handleLogOut}>
         <div className="navbar-logout">Logout</div>
       </Link>}
-      {!token && <Link to="/account/login"><div className="navbar-login">Login</div>
-      </Link>}
     </div>
     </>
   );

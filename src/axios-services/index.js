@@ -93,3 +93,85 @@ export async function getAllProducts() {
     throw error;
   }
 }
+
+// export async function removeProduct(productId, token) {
+//   try {
+//     const {data} = await axios.delete(`${BASE_URL}/products/${productId}`, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       }
+//     })
+//     console.log('product deleted', data)
+//     return data
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+
+
+// export const removeProduct = async (id, token) => {
+//   const requestToken = {
+//       headers: { Authorization: `Bearer ${token}` }
+//   };
+//   try {
+//       const response = await axios.delete(`${ BASE_URL }api/products/${id}`, requestToken)
+//       return response;
+//   } catch (error) {
+//       console.error(error);
+//   }
+// };
+
+export async function updateProduct(productId, token, product) {
+  try {
+    const {data} = await axios.patch(`${BASE_URL}/products/${productId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    console.log('product editied', data)
+    return data
+  } catch (error) {
+    throw error;
+  }
+}
+
+// export const updateProduct = async (productId, product, token) => {
+//   try {
+//     const response = await fetch(`${BASE_URL}/products/${productId}`, {
+//       method: "PATCH",
+//       headers: {
+//         // "Content-Type": "application/json",
+//         Authorization: `Bearer ${token}`,
+//       },
+//       body: (
+//         product
+//       ),
+//     });
+//     // const editProduct = await response.json();
+//     // console.log("you edited a product", editProduct);
+//     console.log("you created a product activity token", token);
+//     return response;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+// export const fetchProducts = async (token) => {
+//   try {
+//     let response;
+//     if (token) {
+//       response = await fetch(`${BASE_URL}/products`, {
+//         headers: {
+//           "Content-Type": "applicaton/json",
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+//     } else {
+//       response = await fetch(`${BASE_URL}/products`);
+//     }
+//     const products = await response.json();
+//     return products;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
