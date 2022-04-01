@@ -12,6 +12,7 @@ import {
 } from "./";
 import "../style/App.css";
 import useUser from "../hooks/useUser";
+import Checkout from "./Checkout";
 
 const App = () => {
   const { setUser, setShoppingCart, setUserOrder } = useUser();
@@ -55,6 +56,7 @@ const App = () => {
               />
             }
           />
+          <Route path="/shopping-cart/checkout" element={<Checkout />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<Product />} />
         </Routes>

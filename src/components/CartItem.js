@@ -8,6 +8,10 @@ const CartItem = ({ item, handleUpdate, index, itemCosts, calcTotal }) => {
   const [quantity, setQuantity] = useState(item.quantity);
   itemCosts[item.productId] = quantity * item.unitPrice;
 
+  useEffect(() => {
+    calcTotal();
+  }, [quantity]);
+
   return (
     <form className="row">
       <div className="description container mt-4">

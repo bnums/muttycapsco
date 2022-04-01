@@ -82,10 +82,6 @@ const Cart = ({ tax, total, subTotal, setSubTotal, setTotal, setTax }) => {
     calcTotal();
   };
 
-  useEffect(() => {
-    calcTotal();
-  }, [itemCosts]);
-
   return (
     <div className="checkout-content container">
       <div className="row">

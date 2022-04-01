@@ -29,7 +29,7 @@ const CartSummary = ({ tax, total, subTotal }) => {
         <span>${total.toFixed(2)}</span>
       </div>
       <button className="">
-        <Link to="">Checkout</Link>
+        <Link to="/shopping-cart/checkout">Checkout</Link>
       </button>
     </div>
   );
