@@ -29,9 +29,14 @@ const App = () => {
     } else {
       setShoppingCart([]);
     }
-
     if (localStorage.getItem("userOrder")) {
       setUserOrder(JSON.parse(localStorage.getItem("userOrder")));
+    }
+    if (localStorage.getItem("orderTotal")) {
+      let orderTotal = JSON.parse(localStorage.getItem("orderTotal"));
+      setSubTotal(orderTotal.subTotal);
+      setTax(orderTotal.tax);
+      setTotal(orderTotal.total);
     }
   }, []);
 
@@ -56,7 +61,10 @@ const App = () => {
               />
             }
           />
-          <Route path="/shopping-cart/checkout" element={<Checkout />} />
+          <Route
+            path="/shopping-cart/:checkout"
+            element={<Checkout tax={tax} total={total} subTotal={subTotal} />}
+          />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<Product />} />
         </Routes>

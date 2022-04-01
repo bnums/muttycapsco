@@ -40,6 +40,10 @@ const Cart = ({ tax, total, subTotal, setSubTotal, setTotal, setTax }) => {
       setTax(tax);
       setSubTotal(sub);
       setTotal(total);
+      localStorage.setItem(
+        "orderTotal",
+        JSON.stringify({ subTotal: sub, tax: tax, total: total })
+      );
       return;
     }
     setTax(0);

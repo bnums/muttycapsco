@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 
 const CartSummary = ({ tax, total, subTotal }) => {
+  const { checkout } = useParams();
   return (
     <div className="summary">
       <h1>Summary</h1>
@@ -28,9 +29,11 @@ const CartSummary = ({ tax, total, subTotal }) => {
         <p>Total: </p>
         <span>${total.toFixed(2)}</span>
       </div>
-      <button className="">
-        <Link to="/shopping-cart/checkout">Checkout</Link>
-      </button>
+      {checkout !== "checkout" ? (
+        <button className="">
+          <Link to="/shopping-cart/checkout">Checkout</Link>
+        </button>
+      ) : null}
     </div>
   );
 };
