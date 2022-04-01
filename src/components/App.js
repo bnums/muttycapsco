@@ -9,10 +9,10 @@ import {
   AccountForm,
   UserProfile,
   Cart,
+  Checkout,
 } from "./";
 import "../style/App.css";
 import useUser from "../hooks/useUser";
-import Checkout from "./Checkout";
 
 const App = () => {
   const { setUser, setShoppingCart, setUserOrder } = useUser();
