@@ -4,8 +4,9 @@ import { faTrashCan, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { ProductImage } from ".";
 import "../style/Cart.css";
 
-const CartItem = ({ item, handleUpdate, index, calcTotal }) => {
+const CartItem = ({ item, handleUpdate, index, itemCosts, calcTotal }) => {
   const [quantity, setQuantity] = useState(item.quantity);
+  itemCosts[item.productId] = quantity * item.unitPrice;
 
   return (
     <form className="row">

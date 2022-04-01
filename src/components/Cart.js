@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../style/Cart.css";
 import CartItem from "./CartItem";
 import useUser from "../hooks/useUser";
@@ -6,7 +6,7 @@ import { callApi } from "../axios-services";
 import { useMutation, useQueryClient } from "react-query";
 import CartSummary from "./CartSummary";
 
-const Cart = ({ tax, total, subTotal, setSubtotal, setTotal, setTax }) => {
+const Cart = ({ tax, total, subTotal, setSubTotal, setTotal, setTax }) => {
   const {
     user,
     user: { token },
@@ -16,6 +16,7 @@ const Cart = ({ tax, total, subTotal, setSubtotal, setTotal, setTax }) => {
     setShoppingCart,
   } = useUser();
   const queryClient = useQueryClient();
+  const itemCosts = {};
 
   const { mutate } = useMutation(callApi, {
     onSuccess: (data) => {
@@ -24,13 +25,27 @@ const Cart = ({ tax, total, subTotal, setSubtotal, setTotal, setTax }) => {
         userOrder.items = userOrder.items.filter(
           (item) => item.productId !== data.productId
         );
+        delete itemCosts[`${data.productId}`];
       }
       setUserOrder(userOrder);
       localStorage.setItem("userOrder", JSON.stringify(userOrder));
     },
   });
 
-  const calcTotal = (itemTotal) => {};
+  const calcTotal = () => {
+    if (Object.values(itemCosts).length > 0) {
+      let sub = Object.values(itemCosts).reduce((a, b) => a + b);
+      let tax = sub * 0.09;
+      let total = sub + tax;
+      setTax(tax);
+      setSubTotal(sub);
+      setTotal(total);
+      return;
+    }
+    setTax(0);
+    setSubTotal(0);
+    setTotal(0);
+  };
 
   const handleUpdate = async ({
     productId,
@@ -55,13 +70,21 @@ const Cart = ({ tax, total, subTotal, setSubtotal, setTotal, setTax }) => {
         const updatedCart = shoppingCart.filter(
           (item) => item.productId !== productId
         );
+        delete itemCosts[`${productId}`];
+        calcTotal();
         setShoppingCart(updatedCart);
         localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
+        return;
       }
       shoppingCart[index].quantity = fields.quantity;
       localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
     }
+    calcTotal();
   };
+
+  useEffect(() => {
+    calcTotal();
+  }, [itemCosts]);
 
   return (
     <div className="checkout-content container">
@@ -76,6 +99,7 @@ const Cart = ({ tax, total, subTotal, setSubtotal, setTotal, setTax }) => {
                     handleUpdate={handleUpdate}
                     item={item}
                     calcTotal={calcTotal}
+                    itemCosts={itemCosts}
                   />
                 );
               })
@@ -89,6 +113,7 @@ const Cart = ({ tax, total, subTotal, setSubtotal, setTotal, setTax }) => {
                     handleUpdate={handleUpdate}
                     item={item}
                     calcTotal={calcTotal}
+                    itemCosts={itemCosts}
                   />
                 );
               })
@@ -96,7 +121,7 @@ const Cart = ({ tax, total, subTotal, setSubtotal, setTotal, setTax }) => {
         </div>
         {/* ===== RIGHT SIDE: SUMMARY DETAILS ===== */}
         <div className="col-lg-3 container">
-          <CartSummary tax={tax} total={total} />
+          <CartSummary tax={tax} total={total} subTotal={subTotal} />
         </div>
       </div>
     </div>
