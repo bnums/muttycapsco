@@ -7,25 +7,22 @@ import useUser from "../hooks/useUser";
 // import { Container, Row, Col, Button } from "react-bootstrap";
 import "../style/index.css";
 
-const AccountForm = () => {
-  const params = useParams();
-  const { setUser, setShoppingCart } = useUser();
-  let { method } = params;
-  const loginRegister = method === "login" ? "Log in" : "Register";
-  const accountTitle =
-    method === "login" ? "Lets Explore Together" : "Join the Adventure";
+const AdminAddUser = () => {
+
+  const { setUser } = useUser();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState([]);
+  const [ isAdmin, setIsAdmin ] = useState(false);
 
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
       localStorage.clear();
       const user = await callApi({
-        url: `/users/${method}`,
+        url: `/users/register`,
         method: "POST",
         body: { username, password, email },
       });
@@ -43,8 +40,7 @@ const AccountForm = () => {
           setPassword("");
           users.token = token;
           setUser(users);
-          setShoppingCart([]);
-          navigate(`/${users.username}/profile/${users.id}`);
+          navigate('/admin-page');
           localStorage.setItem("user", JSON.stringify(users));
         }
 
@@ -64,7 +60,6 @@ const AccountForm = () => {
                 className="text-title text-center"
                 style={{ overflowY: "hidden" }}
               >
-                {accountTitle}
               </h3>
               <Form className="login-register-form" onSubmit={handleSubmit}>
                 <Form.Group
@@ -105,7 +100,6 @@ const AccountForm = () => {
                   className="form-Basic-Email"
                   controlId="formBasicEmail"
                 >
-                  {method === "register" ? (
                     <Form.Control
                       className="email-box"
                       required
@@ -118,8 +112,24 @@ const AccountForm = () => {
                         setEmail(event.target.value);
                       }}
                     />
-                  ) : null}
-                  {errors && (
+                </Form.Group>
+                 <Form.Group
+                  className="form-Basic-isAdmin"
+                  controlId="formBasicIsAdmin"
+                >
+                    <Form.Control
+                      className="isAdmin-box"
+                      required
+                      placeholder="isAdmin"
+                      label="isAdmin"
+                      type="isAdmin"
+                      variant="outlined"
+                      value={isAdmin}
+                      onChange={(event) => {
+                        setIsAdmin(event.target.value);
+                      }}
+                    />
+                      {errors && (
                     <div style={{ marginTop: "1em", color: "red" }}>
                       {errors}
                     </div>
@@ -130,19 +140,8 @@ const AccountForm = () => {
                   className="login-register-button"
                   type="submit"
                 >
-                  {loginRegister}
+                  Create
                 </Button>
-                <div className="login-register-text">
-                  {method === "login" ? (
-                    <Link to={`/account/register`}>
-                      Don't have an account ? Create One
-                    </Link>
-                  ) : (
-                    <Link to={`/account/login`}>
-                      Already have an account ? Log In
-                    </Link>
-                  )}
-                </div>
               </Form>
             </Col>
           </Row>
@@ -153,4 +152,4 @@ const AccountForm = () => {
   );
 };
 
-export default AccountForm;
+export default AdminAddUser;

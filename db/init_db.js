@@ -38,7 +38,7 @@ async function buildTables() {
       price DECIMAL (10, 2),
       "inventoryQTY" DECIMAL (10, 2),
       category VARCHAR(255) NOT NULL,
-      "productImg" VARCHAR(255) not null
+      "productImg" VARCHAR(255) NOT NULL
     );
 
     CREATE TABLE orders(

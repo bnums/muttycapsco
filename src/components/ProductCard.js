@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import cardplaceholder from "../imgs/cardplaceholder.png";
 import "../style/ProductCard.css";
 import { useNavigate } from "react-router";

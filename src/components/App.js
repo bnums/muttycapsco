@@ -5,17 +5,19 @@ import {
   Home,
   Header,
   Footer,
-  Products,
-  Product,
-  AccountForm,
+  // Products,
+  // Product,
+  // AccountForm,
   UserProfile,
   Cart,
   Checkout,
   ReviewsForm,
 } from "./";
 import "../style/App.css";
+import AccountForm from "./AccountForm";
+import { Products, Product, AdminPage, AdminEdit, AdminEditForm, AdminAddUser,  AdminAddProduct} from ".";
+import { callApi} from "../axios-services";
 import useUser from "../hooks/useUser";
-import { callApi } from "../axios-services";
 
 const getStripeKey = async () => {
   const pubKey = await callApi({
@@ -55,6 +57,7 @@ const App = () => {
   }, []);
 
   return (
+
     <>
       <div className="app_container">
         <Header
@@ -103,6 +106,10 @@ const App = () => {
             }
           />
           <Route path="/products/:productId" element={<Product />} />
+          <Route path="/admin-page/users/add" element={<AdminAddUser />} />
+          <Route path="/admin-page/products/add" element={<AdminAddProduct/>} />
+          <Route path="/admin-page" element={<AdminPage /*token={token} user={user} product={product} setProduct={setProduct} products={products} setProducts={setProducts}*//>} />
+        <Route path="/products/:productId/edit" element={<AdminEditForm />}/>
           <Route path="/products/:productId/review" element={<ReviewsForm />} />
         </Routes>
       </div>
