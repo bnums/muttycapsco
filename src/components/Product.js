@@ -49,7 +49,7 @@ const Product = ({ token }) => {
       <div className="reviews-wrapper">
         <ProductReviews reviews={reviews}></ProductReviews>
       </div>
-      <Modal show={show} onHide={handleClose}>
+      <Modal className="product-modal" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <h5>Item Successfully Added!</h5>
         </Modal.Header>

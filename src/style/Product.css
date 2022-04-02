@@ -24,7 +24,7 @@
 }
 
 @media (min-width: 768px) {
-  .modal-dialog {
+  .product-modal .modal-dialog {
     position: relative;
     width: auto;
     margin-left: 70%;

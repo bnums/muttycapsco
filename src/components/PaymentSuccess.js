@@ -1,7 +1,9 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router";
 
 const PaymentSuccess = ({ show, handleClose }) => {
+  const navigate = useNavigate();
   return (
     <>
       <Modal
@@ -13,15 +15,19 @@ const PaymentSuccess = ({ show, handleClose }) => {
         <Modal.Header closeButton>
           <Modal.Title>Payment Successful!</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          I will not close if you click outside me. Don't even try to press
-          escape key.
-        </Modal.Body>
+        <Modal.Body>Thank you for your purchase!</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            View Summary
           </Button>
-          <Button variant="primary">Understood</Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              navigate("/products");
+            }}
+          >
+            Back To Products
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
