@@ -142,12 +142,6 @@ const AdminAddUser = () => {
                 >
                   Create
                 </Button>
-                <div className="login-register-text">
-                  
-                    <Link to={`/account/register`}>
-                    </Link>
-                 
-                </div>
               </Form>
             </Col>
           </Row>

@@ -23,32 +23,30 @@ const AdminEditForm = ({
   const [product, setProduct] = useState({});
   const { productId } = useParams();
   
-  
-  const handleProducts = async () => {
-  try {
-    const products = await fetchProducts();
-    setProducts(products);
-    console.log("products", products);
-  } catch (error) {
-    console.error(error);
-  }
+
+const getProducts = async () => {
+  const data = await callApi({ url: `/products` });
+  setProducts(data);
 };
 
 useEffect(() => {
-  handleProducts();
-}, [token]);
+  getProducts();
+}, []);
 
-  const handleEdit = async (event) => {
-    event.preventDefault();
-    try {
-      const newProduct = await updateProduct(productId, productToEdit, token);
-      setProductToEdit(newProduct);
-      navigate("/admin-page");
-      console.log("newProduct",newProduct)
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const handleEditProduct = async ({id,name, description, price, inventoryQTY, category, productImg}) => {
+      try {
+      localStorage.clear();
+      const editProduct = await callApi({
+        url: `/products/${id}`,
+        method: "patch",
+        token:token,
+        body: { name, description, price, inventoryQTY, category, productImg},
+      });
+      console.log("editProduct", editProduct);
+        } catch (error) {
+    console.error(error);
+  }
+};
 
   useEffect(() => {
     const productToEdit = products.find((product) => {
@@ -66,16 +64,17 @@ useEffect(() => {
     <>
       <div className="edit-a-product">
         <div className="new-product-form-title"> EDIT YOUR PRODUCT </div>
-        <form className="edit-product-form" onSubmit={handleEdit}>
+        <form className="edit-product-form" >
           {products.map((product) => {
             const { id } = product;
             return (
-              <>
+              <div key={product.id}>
                 {id == productId && (
                   <>
                     <input
                       id="name-input"
                       type="text"
+                      placeholder="name"
                       value={productToEdit.name}
                       onChange={(event) =>
                         setProductToEdit({
@@ -88,7 +87,7 @@ useEffect(() => {
                     <input
                       id="description-input"
                       type="text"
-                      placeholder="description*"
+                      placeholder="description"
                       value={productToEdit.description}
                       onChange={(event) =>
                         setProductToEdit({
@@ -101,7 +100,7 @@ useEffect(() => {
                     <input
                       id="price-input"
                       type="text"
-                      placeholder="price*"
+                      placeholder="price"
                       value={productToEdit.price}
                       onChange={(event) =>
                         setProductToEdit({
@@ -111,10 +110,49 @@ useEffect(() => {
                       }
                       required
                     />
-                    <button id="submit-button">Submit</button>
+                     <input
+                      id="inventoryQTY-input"
+                      type="text"
+                      placeholder="inventoryQTY"
+                      value={productToEdit.inventoryQTY}
+                      onChange={(event) =>
+                        setProductToEdit({
+                          ...productToEdit,
+                          inventoryQTY: event.target.value,
+                        })
+                      }
+                      required
+                    />
+                        <input
+                      id="category-input"
+                      type="text"
+                      placeholder="category"
+                      value={productToEdit.category}
+                      onChange={(event) =>
+                        setProductToEdit({
+                          ...productToEdit,
+                          category: event.target.value,
+                        })
+                      }
+                      required
+                    />
+                       <input
+                      id="productImg-input"
+                      type="text"
+                      placeholder="productImg"
+                      value={productToEdit.productImg}
+                      onChange={(event) =>
+                        setProductToEdit({
+                          ...productToEdit,
+                          productImg: event.target.value,
+                        })
+                      }
+                      required
+                    />
+                    <button id="submit-button" type="submit" onClick={(e)=>{e.preventDefault(); handleEditProduct(productToEdit)}}>Submit</button>
                   </>
                 )}
-              </>
+              </div>
             );
           })}
         </form>

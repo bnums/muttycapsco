@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import { callApi } from "../axios-services";
+import { callApi, createProduct } from "../axios-services";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import useUser from "../hooks/useUser";
 // import { Form } from "react-bootstrap";
 // import { Container, Row, Col, Button } from "react-bootstrap";
 import "../style/index.css";
 
-const AdminAddProduct = () => {
+const AdminAddProduct = ({token}) => {
 
   const { setUser } = useUser();
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
   const [product, setProduct] = useState("");
+  const [products, setProducts] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -25,7 +26,7 @@ const AdminAddProduct = () => {
       event.preventDefault();
       localStorage.clear();
       const product = await callApi({
-        url: `/products/add`,
+        url: `/products`,
         method: "POST",
         body: { name, description, price, inventoryQTY, category, productImg},
       });
@@ -37,23 +38,34 @@ const AdminAddProduct = () => {
     //       method: "GET",
     //       token,
     //     });
-    //     const products = product;
-    //     if (products) {
-    //       setName("");
-    //       setDescription("");
-    //       setPrice("");
-    //       setInventoryQTY("");
-    //       setCategory("");
-    //       setProductImg("");
-    //       navigate('/admin-page');
-    //       localStorage.setItem("user", JSON.stringify(products));
-    //     }
+//         const products = product;
+//         if (products) {
+//           setName("");
+//           setDescription("");
+//           setPrice("");
+//           setInventoryQTY("");
+//           setCategory("");
+//           setProductImg("");
+//           navigate('/admin-page');
+//           localStorage.setItem("user", JSON.stringify(products));
+//         }
 
-    // }
+//     }
     } catch (error) {
       setErrors(error.message);
     }
   };
+
+// const handleProductSubmit = async (event ) => {
+//     try {
+//       event.preventDefault();
+//       const newProducts = await createProduct(name, description, price, inventoryQTY, category, productImg, token);
+//       console.log("newProduct", newProducts);
+//       setProducts([...products, newProducts]);
+//     } catch (error) {
+//       setErrors(error)
+//     }
+//   };
 
   return (
     <>
@@ -182,12 +194,6 @@ const AdminAddProduct = () => {
                 >
                   Create
                 </Button>
-                <div className="create-product">
-                  
-                    <Link to={`/account/register`}>
-                    </Link>
-                 
-                </div>
               </Form>
             </Col>
           </Row>
