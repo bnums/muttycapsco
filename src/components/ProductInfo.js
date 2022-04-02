@@ -86,8 +86,6 @@ const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
           " "
         )}
       </h3>
-      {/* <p className="product__card-options">3 Colors</p> */}
-      {/* <RatingStar /> */}
       <p className="product-price">${price}</p>
       <p className="product-description">{description}</p>
       <button

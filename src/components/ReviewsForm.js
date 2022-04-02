@@ -40,9 +40,7 @@ const ReviewsForm = (props) => {
     const url = `/reviews/${productId}`;
     const method = "post";
     const body = data;
-    const token =
-      user?.token ||
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJrYWlzZXIiLCJlbWFpbCI6ImthaXNlckBnbWFpbC5jb20iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NDg4ODQ3NjZ9.LvxtgCLNXFnbeMo6izlEZh_VS0PIa1NFwhes1ONu7oc";
+    const token = user?.token;
     const response = await callApi({
       url,
       method,

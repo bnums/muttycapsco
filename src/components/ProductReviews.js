@@ -11,9 +11,7 @@ const ProductReviews = ({ reviews, setReviews }) => {
     const response = await callApi({
       url: `/reviews/${id}`,
       method: `delete`,
-      token:
-        user.token ||
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJrYWlzZXIiLCJlbWFpbCI6ImthaXNlckBnbWFpbC5jb20iLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2NDg4ODQ3NjZ9.LvxtgCLNXFnbeMo6izlEZh_VS0PIa1NFwhes1ONu7oc",
+      token: user.token,
     });
     if (response?.id) {
       const newReviews = reviews.filter((item) => item.id !== id);
