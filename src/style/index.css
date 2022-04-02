@@ -30,49 +30,50 @@ a:hover {
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 }
 
-.login-register-button{
-  display:block;
+.login-register-button {
+  display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top:40px;
+  margin-top: 40px;
 }
 
-.login-register-text{
-  display:flex;
-  justify-content:center;
+.login-register-text {
+  display: flex;
+  justify-content: center;
   font-family: "Reem Kufi", sans-serif;
-  margin-top:40px;
+  margin-top: 40px;
 }
 
-.text-title{
+.text-title {
   font-family: "Reem Kufi", sans-serif;
-  margin-bottom:50px;
+  margin-bottom: 50px;
   font: black;
 }
 
-.email-box, .password-box{
-  margin-top:20px;
+.email-box,
+.password-box {
+  margin-top: 20px;
 }
 
-.signup-text, .login-text{
+.signup-text,
+.login-text {
   border-radius: 10%;
 }
 
-.login-register-form{
+.login-register-form {
   font-family: "Reem Kufi", sans-serif;
 }
 
-.window{
+.window {
   border-radius: 7%;
   background: white;
 }
 
-.register-login-backdrop{
-  
+.register-login-backdrop {
   background-image: linear-gradient(
       rgba(196, 196, 196, 0.178),
       rgba(49, 49, 49, 0.2)
@@ -83,6 +84,7 @@ body {
   background-position: 50% 20%;
   height: 60vh;
 }
+
 
 .admin-page-backdrop{
   
@@ -111,3 +113,8 @@ color:white;
   justify-content: space-around;
   padding: 16px;
 }
+
+.welcome {
+  color: white;
+}
+

@@ -23,12 +23,12 @@ const AdminEdit = ({
     <>
       <AdminEditForm
         token={token}
-        // products={products}
-        // setProducts={setProducts}
-        // users={users}
-        // setUsers={setUsers}
+        products={products}
+        setProducts={setProducts}
+        users={users}
+        setUsers={setUsers}
         productId={productId}
-        // userId={userId}
+        // isAdmin={isAdmin}
       />
     </>
   );

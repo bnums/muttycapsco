@@ -29,7 +29,7 @@ async function buildTables() {
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
       email VARCHAR(255) UNIQUE NOT NULL,
-      "isAdmin" BOOLEAN DEFAULT false
+      "isAdmin" BOOLEAN DEFAULT FALSE
     );
 
     CREATE TABLE products(
@@ -57,7 +57,7 @@ async function buildTables() {
       UNIQUE("orderId","productId"),
       quantity INTEGER, 
       "unitPrice" DECIMAL(10, 2),
-      "createdAt" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+      "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
     CREATE TABLE reviews(
@@ -377,7 +377,7 @@ async function populateInitialOrders() {
         userId: 2,
         orderTotal: 16.99,
         createdAt: "2009-04-30 09:44:35",
-        isActive: true,
+        isActive: false,
       },
       {
         userId: 4,
@@ -389,13 +389,13 @@ async function populateInitialOrders() {
         userId: 1,
         orderTotal: 32.97,
         createdAt: "2021-12-01 03:14:55",
-        isActive: true,
+        isActive: false,
       },
       {
         userId: null,
         orderTotal: 32.97,
         createdAt: "2022-03-03 07:44:55",
-        isActive: true,
+        isActive: false,
       },
     ];
 

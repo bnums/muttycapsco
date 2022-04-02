@@ -4,7 +4,7 @@ import "../style/ProductImage.css";
 
 const ProductImage = ({ productImg }) => {
   return (
-    <div className="product-img-container">
+    <div className="product-img-container col">
       <img
         className="product__card-img"
         src={productImg || cardplaceholder}

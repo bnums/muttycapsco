@@ -1,4 +1,3 @@
-
 .product-card-container {
   display: flex;
   align-items: flex-start;
@@ -36,7 +35,7 @@
 
 .product__card-title {
   margin-top: 15px;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .product__card-options {
@@ -46,6 +45,6 @@
 }
 
 .product__card-price {
-  font-size: 20px;
+  font-size: 18px;
   margin-top: 15px;
 }

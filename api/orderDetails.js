@@ -28,11 +28,11 @@ orderDetailsRouter.delete(
   async (req, res, next) => {
     try {
       const { orderDetailId } = req.params;
-      const deletedItemId = await deleteItem(orderDetailId);
+      const { productId } = await deleteItem(orderDetailId);
       res.send({
         success: true,
         message: "Item successfully removed from your cart",
-        deletedItemId,
+        productId: productId,
       });
     } catch (error) {
       next({

@@ -5,17 +5,21 @@ import { callApi, getAllUsers, getAllProducts, removeProduct } from "../axios-se
 import { ProductImage, ProductInfo, ProductCard } from ".";
 import { Button, Card} from "react-bootstrap";
 import cardplaceholder from "../imgs/cardplaceholder.png";
+import useUser from "../hooks/useUser";
+
 
 const AdminPage = ({token}) =>{
   const [users, setUsers] = useState([])
   const [products, setProducts] = useState([])
+  const [orders, setOrders] = useState([])
   const [product, setProduct] = useState({})
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState("");
+  // const [isAdmin, setIsAdmin] = useState("");
   // const [token, setToken] = useState("");
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
   const { productId } = useParams();
   console.log("this is admin", AdminPage)
+  const { setUser, setShoppingCart, setUserOrder } = useUser();
   
 
 const handleUsers = async () =>{
@@ -77,7 +81,7 @@ return (
       <h3 className="products-title">Products</h3>
         <div className="list-of-products">
           {products.map(product => {
-            const { id, productImg, name, price, isAdmin, productId } = product;
+            const { id, productImg, name, price, isAdmin } = product;
           return (
           <Card className="product__card">
             <img
@@ -88,8 +92,35 @@ return (
             <h3 className="product__card-title">{name}</h3>
             <p className="product__card-price">{price}</p>
             <Button  className="edit-product-button"
+                      onClick={() => {
+                        navigate(`/products/${id}/edit`);
+                      }}>Edit</Button>
+            <Button  className="delete-product-button"
+                      variant="dark"
                       onClick={(event) => {
-                        navigate(`/products/${productId}/edit`);
+                        handleDeleteProduct(event, id, isAdmin);
+                      }}>
+                        Delete
+            </Button>        
+          </Card>)
+          })}
+      </div>
+      <h3 className="orders-title">Orders</h3>
+        <div className="list-of-orders">
+          {orders.map(product => {
+            const { id, productImg, name, price, isAdmin } = product;
+          return (
+          <Card className="product__card">
+            <img
+          className="product__card-img"
+          src={productImg || cardplaceholder}
+          alt="img of dog with yellow beanie"
+        />
+            <h3 className="product__card-title">{name}</h3>
+            <p className="product__card-price">{price}</p>
+            <Button  className="edit-product-button"
+                      onClick={() => {
+                        navigate(`/products/${id}/edit`);
                       }}>Edit</Button>
             <Button  className="delete-product-button"
                       variant="dark"

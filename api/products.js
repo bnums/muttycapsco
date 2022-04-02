@@ -45,7 +45,7 @@ productRouter.post("/category", async (req, res, next) => {
 });
 
 //POST/products
-productRouter.post("/", requireAdmin, async (req, res, next) => {
+productRouter.post("/", async (req, res, next) => {
   try {
     const {
       name,
@@ -70,7 +70,7 @@ productRouter.post("/", requireAdmin, async (req, res, next) => {
 });
 
 //PATCH/products/:productId
-productRouter.patch("/:productId", requireAdmin, async (req, res, next) => {
+productRouter.patch("/:productId", async (req, res, next) => {
   const { productId } = req.params;
   try {
     const toUpdateProduct = { ...req.body, productId };
@@ -82,7 +82,7 @@ productRouter.patch("/:productId", requireAdmin, async (req, res, next) => {
 });
 
 // DELETE/products/:productId
-productRouter.delete("/:productId", requireAdmin, async (req, res, next) => {
+productRouter.delete("/:productId", async (req, res, next) => {
   const { productId } = req.params;
   //   const product = await getProductById(productId);
 
