@@ -49,6 +49,10 @@ const Cart = ({ tax, total, subTotal, setSubTotal, setTotal, setTax }) => {
     setTax(0);
     setSubTotal(0);
     setTotal(0);
+    localStorage.setItem(
+      "orderTotal",
+      JSON.stringify({ subTotal: 0, tax: 0, total: 0 })
+    );
   };
 
   const handleUpdate = async ({

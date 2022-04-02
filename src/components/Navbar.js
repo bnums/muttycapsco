@@ -9,12 +9,15 @@ import {
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Navbar = () => {
+const Navbar = ({ setSubTotal, setTotal, setTax }) => {
   const { user, setUser, setShoppingCart, setUserOrder } = useUser();
   const handleLogOut = () => {
     setUser({});
     setShoppingCart([]);
     setUserOrder([]);
+    setSubTotal(0);
+    setTotal(0);
+    setTax(0);
     localStorage.clear();
   };
 

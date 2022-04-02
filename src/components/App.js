@@ -47,7 +47,12 @@ const App = () => {
   return (
     <>
       <div className="app_container">
-        <Header className="header" />
+        <Header
+          className="header"
+          setSubTotal={setSubTotal}
+          setTax={setTax}
+          setTotal={setTotal}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/account/:method" element={<AccountForm />} />
