@@ -6,25 +6,57 @@ import { useNavigate } from "react-router";
 import useUser from "../hooks/useUser";
 import "../style/Products.css";
 
-const Products = (props) => {
+const Products = ({ productSearchStr, setProductSearchStr }) => {
   const navigate = useNavigate();
   const { shoppingCart } = useUser();
   const [products, setProducts] = useState([]);
 
   const getProducts = async () => {
     const data = await callApi({ url: `/products` });
-    setProducts(data);
+    if (!productSearchStr) {
+      setProducts(data);
+    } else {
+      const filteredData = getFilteredData(data, productSearchStr);
+      setProducts(filteredData);
+    }
+  };
+
+  const getFilteredData = (data = [], searchStr = "") => {
+    const search = searchStr.trim().toLowerCase();
+    return data.filter((item) => {
+      const { name = "", category = "" } = item;
+      const combinedStr = `${name?.toLowerCase()} ${category?.toLowerCase()}`;
+      return combinedStr.includes(search);
+    });
   };
 
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [productSearchStr]);
 
   return (
     <div>
-      <h2>Products page</h2>
       <div className="products-container container">
-        <div className="row">
+        <div className="row mt-1">
+          {productSearchStr ? (
+            <div className="d-flex align-items-center">
+              <span className="mr-3">
+                <strong>Search By: </strong>
+              </span>
+              <span
+                className="btn btn-light mx-2 d-flex align-items-center"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setProductSearchStr("");
+                }}
+              >
+                {productSearchStr}
+                <span className="badge badge-light">x</span>
+              </span>
+            </div>
+          ) : (
+            ""
+          )}
           {products?.length ? (
             products.map((item) => <ProductCard key={item.id} {...item} />)
           ) : (
