@@ -24,34 +24,32 @@ const AdminAddProduct = () => {
     try {
       event.preventDefault();
       localStorage.clear();
-      const user = await callApi({
-        url: `/products/${productId}`,
+      const product = await callApi({
+        url: `/products/add`,
         method: "POST",
         body: { name, description, price, inventoryQTY, category, productImg},
       });
 
-      const token = user && user.token;
-      if (token) {
-        const product = await callApi({
-          url: `/product`,
-          method: "GET",
-          token,
-        });
-        const products = product;
-        if (products) {
-          setName("");
-          setDescription("");
-          setPrice("");
-          setInventoryQTY("");
-          setCategory("");
-          setProductImg("");
-        //   users.token = token;
-        //   setUser(users);
-          navigate('/admin-page');
-          localStorage.setItem("user", JSON.stringify(products));
-        }
+    //   const token = product && product.token;
+    //   if (token) {
+    //     const product = await callApi({
+    //       url: `/product`,
+    //       method: "GET",
+    //       token,
+    //     });
+    //     const products = product;
+    //     if (products) {
+    //       setName("");
+    //       setDescription("");
+    //       setPrice("");
+    //       setInventoryQTY("");
+    //       setCategory("");
+    //       setProductImg("");
+    //       navigate('/admin-page');
+    //       localStorage.setItem("user", JSON.stringify(products));
+    //     }
 
-    }
+    // }
     } catch (error) {
       setErrors(error.message);
     }

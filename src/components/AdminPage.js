@@ -120,7 +120,7 @@ return (
       <h3 className="products-title">Products</h3>
       <Button  className="edit-product-button"
                       onClick={() => {
-                        navigate(`/admin-page/users/products`);
+                        navigate(`/admin-page/products/add`);
                       }}>Add Product</Button>
         <div className="list-of-products">
           {products.map(product => {
