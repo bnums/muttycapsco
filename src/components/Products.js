@@ -5,8 +5,6 @@ import { callApi } from "../axios-services";
 import "../style/Products.css";
 
 const Products = ({ productSearchStr, setProductSearchStr }) => {
-  const navigate = useNavigate();
-  const { shoppingCart } = useUser();
   const [products, setProducts] = useState([]);
 
   const getProducts = async () => {

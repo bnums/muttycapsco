@@ -3,6 +3,7 @@ import useUser from "../hooks/useUser";
 import { useMutation, useQueryClient } from "react-query";
 import "../style/ProductInfo.css";
 import { callApi } from "../axios-services";
+import { useNavigate } from "react-router";
 
 const ProductInfo = ({ id, description, name, price, setShow, productImg }) => {
   const { user, shoppingCart, userOrder } = useUser();

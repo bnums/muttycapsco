@@ -26,12 +26,7 @@ const Footer = () => {
           <p className="footer-content">Privacy Policy</p>
           <p className="footer-content">Terms of Service</p>
         </div>
-        <div className="footer-links col-md-2">
-          <p>Placholder </p>
-          <p>Placholder </p>
-          <p>Placholder </p>
-          <p>Placholder </p>
-        </div>
+        <div className="footer-links col-md-2"></div>
       </div>
     </div>
   );
