@@ -5,20 +5,20 @@ const HomeBanner = () => {
   const navigate = useNavigate();
   return (
     <div className="homebanner container-fluid">
-      <div className="homebanner-title">Welcome to MuttyCapsCo!</div>
-      <div className="homebanner-content row ">
-        <div className="homebanner-subtitle col-7">
+      <div className="homebanner-content container">
+        <div className="homebanner-title row">Welcome to MuttyCapsCo!</div>
+        <div className="homebanner-subtitle row">
           We have never been more ready for the outdoors.
         </div>
+        <button
+          className="homebanner-button btn row "
+          onClick={() => {
+            navigate("/products");
+          }}
+        >
+          Shop
+        </button>
       </div>
-      <button
-        className="homebanner-button btn row "
-        onClick={() => {
-          navigate("/products");
-        }}
-      >
-        Shop
-      </button>
     </div>
   );
 };

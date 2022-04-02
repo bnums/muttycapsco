@@ -6,7 +6,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
@@ -17,8 +16,10 @@
   --blue: blue;
 }
 
-html {
+html,
+body {
   touch-action: manipulation;
+  height: 100%;
 }
 
 a,
@@ -30,8 +31,10 @@ a:hover {
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
   width: 100vw;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .login-register-button {

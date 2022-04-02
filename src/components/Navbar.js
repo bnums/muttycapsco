@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, Link, useParams } from "react-router-dom";
-import { callApi } from "../axios-services";
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import useUser from "../hooks/useUser";
+import { useNavigate } from "react-router";
+
 import "../style/Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,40 +11,33 @@ import {
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Navbar = () => {
-
-  const [token, setToken] = useState("");
-  const [isAdmin, setIsAdmin] = useState("");
-  const navigate = useNavigate();
+const Navbar = ({
+  setSubTotal,
+  setTotal,
+  setTax,
+  setProductSearchStr,
+  productSearchStr,
+}) => {
   const { user, setUser, setShoppingCart, setUserOrder } = useUser();
-
-  const handleUser = async () => {
-    const user = await callApi({
-      url: `/users/me`,
-      method: "GET",
-      token,
-    });
-    setUser(user);
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (token) {
-      handleUser();
-    }
-  }, [token]);
-
+  const [displaySearchBar, setDisplaySearchBar] = useState(false);
+  const searchInput = useRef();
   const handleLogOut = () => {
     setUser({});
     setShoppingCart([]);
     setUserOrder([]);
+    setSubTotal(0);
+    setTotal(0);
+    setTax(0);
     localStorage.clear();
   };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!productSearchStr && searchInput && searchInput.current) {
+      searchInput.current.value = "";
+    }
+  }, [productSearchStr]);
 
   return (
     <>
@@ -54,11 +48,35 @@ const Navbar = () => {
       {user.token && user.username ? (
         <div className="welcome">{`Welcome ${user.username}`}</div>
       ) : null}
-      <Link to="/products">
-        <div className="navbar-search">
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
-        </div>
-      </Link>
+      <div className="d-flex align-items-center">
+        {displaySearchBar ? (
+          <input
+            className="search-input"
+            ref={searchInput}
+            type="text"
+            placeholder="Search by name or category"
+            onKeyUp={(e) => {
+              const value = e.target.value;
+              if (e.key === "Enter" || !value) {
+                setProductSearchStr(value);
+                navigate("/products");
+                // setDisplaySearchBar(false);
+              }
+            }}
+          />
+        ) : (
+          <div
+            className="navbar-search"
+            onClick={(e) => {
+              e.preventDefault();
+              setDisplaySearchBar((previousValue) => !previousValue);
+            }}
+          >
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </div>
+        )}
+      </div>
+
       <Link
         to={
           user.token ? `/${user.username}/profile/${user.id}` : "/account/login"
@@ -73,8 +91,6 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faCartShopping} />
         </div>
       </Link>
-
-      {token && <div className="welcome">{`Welcome ${user.username}`}</div>}
       {user.token && (
         <Link to="/account/login" onClick={handleLogOut}>
           <div className="navbar-logout">Logout</div>

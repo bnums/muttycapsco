@@ -8,19 +8,12 @@ import cardplaceholder from "../imgs/cardplaceholder.png";
 import useUser from "../hooks/useUser";
 
 const AdminEditForm = ({
-  token,
-  products,
-  setProducts,
+
 }) => {
+  const {user:{token}}=useUser()
+  const [products, setProducts] = useState([])
   const [productToEdit, setProductToEdit] = useState(null);
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [inventoryQTY, setInventoryQTY] = useState('');
-  const [category, setCategory] = useState('');
-  const [productImg, setProductImg] = useState('');
-  const [price, setPrice] = useState('');
-  const [product, setProduct] = useState({});
   const { productId } = useParams();
   
 
