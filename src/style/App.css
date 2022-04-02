@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-.app_container {
-  flex: 1 0 auto;
-=======
-body, body * {
+body,
+body * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -15,7 +12,6 @@ body, body * {
 .app-container {
   display: flex;
   flex-direction: column;
->>>>>>> c8883f364f6aac256e9521da8870551750b0cf51
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -30,7 +26,7 @@ body, body * {
   pointer-events: none;
 }
 .rating-icon path {
-  color:#e5e4e4 !important;
+  color: #e5e4e4 !important;
 }
 
 .rating-icon.selected path {
