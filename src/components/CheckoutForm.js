@@ -105,11 +105,21 @@ export default function CheckoutForm() {
     if (error) {
       setMessage(error.message);
     }
-
-    if (paymentIntent.status === "succeeded") {
-      handleSuccess(token, userOrder.id);
-      handleShow();
-      setMessage("Payment succeeded!");
+    switch (paymentIntent.status) {
+      case "succeeded":
+        handleSuccess(token, userOrder.id);
+        handleShow();
+        setMessage("Payment succeeded!");
+        break;
+      case "processing":
+        setMessage("Your payment is processing.");
+        break;
+      case "requires_payment_method":
+        setMessage("Your payment was not successful, please try again.");
+        break;
+      default:
+        setMessage("Something went wrong.");
+        break;
     }
 
     setIsLoading(false);

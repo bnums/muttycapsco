@@ -11,7 +11,6 @@ import {
   UserProfile,
   Cart,
   Checkout,
-  PaymentSuccess,
 } from "./";
 import "../style/App.css";
 import useUser from "../hooks/useUser";
@@ -89,10 +88,6 @@ const App = () => {
                 stripePromise={stripePromise}
               />
             }
-          />
-          <Route
-            path="/shopping-cart/checkout/success"
-            element={<PaymentSuccess />}
           />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<Product />} />
