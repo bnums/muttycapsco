@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import "../style/index.css";
-import { callApi, getAllUsers, getAllProducts, removeProduct, updateProduct, fetchProducts } from "../axios-services";
+import { callApi, getAllUsers, getAllProducts, removeProduct, updateProduct, fetchProducts, createProduct } from "../axios-services";
 import { ProductImage, ProductInfo, ProductCard } from ".";
 import { Button, Card} from "react-bootstrap";
 import cardplaceholder from "../imgs/cardplaceholder.png";
@@ -11,32 +11,19 @@ const AdminEditForm = ({
   token,
   products,
   setProducts,
-  // product,
-  // setProduct,
-  // productId,
 }) => {
   const [productToEdit, setProductToEdit] = useState(null);
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [inventoryQTY, setInventoryQTY] = useState('');
+  const [category, setCategory] = useState('');
+  const [productImg, setProductImg] = useState('');
+  const [price, setPrice] = useState('');
   const [product, setProduct] = useState({});
-  // const [products, setProducts] = useState([]);
   const { productId } = useParams();
-  // const { setProduct } = useUser();
-
-  // const { productId } = useParams();
-  // const navigate = useNavigate();
-  // const [product, setProduct] = useState([]);
-
-
-  // const getProductByProductId = async () => {
-  //   const data = await callApi({ url: `/products/${productId}` });
-  //   setProduct(data);
-  // };
-
-  // useEffect(() => {
-  //   getProductByProductId();
-  // }, [productId]);
+  
+  
   const handleProducts = async () => {
   try {
     const products = await fetchProducts();
@@ -62,20 +49,6 @@ useEffect(() => {
       console.error(error);
     }
   };
-
-  //   const handleEditProductSubmit= async (event, productId) => {
-  //   event.preventDefault()
-  //   try {
-      
-  //       const editedProduct = await callApi({ method: 'patch', url: `/products/${productId}`,token:token})
-  //       console.log(editedProduct)
-  //       setProduct(editedProduct)
-      
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  //   navigate("/admin-page");
-  // };
 
   useEffect(() => {
     const productToEdit = products.find((product) => {

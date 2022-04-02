@@ -13,7 +13,7 @@ import {
 import "../style/App.css";
 import Cart from "./Cart";
 import AccountForm from "./AccountForm";
-import { Products, Product, AdminPage, AdminEdit, AdminEditForm } from ".";
+import { Products, Product, AdminPage, AdminEdit, AdminEditForm, AdminAddUser,  AdminAddProduct} from ".";
 import { callApi} from "../axios-services";
 import useUser from "../hooks/useUser";
 import CheckoutDev from "./CheckoutDev";
@@ -61,8 +61,10 @@ const App = () => {
           {/* <Route path="/shopping-cart" element={<CheckoutDev />} /> */}
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<Product />} />
+          <Route path="/admin-page/users/add" element={<AdminAddUser />} />
+          <Route path="/admin-page/products/add" element={<AdminAddProduct/>} />
           <Route path="/admin-page" element={<AdminPage /*token={token} user={user} product={product} setProduct={setProduct} products={products} setProducts={setProducts}*//>} />
-        <Route path="/products/:productId/edit" element={<AdminEdit token={token} user={user} product={product} setProduct={setProduct} products={products} setProducts={setProducts}/>}/>
+        <Route path="/products/:productId/edit" element={<AdminEditForm token={token} user={user} product={product} setProduct={setProduct} products={products} setProducts={setProducts}/>}/>
         </Routes>
       </div>
       <Footer className="footer" />
