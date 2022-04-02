@@ -1,8 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { App } from './components';
-// css stylesheets can be created for each component
-// place them in the src/style directory, and import them like this:
-import './style/index.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import { QueryClientProvider, QueryClient } from "react-query";
+import { UserProvider } from "./context/UserProvider";
+import { App } from "./components";
+import "./style/index.css";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const queryClient = new QueryClient();
+
+ReactDOM.render(
+  <Router>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </QueryClientProvider>
+  </Router>,
+  document.getElementById("root")
+);

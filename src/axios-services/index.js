@@ -1,29 +1,26 @@
-import axios from 'axios';
+import axios from "axios";
+const BASE_URL = "http://localhost:4000/api"; //'https://muttycapsco.herokuapp.com/api';
 
-// this file holds your frontend network request adapters
-// think about each function as a service that provides data
-// to your React UI through AJAX calls
+export const api = axios.create({
+  baseURL: `${BASE_URL}`,
+});
 
-// for example, if we need to display a list of users
-// we'd probably want to define a getUsers service like this:
-
-/* 
-  export async function getUsers() {
-    try {
-      const { data: users } = await axios.get('/api/users')
-      return users;
-    } catch(err) {
-      console.error(err)
-    }
-  }
-*/
-
-export async function getAPIHealth() {
+export const callApi = async ({ url, method, token, body }) => {
   try {
-    const { data } = await axios.get('/api/health');
+    const options = {
+      method: method ? method.toLowerCase() : "get",
+      url: `${BASE_URL}${url}`,
+      data: body,
+    };
+    if (token) {
+      options.headers = { Authorization: `Bearer ${token}` };
+    }
+    const { data } = await api(options);
+    if (data.error) throw data.error;
+
     return data;
-  } catch (err) {
-    console.error(err);
-    return { healthy: false };
+  } catch (error) {
+    const errToThrow = error?.response?.data; // handle axios 400- and 500-level errors
+    throw errToThrow;
   }
-}
+};

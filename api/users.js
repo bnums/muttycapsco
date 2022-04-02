@@ -1,15 +1,21 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET = 'neverTell' } = process.env;
+require("dotenv").config();
+const { JWT_SECRET = "neverTell" } = process.env;
 
 const {
   createUser,
   getUserByUsername,
+  getUser,
+  getAllUsers,
+  getOrdersByUserId,
 } = require("../db");
+const { requireUser } = require("./utils");
 
+//POST registers a user
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, isAdmin } = req.body;
+  const { username, password, email, isAdmin } = req.body;
   try {
     if (password.length < 8) {
       next({
@@ -26,25 +32,20 @@ usersRouter.post("/register", async (req, res, next) => {
       });
       return;
     }
-    const user = await createUser({ username, password, isAdmin });
-    
-    // const token = jwt.sign({ 
-    //   id: user.id, 
-    //   username
-    // }, process.env.JWT_SECRET, {
-    //   expiresIn: '30d'
-    // });
-    
-    res.send({ 
+    const user = await createUser({ username, password, email, isAdmin });
+    const token = jwt.sign(user, JWT_SECRET);
+
+    res.send({
       user,
-      message: "thank you for signing up",
-      token 
-     });
+      message: "Thank you for signing up",
+      token,
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
 });
 
+//POST logs a user in
 usersRouter.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -56,40 +57,49 @@ usersRouter.post("/login", async (req, res, next) => {
   try {
     const user = await getUser(req.body);
     if (user) {
-      const token = jwt.sign({ user }, JWT_SECRET);
+      const token = jwt.sign(user, JWT_SECRET);
       res.send({ user, token, message: "you're logged in!" });
     } else {
       next({
         name: "IncorrectCredentialsError",
-        message: "Username or password is incorrect",
+        message: "Password is incorrect",
       });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     next(error);
   }
 });
 
+//GET a users info
 usersRouter.get("/me", requireUser, async (req, res, next) => {
   try {
-      res.send(req.user);
+    res.send(req.user);
   } catch (error) {
     next(error);
   }
 });
 
-// usersRouter.get('/', async (req, res) => {
-//   try{
-//   const users = await getAllUsers();
+//GET all registered users
+usersRouter.get("/", async (req, res, next) => {
+  try {
+    const users = await getAllUsers();
 
-// res.send({
-//   users,
-// });
+    res.send(users);
+  } catch (error) {
+    next(error);
+  }
+});
 
-// } catch (error) {
-//   next(error);
-// }
-
-// });
+//GET gets a user's orders
+usersRouter.get("/:userId/orders", async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const orders = await getOrdersByUserId(userId);
+    res.send(orders);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 
 module.exports = usersRouter;

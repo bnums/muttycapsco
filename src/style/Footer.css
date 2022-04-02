@@ -1,0 +1,18 @@
+.footer {
+  background: hsl(180, 15%, 39%);
+  font-family: "Reem Kufi", sans-serif;
+  flex-shrink: 0;
+}
+
+.footer-title {
+  color: #e5e5e5;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.footer-content {
+  font-family: "Urbanist", sans-serif;
+  color: #adc3c3;
+  font-size: 19px;
+}

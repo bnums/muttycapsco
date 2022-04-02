@@ -1,32 +1,113 @@
-import React, { useState, useEffect } from 'react';
-// getAPIHealth is defined in our axios-services directory index.js
-// you can think of that directory as a collection of api adapters
-// where each adapter fetches specific info from our express server's /api route
-import { getAPIHealth } from '../axios-services';
-import '../style/App.css';
+import React, { useEffect, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { Routes, Route } from "react-router-dom";
+import {
+  Home,
+  Header,
+  Footer,
+  Products,
+  Product,
+  AccountForm,
+  UserProfile,
+  Cart,
+  Checkout,
+  ReviewsForm,
+} from "./";
+import "../style/App.css";
+import useUser from "../hooks/useUser";
+import { callApi } from "../axios-services";
+
+const getStripeKey = async () => {
+  const pubKey = await callApi({
+    url: "/stripe/pub-key",
+  });
+  const stripePromise = await loadStripe(pubKey);
+  return stripePromise;
+};
+
+const stripePromise = getStripeKey();
 
 const App = () => {
-  const [APIHealth, setAPIHealth] = useState('');
+  const { setUser, setShoppingCart, setUserOrder } = useUser();
+  const [subTotal, setSubTotal] = useState(0);
+  const [tax, setTax] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [productSearchStr, setProductSearchStr] = useState();
 
   useEffect(() => {
-    // follow this pattern inside your useEffect calls:
-    // first, create an async function that will wrap your axios service adapter
-    // invoke the adapter, await the response, and set the data
-    const getAPIStatus = async () => {
-      const { healthy } = await getAPIHealth();
-      setAPIHealth(healthy ? 'api is up! :D' : 'api is down :/');
-    };
-
-    // second, after you've defined your getter above
-    // invoke it immediately after its declaration, inside the useEffect callback
-    getAPIStatus();
+    if (localStorage.getItem("user")) {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    }
+    if (localStorage.getItem("shoppingCart")) {
+      setShoppingCart(JSON.parse(localStorage.getItem("shoppingCart")));
+    } else {
+      setShoppingCart([]);
+    }
+    if (localStorage.getItem("userOrder")) {
+      setUserOrder(JSON.parse(localStorage.getItem("userOrder")));
+    }
+    if (localStorage.getItem("orderTotal")) {
+      let orderTotal = JSON.parse(localStorage.getItem("orderTotal"));
+      setSubTotal(orderTotal.subTotal);
+      setTax(orderTotal.tax);
+      setTotal(orderTotal.total);
+    }
   }, []);
 
   return (
-    <div className="app-container">
-      <h1>Hello, World!</h1>
-      <p>API Status: {APIHealth}</p>
-    </div>
+    <>
+      <div className="app_container">
+        <Header
+          className="header"
+          setSubTotal={setSubTotal}
+          setTax={setTax}
+          setTotal={setTotal}
+          setProductSearchStr={setProductSearchStr}
+          productSearchStr={productSearchStr}
+        />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/account/:method" element={<AccountForm />} />
+          <Route path="/:username/profile/:userId" element={<UserProfile />} />
+          <Route
+            path="/shopping-cart"
+            element={
+              <Cart
+                total={total}
+                subTotal={subTotal}
+                tax={tax}
+                setTotal={setTotal}
+                setTax={setTax}
+                setSubTotal={setSubTotal}
+              />
+            }
+          />
+          <Route
+            path="/shopping-cart/:checkout"
+            element={
+              <Checkout
+                tax={tax}
+                total={total}
+                subTotal={subTotal}
+                stripePromise={stripePromise}
+              />
+            }
+          />
+          <Route
+            path="/products"
+            element={
+              <Products
+                productSearchStr={productSearchStr}
+                setProductSearchStr={setProductSearchStr}
+              />
+            }
+          />
+          <Route path="/products/:productId" element={<Product />} />
+          <Route path="/products/:productId/review" element={<ReviewsForm />} />
+        </Routes>
+      </div>
+      <Footer className="footer" />
+    </>
   );
 };
 

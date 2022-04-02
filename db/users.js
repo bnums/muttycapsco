@@ -1,5 +1,5 @@
 // grab our db client connection to use with our adapters
-const client = require('./client');
+const client = require("./client");
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 
@@ -26,14 +26,15 @@ async function createUser({ username, password, email, isAdmin }) {
 }
 
 async function getAllUsers() {
-  try{
-  const { rows } = await client.query(
-      `SELECT *
+  try {
+    const { rows } = await client.query(
+      `SELECT username, email, "isAdmin"
       FROM users;
-    `);
-  
+    `
+    );
+
     return rows;
-  }catch (error){
+  } catch (error) {
     throw error;
   }
 }
@@ -57,7 +58,7 @@ async function getUserById(id) {
   }
 }
 
-async function getUserByUsername( username ) {
+async function getUserByUsername(username) {
   try {
     const {
       rows: [user],
@@ -89,7 +90,7 @@ async function getUser({ username, password }) {
     if (!user) {
       throw {
         name: "userNotFound",
-        message: "User not found under that username",
+        message: "User not found ",
       };
     }
 
@@ -98,6 +99,8 @@ async function getUser({ username, password }) {
     if (isMatch) {
       delete user.password;
       return user;
+    } else {
+      console.log("password does not match!");
     }
   } catch (error) {
     throw error;

@@ -1,13 +1,34 @@
+body,
+body * {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+#root {
+  height: 100vh;
+}
+
 .app-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
 }
 
 .app-container h1 {
   color: var(--green);
   padding: 1rem;
+}
+
+.rating-icon {
+  pointer-events: none;
+}
+.rating-icon path {
+  color: #e5e4e4 !important;
+}
+
+.rating-icon.selected path {
+  color: #f3cf0a !important;
 }
