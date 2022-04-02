@@ -5,8 +5,6 @@ const {
   createOrders,
   addProductToOrder,
   createReview,
-  // declare your model imports here
-  // for example, User
 } = require("./");
 
 async function buildTables() {
