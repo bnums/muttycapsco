@@ -52,7 +52,11 @@ const Cart = () => {
               <p>Total: </p>
               <span>$65.99</span>
             </div>
+<<<<<<< HEAD
             <button className="checkoutBtn">
+=======
+            <button className="">
+>>>>>>> c8883f364f6aac256e9521da8870551750b0cf51
               <Link to="">Checkout</Link>
             </button>
           </div>

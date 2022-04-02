@@ -7,6 +7,15 @@
   /* fonts */
   --descriptionFont: Urbanist;
   --headerFont: Reem Kufi;
+<<<<<<< HEAD
+=======
+}
+
+* {
+  margin: 0;
+  font-family: var(--descriptionFont);
+  color: #333;
+>>>>>>> c8883f364f6aac256e9521da8870551750b0cf51
 }
 
 .row {
