@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
 import {
   PaymentElement,
   useStripe,
@@ -6,6 +7,7 @@ import {
 } from "@stripe/react-stripe-js";
 
 import "../style/CheckoutForm.css";
+const SITE_URL = "http://localhost:3000";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -60,7 +62,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/products",
+        return_url: `${SITE_URL}/shopping-cart/checkout/success`,
       },
     });
 

@@ -7,6 +7,7 @@ export { default as UserProfile } from "./UserProfile";
 export { default as OrderCard } from "./OrderCard";
 export { default as Cart } from "./Cart";
 export { default as Checkout } from "./Checkout";
+export { default as PaymentSuccess } from "./PaymentSuccess";
 // Product commponents start
 export { default as Products } from "./Products";
 export { default as Product } from "./Product";
