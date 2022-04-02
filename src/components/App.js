@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 import { Routes, Route } from "react-router-dom";
 import {
   Home,
@@ -13,6 +14,9 @@ import {
 } from "./";
 import "../style/App.css";
 import useUser from "../hooks/useUser";
+const stripePromise = loadStripe(
+  "pk_test_51KcDanJxbkhdCMB8AbA93MgsBUWCFYTYN1qCsSuw6e0vi8NJTSefpgCXJsSkmMX2agc7i2EfKuIFoVJ5lLOCXjR700mXXWD7to"
+);
 
 const App = () => {
   const { setUser, setShoppingCart, setUserOrder } = useUser();
@@ -63,7 +67,14 @@ const App = () => {
           />
           <Route
             path="/shopping-cart/:checkout"
-            element={<Checkout tax={tax} total={total} subTotal={subTotal} />}
+            element={
+              <Checkout
+                tax={tax}
+                total={total}
+                subTotal={subTotal}
+                stripePromise={stripePromise}
+              />
+            }
           />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:productId" element={<Product />} />
