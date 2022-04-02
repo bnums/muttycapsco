@@ -77,8 +77,9 @@ const UserProfile = () => {
                 return <OrderCard key={order.id} order={order} />;
               })
             ) : (
-              <div>Your cart is currently empty</div>
+              <div className="all-orders-container">Your cart is currently empty</div>
             )}
+
             <div className="header-info">
               <h3>Your Previous Orders</h3>
             </div>
@@ -88,7 +89,7 @@ const UserProfile = () => {
                 return <OrderCard key={order.id} order={order} />;
               })
             ) : (
-              <div>You have not made any orders yet</div>
+              <div className="all-orders-container">You have not made any orders yet</div>
             )}
 
           </div>

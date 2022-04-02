@@ -42,17 +42,13 @@
 
 .profile-bottom {
     color: black;
+    /* background-color: red; */
+    margin: 10px 0;
     padding: 60px 0;
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.profile-bottom .down-arrow {
-    width: 15px;
-    margin-top: 15px;
-    cursor: pointer;
 }
 
 .profile-box h2 {
