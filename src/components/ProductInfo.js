@@ -3,12 +3,13 @@ import useUser from "../hooks/useUser";
 import { useMutation, useQueryClient } from "react-query";
 import "../style/ProductInfo.css";
 import { callApi } from "../axios-services";
+import { useNavigate } from "react-router";
 const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
   const { user, shoppingCart, userOrder, setUserOrder } = useUser();
   const [disable, setDisable] = useState(false);
   const queryClient = useQueryClient();
   let inCart = shoppingCart.filter((item) => item.productId === id);
-
+  const navigate = useNavigate();
   const { mutate } = useMutation(callApi, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("getUserOrders");
@@ -69,8 +70,24 @@ const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
 
   return (
     <div className="product-info-container">
-      <h3 className="product-name">{name}</h3>
+      <h3 className="product-name">
+        {name}
+        {!user?.id ? (
+          <span
+            className="btn btn-link"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(`/products/${id}/review`);
+            }}
+          >
+            Add Review
+          </span>
+        ) : (
+          " "
+        )}
+      </h3>
       {/* <p className="product__card-options">3 Colors</p> */}
+      {/* <RatingStar /> */}
       <p className="product-price">${price}</p>
       <p className="product-description">{description}</p>
       <button

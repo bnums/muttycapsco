@@ -47,7 +47,10 @@ const Product = ({ token }) => {
         ></SimilarProducts>
       </div>
       <div className="reviews-wrapper">
-        <ProductReviews reviews={reviews}></ProductReviews>
+        <ProductReviews
+          reviews={reviews}
+          setReviews={setReviews}
+        ></ProductReviews>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
