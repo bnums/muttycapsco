@@ -2,8 +2,30 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
+import { callApi } from "../axios-services";
+import useUser from "../hooks/useUser";
 
 const CartSummary = ({ tax, total, subTotal }) => {
+  const {
+    userOrder,
+    user: { token },
+  } = useUser();
+  const handleCheckout = async () => {
+    try {
+      if (userOrder.id) {
+        await callApi({
+          url: `/orders/${userOrder.id}`,
+          method: "patch",
+          body: {
+            orderTotal: Math.round(total * 100) / 100,
+          },
+          token,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const { checkout } = useParams();
   return (
     <div className="summary">
@@ -29,8 +51,8 @@ const CartSummary = ({ tax, total, subTotal }) => {
         <p>Total: </p>
         <span>${total.toFixed(2)}</span>
       </div>
-      {checkout !== checkout || total !== 0 ? (
-        <button className="">
+      {checkout !== "checkout" && total !== 0 ? (
+        <button className="" onClick={handleCheckout}>
           <Link to="/shopping-cart/checkout">Checkout</Link>
         </button>
       ) : null}

@@ -38,7 +38,9 @@ const UserProfile = () => {
           createOrder();
         }
         localStorage.setItem("userOrder", JSON.stringify(activeOrder[0]));
-        setUserOrder(activeOrder[0]);
+        if (activeOrder[0]) {
+          setUserOrder(activeOrder[0]);
+        }
         setCurrentOrder(activeOrder);
         setCompletedOrders(userOrders.filter((order) => !order.isActive));
       } else {
@@ -55,13 +57,11 @@ const UserProfile = () => {
     <div className="container pt-5 pb-5">
       <h2>{`Welcome to ${user.username}'s page`}</h2>
       <h3>Your Current Order</h3>
-      {currentOrder && currentOrder.length > 0 ? (
-        currentOrder.map((order) => {
-          return <OrderCard key={order.id} order={order} />;
-        })
-      ) : (
-        <div>Your cart is currently empty</div>
-      )}
+      {currentOrder && currentOrder.length > 0
+        ? currentOrder.map((order) => {
+            return <OrderCard key={order.id} order={order} />;
+          })
+        : null}
       <h3>Your Previous Orders</h3>
       {completedOrders && completedOrders.length > 0 ? (
         completedOrders.map((order) => {

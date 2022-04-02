@@ -2,9 +2,18 @@ import React, { useState, useEffect } from "react";
 import CartSummary from "./CartSummary";
 import { Elements } from "@stripe/react-stripe-js";
 import { callApi } from "../axios-services";
+import { Modal, Container, Col, Row } from "react-bootstrap";
 import CheckoutForm from "./CheckoutForm";
 
-const Checkout = ({ tax, subTotal, total, stripePromise }) => {
+const Checkout = ({
+  tax,
+  subTotal,
+  total,
+  stripePromise,
+  setSubTotal,
+  setTotal,
+  setTax,
+}) => {
   const [clientSecret, setClientSecret] = useState("");
 
   const appearance = {
@@ -34,7 +43,11 @@ const Checkout = ({ tax, subTotal, total, stripePromise }) => {
         <div className="col-lg-8">
           {clientSecret && (
             <Elements options={options} stripe={stripePromise}>
-              <CheckoutForm />
+              <CheckoutForm
+                setSubTotal={setSubTotal}
+                setTotal={setTotal}
+                setTax={setTax}
+              />
             </Elements>
           )}
         </div>

@@ -41,12 +41,28 @@ ordersRouter.post("/", async (req, res, next) => {
 //updates an order for a logged in user who is the owner of the order
 ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
   const { orderId } = req.params;
-  const { orderTotal } = req.body;
+  const userId = req.user.id;
+  const { orderTotal, isActive } = req.body;
+  const order = await getOrderById(orderId);
+
+  let updateFields = {
+    id: orderId,
+    userId: order.userId,
+    orderTotal: order.orderTotal,
+    createdAt: order.createdAt,
+    isActive: order.isActive,
+  };
+
+  if (isActive != null) {
+    updateFields.isActive = isActive;
+  }
+  if (orderTotal) {
+    updateFields.orderTotal = orderTotal;
+  }
 
   try {
-    const order = await getOrderById(orderId);
-    if (order.userId === req.user.id) {
-      const updatedOrder = await updateOrder(orderId, orderTotal);
+    if (order.userId === userId) {
+      const updatedOrder = await updateOrder(updateFields);
       res.send(updatedOrder);
       return;
     } else {

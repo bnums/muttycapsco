@@ -4,13 +4,47 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-
 import "../style/CheckoutForm.css";
+import useUser from "../hooks/useUser";
+import { callApi } from "../axios-services";
+import { useMutation, useQueryClient } from "react-query";
 const SITE_URL = "http://localhost:3000";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const {
+    userOrder,
+    user: { token },
+  } = useUser();
+
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation(callApi, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("getUserOrders");
+      localStorage.removeItem("userOrder");
+    },
+  });
+  const handleSuccess = async (token, orderId) => {
+    if (token) {
+      try {
+        mutate({
+          url: `/orders/${orderId}`,
+          method: "patch",
+          body: {
+            isActive: false,
+          },
+          token,
+        });
+        console.log("ONLY IF YOU ARE LOGGED IN");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    localStorage.removeItem("orderTotal");
+    localStorage.removeItem("shoppingCart");
+  };
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,17 +89,21 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${SITE_URL}/shopping-cart/checkout/success`,
+        return_url: `${SITE_URL}`,
       },
+      redirect: "if_required",
     });
 
-    if (error.type === "card_error" || error.type === "validation_error") {
+    if (error) {
       setMessage(error.message);
-    } else {
-      setMessage("An unexpected error occured.");
+    }
+
+    if (paymentIntent.status === "succeeded") {
+      handleSuccess(token, userOrder.id);
+      setMessage("Payment succeeded!");
     }
 
     setIsLoading(false);

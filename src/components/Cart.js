@@ -96,7 +96,7 @@ const Cart = ({ tax, total, subTotal, setSubTotal, setTotal, setTax }) => {
       <div className="row">
         <div className="col-lg-8">
           <h1>Shopping Cart</h1>
-          {user.username && userOrder.items.length > 0
+          {user.username && userOrder.items && userOrder.items.length > 0
             ? userOrder.items.map((item, index) => {
                 return (
                   <CartItem

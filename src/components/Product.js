@@ -77,13 +77,6 @@ const Product = ({ token }) => {
           >
             View Bag
           </button>
-          <button
-            onClick={() => {
-              console.log("checkout");
-            }}
-          >
-            Checkout
-          </button>
         </Modal.Footer>
       </Modal>
     </div>
