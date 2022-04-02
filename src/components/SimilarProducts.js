@@ -15,7 +15,6 @@ const SimilarProducts = ({ category, currentProductId }) => {
       body: { category: category, productId: currentProductId },
       method: "post",
     });
-    console.log("... similar", similarProducts);
     setSimilarProducts(data);
   };
 
@@ -46,8 +45,8 @@ const SimilarProducts = ({ category, currentProductId }) => {
     <>
       <h3> You Might Also Like</h3>
       <div className="similar-products-container">
-        {similarProducts?.map((item) => (
-          <ProductCard {...item} />
+        {mockData?.map((item) => (
+          <ProductCard {...item} key={item.id} />
         ))}
       </div>
     </>

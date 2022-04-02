@@ -1,58 +1,52 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, Link } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
+import useUser from "../hooks/useUser";
 import "../style/Navbar.css";
-import { callApi } from "../axios-services";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faUser, faCartShopping} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMagnifyingGlass,
+  faUser,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
-  const [token, setToken] = useState("");
-  const [user, setUser] = useState("");
-  const navigate = useNavigate();
-
-  const handleUser = async () => {
-    const user = await callApi({
-      url: `/users/me`,
-      method: "GET",
-      token,
-    });
-    setUser(user);
-  };
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-    }
-  }, []);
-
+  const { user, setUser, setShoppingCart, setUserOrder } = useUser();
   const handleLogOut = () => {
-    setToken("");
-    localStorage.removeItem("token");
+    setUser({});
+    setShoppingCart([]);
+    setUserOrder([]);
+    localStorage.clear();
   };
-
-  useEffect(() => {
-    if (token) {
-      handleUser();
-    }
-  }, [token]);
 
   return (
-    <div className="navbar__container">
-      <Link to="/">
-        <div className="navbar-search"><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
+    <div className="navbar__container ">
+      {user.token && user.username ? (
+        <div className="welcome">{`Welcome ${user.username}`}</div>
+      ) : null}
+      <Link to="/products">
+        <div className="navbar-search">
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        </div>
       </Link>
-      <Link to="/login-register">
-        <div className="navbar-user"><FontAwesomeIcon icon={faUser} /></div>
+      <Link
+        to={
+          user.token ? `/${user.username}/profile/${user.id}` : "/account/login"
+        }
+      >
+        <div className="navbar-user">
+          <FontAwesomeIcon icon={faUser} />
+        </div>
       </Link>
       <Link to="/shopping-cart">
-        <div className="navbar-shopping-cart"><FontAwesomeIcon icon={faCartShopping} /></div>
+        <div className="navbar-shopping-cart">
+          <FontAwesomeIcon icon={faCartShopping} />
+        </div>
       </Link>
-      {/* {token && <div className="welcome">{`Welcome ${user.username}`}</div>} */}
-      {!token && <Link to="/account/login"><div className="navbar-login">Login</div>
-      </Link>}
-      {token && <Link to="/account/login"onClick={handleLogOut}>
-        <div className="navbar-logout">Logout</div>
-      </Link>}
+      {user.token && (
+        <Link to="/account/login" onClick={handleLogOut}>
+          <div className="navbar-logout">Logout</div>
+        </Link>
+      )}
     </div>
   );
 };
