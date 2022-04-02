@@ -52,7 +52,7 @@ const Product = ({ token }) => {
           setReviews={setReviews}
         ></ProductReviews>
       </div>
-      <Modal show={show} onHide={handleClose}>
+      <Modal className="product-modal" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <h5>Item Successfully Added!</h5>
         </Modal.Header>
@@ -79,13 +79,6 @@ const Product = ({ token }) => {
             }}
           >
             View Bag
-          </button>
-          <button
-            onClick={() => {
-              console.log("checkout");
-            }}
-          >
-            Checkout
           </button>
         </Modal.Footer>
       </Modal>

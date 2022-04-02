@@ -10,7 +10,8 @@ const addCurrentItemsToOrder = async (orders) => {
     const { rows: products } = await client.query(`
       SELECT products.id AS "productId", 
       orderDetails.id AS "orderDetailId", 
-      orderDetails.quantity, products.name, orderDetails."unitPrice", orderDetails."orderId" 
+      orderDetails.quantity, products.name, orderDetails."unitPrice", orderDetails."orderId",
+      products."productImg" 
       FROM products 
       JOIN orderDetails ON products.id = orderDetails."productId"
       WHERE orderDetails."orderId" IN (${orderIdArray});
@@ -106,19 +107,27 @@ async function getOrdersByUserId(userId) {
   }
 }
 
-async function updateOrder(id, orderTotal) {
+async function updateOrder(orderFields) {
+  const orderId = orderFields.id;
+  delete orderFields.id;
+  const setString = Object.keys(orderFields)
+    .map((key, index) => `"${key}" = $${index + 1}`)
+    .join(", ");
+  if (setString.length === 0) {
+    return;
+  }
   try {
     const {
       rows: [updatedOrder],
     } = await client.query(
       `
-          UPDATE orders
-          SET "orderTotal" = ${orderTotal}
-          WHERE id = ${id}
-          RETURNING *;
-        `
+      UPDATE orders
+      SET ${setString}
+      WHERE id = ${orderId}
+      RETURNING *;
+      `,
+      Object.values(orderFields)
     );
-
     return updatedOrder;
   } catch (error) {
     throw error;

@@ -9,34 +9,10 @@
   --headerFont: Reem Kufi;
 }
 
-* {
-  margin: 0;
+.checkout-content {
   font-family: var(--descriptionFont);
   color: #333;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 100px 0;
-}
-
-.col1 {
-  flex-basis: 50%;
-  position: relative;
-  margin: 0 25px 0 50px;
-  padding-bottom: 50px;
-  /* border-bottom: 2px solid #C7C7C7; */
-}
-
-.col2 {
-  margin: 0 50px 0 25px;
-  flex-basis: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 25px auto 25px auto;
 }
 
 h1 {
@@ -56,14 +32,16 @@ h1 {
 h3 {
   font-family: var(--headerFont);
   font-weight: 400;
-  font-size: 30px;
+  font-size: 25px;
   line-height: 45px;
+  color: #232323;
 }
 
 .single-product-line {
   padding-bottom: 50px;
   display: flex;
   justify-content: space-between;
+  text-align: left;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
@@ -84,15 +62,18 @@ h3 {
   color: var(--lighterGreen);
   cursor: pointer;
 }
-
+.product-quantity label {
+  margin-right: 5px;
+}
 .product-price {
   float: right;
 }
 
 button {
   display: inline-block;
-  margin: 15;
+  margin: 10px 15px auto auto;
   padding: 10px 15px;
+  max-width: 180px;
   border-radius: 35px;
   border-width: 1px;
   background-image: linear-gradient(
@@ -115,8 +96,8 @@ button:hover {
 button a {
   text-decoration: none;
   font-family: var(--descriptionFont);
-  font-weight: 400;
-  font-size: 24px;
+  font-weight: 700;
+  font-size: 18px;
   align-items: center;
 }
 

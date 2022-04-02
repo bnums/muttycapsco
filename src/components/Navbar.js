@@ -11,7 +11,13 @@ import {
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Navbar = ({ setProductSearchStr, productSearchStr }) => {
+const Navbar = ({
+  setSubTotal,
+  setTotal,
+  setTax,
+  setProductSearchStr,
+  productSearchStr,
+}) => {
   const { user, setUser, setShoppingCart, setUserOrder } = useUser();
   const [displaySearchBar, setDisplaySearchBar] = useState(false);
   const searchInput = useRef();
@@ -19,6 +25,9 @@ const Navbar = ({ setProductSearchStr, productSearchStr }) => {
     setUser({});
     setShoppingCart([]);
     setUserOrder([]);
+    setSubTotal(0);
+    setTotal(0);
+    setTax(0);
     localStorage.clear();
   };
 

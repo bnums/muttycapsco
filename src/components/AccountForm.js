@@ -6,9 +6,9 @@ import { Form } from "react-bootstrap";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "../style/index.css";
 
-const AccountForm = ({ fetchUserOrders }) => {
+const AccountForm = () => {
   const params = useParams();
-  const { setUser } = useUser();
+  const { setUser, setShoppingCart } = useUser();
   let { method } = params;
   const loginRegister = method === "login" ? "Log in" : "Register";
   const accountTitle =
@@ -41,6 +41,7 @@ const AccountForm = ({ fetchUserOrders }) => {
           setPassword("");
           users.token = token;
           setUser(users);
+          setShoppingCart([]);
           navigate(`/${users.username}/profile/${users.id}`);
           localStorage.setItem("user", JSON.stringify(users));
         }

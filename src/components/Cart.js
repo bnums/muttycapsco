@@ -1,61 +1,132 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
 import "../style/Cart.css";
 import CartItem from "./CartItem";
 import useUser from "../hooks/useUser";
+import { callApi } from "../axios-services";
+import { useMutation, useQueryClient } from "react-query";
+import CartSummary from "./CartSummary";
 
-const Cart = () => {
-  const { shoppingCart, userOrder } = useUser();
-  // const createCart = async () => {
-  //   if (!userOrder.id) {
-  //     const createdOrder = await callApi({
-  //       url: "/orders",
-  //       method: "post",
-  //       body: {
-  //         orderTotal: 0,
-  //         createdAt: new Date().toISOString().slice(0, 19).replace("T", " "),
-  //       },
-  //     });
-  //     setShoppingCart(createdOrder);
-  //     localStorage.setItem("shoppingCart", JSON.stringify(createdOrder));
-  //     console.log("Order created", createdOrder);
-  //   }
-  // };
+const Cart = ({ tax, total, subTotal, setSubTotal, setTotal, setTax }) => {
+  const {
+    user,
+    user: { token },
+    userOrder,
+    setUserOrder,
+    shoppingCart,
+    setShoppingCart,
+  } = useUser();
+  const queryClient = useQueryClient();
+  const itemCosts = {};
+
+  const { mutate } = useMutation(callApi, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries("getUserOrders");
+      if (data.success) {
+        userOrder.items = userOrder.items.filter(
+          (item) => item.productId !== data.productId
+        );
+        delete itemCosts[`${data.productId}`];
+      }
+      calcTotal();
+      setUserOrder(userOrder);
+      localStorage.setItem("userOrder", JSON.stringify(userOrder));
+    },
+  });
+
+  const calcTotal = () => {
+    if (Object.values(itemCosts).length > 0) {
+      let sub = Object.values(itemCosts).reduce((a, b) => a + b);
+      let tax = sub * 0.09;
+      let total = sub + tax;
+      setTax(tax);
+      setSubTotal(sub);
+      setTotal(total);
+      localStorage.setItem(
+        "orderTotal",
+        JSON.stringify({ subTotal: sub, tax: tax, total: total })
+      );
+      return;
+    }
+    setTax(0);
+    setSubTotal(0);
+    setTotal(0);
+    localStorage.setItem(
+      "orderTotal",
+      JSON.stringify({ subTotal: 0, tax: 0, total: 0 })
+    );
+  };
+
+  const handleUpdate = async ({
+    productId,
+    method,
+    orderDetailId,
+    index,
+    fields,
+  }) => {
+    if (user.username) {
+      try {
+        mutate({
+          url: `/orderDetails/${orderDetailId}`,
+          method: method,
+          body: fields,
+          token,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      if (method === "delete") {
+        const updatedCart = shoppingCart.filter(
+          (item) => item.productId !== productId
+        );
+        delete itemCosts[`${productId}`];
+        calcTotal();
+        setShoppingCart(updatedCart);
+        localStorage.setItem("shoppingCart", JSON.stringify(updatedCart));
+        return;
+      }
+      shoppingCart[index].quantity = fields.quantity;
+      localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+    }
+    calcTotal();
+  };
+
   return (
-    <div className="content">
+    <div className="checkout-content container">
       <div className="row">
-        <CartItem />
+        <div className="col-lg-8">
+          <h1>Shopping Cart</h1>
+          {user.username && userOrder.items && userOrder.items.length > 0
+            ? userOrder.items.map((item, index) => {
+                return (
+                  <CartItem
+                    key={index}
+                    handleUpdate={handleUpdate}
+                    item={item}
+                    calcTotal={calcTotal}
+                    itemCosts={itemCosts}
+                  />
+                );
+              })
+            : null}
+          {shoppingCart && shoppingCart.length > 0
+            ? shoppingCart.map((item, index) => {
+                return (
+                  <CartItem
+                    key={index}
+                    index={index}
+                    handleUpdate={handleUpdate}
+                    item={item}
+                    calcTotal={calcTotal}
+                    itemCosts={itemCosts}
+                  />
+                );
+              })
+            : null}
+        </div>
         {/* ===== RIGHT SIDE: SUMMARY DETAILS ===== */}
-        <div className="col">
-          <div className="summary">
-            <h1>Summary</h1>
-            <div className="pricing-breakdown">
-              <div className="subtotal">
-                <p>Subtotal: </p>
-                <span className="">$20.99</span>
-              </div>
-              <div className="estimated-shipping">
-                <p>
-                  Estimated Shipping
-                  <FontAwesomeIcon icon={faCircleQuestion} />:{" "}
-                </p>{" "}
-                <span className="">$1.50</span>
-              </div>
-              <div className="estimated-tax">
-                <p>Estimated Tax: </p>
-                <span className="">$1.45</span>
-              </div>
-            </div>
-            <div className="orderTotal">
-              <p>Total: </p>
-              <span>$65.99</span>
-            </div>
-            <button className="">
-              <Link to="">Checkout</Link>
-            </button>
-          </div>
+        <div className="col-lg-3 container">
+          <CartSummary tax={tax} total={total} subTotal={subTotal} />
         </div>
       </div>
     </div>

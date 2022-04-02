@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 import { Routes, Route } from "react-router-dom";
 import {
   Home,
@@ -9,14 +10,28 @@ import {
   AccountForm,
   UserProfile,
   Cart,
+  Checkout,
   ReviewsForm,
 } from "./";
 import "../style/App.css";
 import useUser from "../hooks/useUser";
-import CheckoutDev from "./CheckoutDev";
+import { callApi } from "../axios-services";
+
+const getStripeKey = async () => {
+  const pubKey = await callApi({
+    url: "/stripe/pub-key",
+  });
+  const stripePromise = await loadStripe(pubKey);
+  return stripePromise;
+};
+
+const stripePromise = getStripeKey();
 
 const App = () => {
   const { setUser, setShoppingCart, setUserOrder } = useUser();
+  const [subTotal, setSubTotal] = useState(0);
+  const [tax, setTax] = useState(0);
+  const [total, setTotal] = useState(0);
   const [productSearchStr, setProductSearchStr] = useState();
 
   useEffect(() => {
@@ -28,9 +43,14 @@ const App = () => {
     } else {
       setShoppingCart([]);
     }
-
     if (localStorage.getItem("userOrder")) {
       setUserOrder(JSON.parse(localStorage.getItem("userOrder")));
+    }
+    if (localStorage.getItem("orderTotal")) {
+      let orderTotal = JSON.parse(localStorage.getItem("orderTotal"));
+      setSubTotal(orderTotal.subTotal);
+      setTax(orderTotal.tax);
+      setTotal(orderTotal.total);
     }
   }, []);
 
@@ -39,6 +59,9 @@ const App = () => {
       <div className="app_container">
         <Header
           className="header"
+          setSubTotal={setSubTotal}
+          setTax={setTax}
+          setTotal={setTotal}
           setProductSearchStr={setProductSearchStr}
           productSearchStr={productSearchStr}
         />
@@ -46,8 +69,30 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/account/:method" element={<AccountForm />} />
           <Route path="/:username/profile/:userId" element={<UserProfile />} />
-          <Route path="/shopping-cart" element={<Cart />} />
-          {/* <Route path="/shopping-cart" element={<CheckoutDev />} /> */}
+          <Route
+            path="/shopping-cart"
+            element={
+              <Cart
+                total={total}
+                subTotal={subTotal}
+                tax={tax}
+                setTotal={setTotal}
+                setTax={setTax}
+                setSubTotal={setSubTotal}
+              />
+            }
+          />
+          <Route
+            path="/shopping-cart/:checkout"
+            element={
+              <Checkout
+                tax={tax}
+                total={total}
+                subTotal={subTotal}
+                stripePromise={stripePromise}
+              />
+            }
+          />
           <Route
             path="/products"
             element={

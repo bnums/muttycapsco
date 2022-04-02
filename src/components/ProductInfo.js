@@ -4,8 +4,9 @@ import { useMutation, useQueryClient } from "react-query";
 import "../style/ProductInfo.css";
 import { callApi } from "../axios-services";
 import { useNavigate } from "react-router";
-const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
-  const { user, shoppingCart, userOrder, setUserOrder } = useUser();
+
+const ProductInfo = ({ id, description, name, price, setShow, productImg }) => {
+  const { user, shoppingCart, userOrder } = useUser();
   const [disable, setDisable] = useState(false);
   const queryClient = useQueryClient();
   let inCart = shoppingCart.filter((item) => item.productId === id);
@@ -13,7 +14,7 @@ const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
   const { mutate } = useMutation(callApi, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("getUserOrders");
-      const { id, productId, quantity, unitPrice, orderId } = data;
+      const { id, productId, quantity, unitPrice, orderId, productImg } = data;
       if (
         userOrder.items.push({
           name,
@@ -22,6 +23,7 @@ const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
           quantity,
           unitPrice,
           orderId,
+          productImg,
         })
       ) {
         localStorage.setItem("userOrder", JSON.stringify(userOrder));
@@ -52,6 +54,7 @@ const ProductInfo = ({ id, description, name, price, setShow, ...props }) => {
           name: name,
           unitPrice: price,
           quantity: 1,
+          productImg: productImg,
         })
       ) {
         localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
