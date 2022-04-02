@@ -4,9 +4,18 @@ import { useMutation, useQueryClient } from "react-query";
 import "../style/ProductInfo.css";
 import { callApi } from "../axios-services";
 import { useNavigate } from "react-router";
+import RatingStar from "./Ratingstar";
 
-const ProductInfo = ({ id, description, name, price, setShow, productImg }) => {
-  const { user, shoppingCart, userOrder } = useUser();
+const ProductInfo = ({
+  id,
+  description,
+  rating,
+  name,
+  price,
+  setShow,
+  ...props
+}) => {
+  const { user, shoppingCart, userOrder, setUserOrder } = useUser();
   const [disable, setDisable] = useState(false);
   const queryClient = useQueryClient();
   let inCart = shoppingCart.filter((item) => item.productId === id);
@@ -89,6 +98,10 @@ const ProductInfo = ({ id, description, name, price, setShow, productImg }) => {
           " "
         )}
       </h3>
+      <p>
+        {" "}
+        <RatingStar rating={rating} />
+      </p>
       <p className="product-price">${price}</p>
       <p className="product-description">{description}</p>
       <button
