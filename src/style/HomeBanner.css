@@ -17,13 +17,11 @@
   font-size: 36px;
   overflow-wrap: break-word;
   min-width: 50%;
-  margin-top: 10%;
-  margin-left: 8vw;
+  padding-top: 10%;
 }
 
 .homebanner-subtitle {
   overflow-wrap: break-word;
-  margin-left: 8vw;
 }
 
 .homebanner-button {
@@ -32,7 +30,6 @@
   font-size: 15px;
   width: 100px;
   margin-top: 2.5rem;
-  margin-left: 8vw;
   color: white;
 }
 
