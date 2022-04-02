@@ -47,13 +47,13 @@ const App = () => {
 
   return (
     <>
+      <Header
+        className="header"
+        setSubTotal={setSubTotal}
+        setTax={setTax}
+        setTotal={setTotal}
+      />
       <div className="app_container">
-        <Header
-          className="header"
-          setSubTotal={setSubTotal}
-          setTax={setTax}
-          setTotal={setTotal}
-        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/account/:method" element={<AccountForm />} />
@@ -90,7 +90,7 @@ const App = () => {
           <Route path="/products/:productId" element={<Product />} />
         </Routes>
       </div>
-      <Footer className="footer" />
+      {/* <Footer className="footer" /> */}
     </>
   );
 };

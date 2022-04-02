@@ -29,7 +29,7 @@ const CartSummary = ({ tax, total, subTotal }) => {
         <p>Total: </p>
         <span>${total.toFixed(2)}</span>
       </div>
-      {checkout !== "checkout" ? (
+      {checkout !== checkout || total !== 0 ? (
         <button className="">
           <Link to="/shopping-cart/checkout">Checkout</Link>
         </button>

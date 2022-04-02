@@ -52,7 +52,7 @@ const UserProfile = () => {
   useQuery("getUserOrders", fetchUserOrders);
 
   return (
-    <div className="container">
+    <div className="container pt-5 pb-5">
       <h2>{`Welcome to ${user.username}'s page`}</h2>
       <h3>Your Current Order</h3>
       {currentOrder && currentOrder.length > 0 ? (

@@ -3,16 +3,9 @@ import useUser from "../hooks/useUser";
 import { useMutation, useQueryClient } from "react-query";
 import "../style/ProductInfo.css";
 import { callApi } from "../axios-services";
-const ProductInfo = ({
-  id,
-  description,
-  name,
-  price,
-  setShow,
-  productImg,
-  ...props
-}) => {
-  const { user, shoppingCart, userOrder, setUserOrder } = useUser();
+
+const ProductInfo = ({ id, description, name, price, setShow, productImg }) => {
+  const { user, shoppingCart, userOrder } = useUser();
   const [disable, setDisable] = useState(false);
   const queryClient = useQueryClient();
   let inCart = shoppingCart.filter((item) => item.productId === id);

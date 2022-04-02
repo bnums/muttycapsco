@@ -27,6 +27,7 @@ const Cart = ({ tax, total, subTotal, setSubTotal, setTotal, setTax }) => {
         );
         delete itemCosts[`${data.productId}`];
       }
+      calcTotal();
       setUserOrder(userOrder);
       localStorage.setItem("userOrder", JSON.stringify(userOrder));
     },
