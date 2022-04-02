@@ -6,8 +6,53 @@
   line-height: 50px;
 }
 
+.navbar__container a {
+  padding-left: 15px;
+}
+
 .navbar-logout {
   color: #ffffff;
   font-size: 24px;
   font-weight: 500;
+}
+
+.navbar-login {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+svg path {
+  color: #adc3c3;
+}
+
+svg path:hover {
+  color: white;
+}
+
+.fa-cart-shopping,
+.fa-user,
+.fa-magnifying-glass {
+  width: 25px;
+  height: 25px;
+  color: #adc3c3;
+}
+
+.navbar-search {
+  cursor: pointer;
+}
+
+.search-input {
+  width: 280px;
+  height: 30px;
+  padding: 0px 12px;
+  border-radius: 18px;
+  border-width: 0px;
+  box-shadow: none;
+}
+
+.search-input:focus {
+  border-width: 0px;
+  outline: none;
+
 }

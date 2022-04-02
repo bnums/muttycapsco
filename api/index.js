@@ -4,6 +4,7 @@ const reviewsRouter = require("./reviews");
 const ordersRouter = require("./orders");
 const orderDetailsRouter = require("./orderDetails");
 const productRouter = require("./products");
+const stripeRouter = require("./stripe");
 const { getUserById } = require("../db/users");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
@@ -46,6 +47,7 @@ apiRouter.use("/products", productRouter);
 apiRouter.use("/orders", ordersRouter);
 apiRouter.use("/orderDetails", orderDetailsRouter);
 apiRouter.use("/reviews", reviewsRouter);
+apiRouter.use("/stripe", stripeRouter);
 
 //custom error handlers
 apiRouter.get("*", (req, res, next) => {

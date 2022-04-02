@@ -1,37 +1,67 @@
-import React from "react";
+import React, { useEffect } from "react";
+import useUser from "../hooks/useUser";
 import "../style/ProductReviews.css";
+import { callApi } from "../axios-services";
+import RatingStar from "./Ratingstar";
 
-const ProductReviews = (props) => {
-  const mockData = [
-    {
-      title: "Amazing",
-      rating: 5,
-      review:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      author: "remote control",
-      color: "mustard yellow",
-    },
-  ];
+const ProductReviews = ({ reviews, setReviews }) => {
+  const { user } = useUser();
+  const onDelete = async (review) => {
+    const { id } = review;
+    const response = await callApi({
+      url: `/reviews/${id}`,
+      method: `delete`,
+      token: user.token,
+    });
+    if (response?.id) {
+      const newReviews = reviews.filter((item) => item.id !== id);
+      setReviews(newReviews);
+    }
+  };
+
+  useEffect(() => {}, [reviews, setReviews]);
   return (
-    <div className="product-reviews-container">
+    <>
       <h3>Reviews</h3>
       <div className="reviews-wrapper">
-        {mockData?.map((item) => (
-          <div className="review">
-            <div>
-              <strong>{item.title}</strong>
-            </div>
-            <div>{item.rating}</div>
-            <div>{item.review}</div>
-            <div>{item.author}</div>
-            <div>{item.color}</div>
-          </div>
-        ))}
+        {reviews?.length
+          ? reviews?.map((item) => (
+              <div className="card my-3 review" key={item?.id}>
+                <div className="card-header d-flex align-items-center justify-content-between px-3">
+                  <div>
+                    <strong>{item.title}</strong>
+                  </div>
+                  <div>
+                    {item.creatorId === user.id ? (
+                      <div
+                        className="btn btn-link"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onDelete(item);
+                        }}
+                      >
+                        Delete
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="card-body">
+                  <div>
+                    <RatingStar rating={item.rating} />
+                  </div>
+                  <div> {item.comment}</div>
+                  <div> Author: {item.creatorId}</div>
+                </div>
+              </div>
+            ))
+          : ""}
       </div>
-      <div className="more-reviews-wrapper">
+      {/* <div className="more-reviews-wrapper">
         <div> Show More Reviews</div>
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 };
 

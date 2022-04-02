@@ -8,12 +8,10 @@ const {
   createOrders,
   updateOrder,
   deleteOrder,
-  getOrderbyId,
   addProductToOrder,
 } = require("../db");
 
 //GET gets all orders
-//TODO maybe think about making this get route available to only admins
 ordersRouter.get("/", async (req, res, next) => {
   try {
     const orders = await getAllOrders();
@@ -23,12 +21,12 @@ ordersRouter.get("/", async (req, res, next) => {
   }
 });
 
-//POST creates a new order for a logged in user
-ordersRouter.post("/", requireUser, async (req, res, next) => {
-  const { orderTotal, createdAt } = req.body;
+//POST /orders creates a new order for a logged in user
+ordersRouter.post("/", async (req, res, next) => {
+  const { orderTotal, createdAt, userId } = req.body;
   try {
     const createdOrder = await createOrders({
-      userId: req.user.id,
+      userId: userId,
       orderTotal: orderTotal,
       createdAt: createdAt,
       isActive: true,
@@ -43,12 +41,28 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
 //updates an order for a logged in user who is the owner of the order
 ordersRouter.patch("/:orderId", requireUser, async (req, res, next) => {
   const { orderId } = req.params;
-  const { orderTotal } = req.body;
+  const userId = req.user.id;
+  const { orderTotal, isActive } = req.body;
+  const order = await getOrderById(orderId);
+
+  let updateFields = {
+    id: orderId,
+    userId: order.userId,
+    orderTotal: order.orderTotal,
+    createdAt: order.createdAt,
+    isActive: order.isActive,
+  };
+
+  if (isActive != null) {
+    updateFields.isActive = isActive;
+  }
+  if (orderTotal) {
+    updateFields.orderTotal = orderTotal;
+  }
 
   try {
-    const order = await getOrderById(orderId);
-    if (order.userId === req.user.id) {
-      const updatedOrder = await updateOrder(orderId, orderTotal);
+    if (order.userId === userId) {
+      const updatedOrder = await updateOrder(updateFields);
       res.send(updatedOrder);
       return;
     } else {
@@ -88,7 +102,7 @@ ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
 
 // POST /orders/:orderId/products
 // adds a product to an order /orders/:orderId/product
-ordersRouter.post("/:orderId/products", requireUser, async (req, res, next) => {
+ordersRouter.post("/:orderId/products", async (req, res, next) => {
   const { orderId } = req.params;
   const productOrder = { ...req.body, orderId: orderId };
 

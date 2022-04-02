@@ -1,19 +1,7 @@
 .footer {
   background: hsl(180, 15%, 39%);
-  display: flex;
-  flex-direction: row;
   font-family: "Reem Kufi", sans-serif;
-  padding: 2em;
-  justify-content: space-evenly;
-}
-
-@media screen and (max-width: 700px) {
-  .footer {
-    flex-direction: column;
-  }
-  .footer-links {
-    margin-left: 60vw;
-  }
+  flex-shrink: 0;
 }
 
 .footer-title {
@@ -21,13 +9,10 @@
   font-weight: 500;
   font-size: 24px;
   line-height: 36px;
-  padding-bottom: 1.5rem;
-  margin-top: 1rem;
 }
 
 .footer-content {
   font-family: "Urbanist", sans-serif;
   color: #adc3c3;
-  font-size: 20px;
-  padding: 3px;
+  font-size: 19px;
 }

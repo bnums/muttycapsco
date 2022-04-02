@@ -28,6 +28,17 @@ async function getProductById(productId) {
   }
 }
 
+async function getProductByCategory() {
+  try {
+    const { rows: products } = await client.query(`
+      SELECT * FROM products
+      `);
+    return products;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function createProducts({
   name,
   description,
@@ -100,6 +111,7 @@ async function removeProduct(productId) {
 module.exports = {
   getAllProducts,
   getProductById,
+  getProductByCategory,
   createProducts,
   updateProduct,
   removeProduct,

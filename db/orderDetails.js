@@ -18,6 +18,14 @@ const addProductToOrder = async ({
         `,
       [orderId, productId, quantity, unitPrice, createdAt]
     );
+    const {
+      rows: [productImg],
+    } = await client.query(
+      `SELECT "productImg" FROM products
+      WHERE id = ${orderDetail.productId}`
+    );
+    orderDetail.productImg = productImg.productImg;
+
     return orderDetail;
   } catch (error) {
     throw error;
@@ -85,7 +93,7 @@ const deleteItem = async (id) => {
       `
             DELETE FROM orderDetails
             WHERE "id" = $1
-            RETURNING orderDetails.id;
+            RETURNING orderDetails."productId";
         `,
       [id]
     );
