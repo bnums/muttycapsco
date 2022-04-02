@@ -66,7 +66,7 @@ usersRouter.post("/login", async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     next(error);
   }
 });

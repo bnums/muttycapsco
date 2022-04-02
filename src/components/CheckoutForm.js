@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Spinner } from "react-bootstrap";
 import {
   PaymentElement,
   useStripe,
@@ -51,8 +50,6 @@ export default function CheckoutForm() {
     e.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
@@ -61,7 +58,6 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
         return_url: `${SITE_URL}/shopping-cart/checkout/success`,
       },
     });
@@ -89,7 +85,6 @@ export default function CheckoutForm() {
             )}
           </span>
         </button>
-        {/* Show any error or success messages */}
         {message && <div id="payment-message">{message}</div>}
       </form>
     </>

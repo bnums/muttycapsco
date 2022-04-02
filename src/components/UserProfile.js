@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useUser from "../hooks/useUser";
 import { useQuery } from "react-query";
 import { callApi } from "../axios-services";

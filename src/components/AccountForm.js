@@ -6,7 +6,7 @@ import { Form } from "react-bootstrap";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "../style/index.css";
 
-const AccountForm = ({ fetchUserOrders }) => {
+const AccountForm = () => {
   const params = useParams();
   const { setUser, setShoppingCart } = useUser();
   let { method } = params;
