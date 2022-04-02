@@ -15,9 +15,17 @@ import {
 } from "./";
 import "../style/App.css";
 import useUser from "../hooks/useUser";
-const stripePromise = loadStripe(
-  "pk_test_51KcDanJxbkhdCMB8AbA93MgsBUWCFYTYN1qCsSuw6e0vi8NJTSefpgCXJsSkmMX2agc7i2EfKuIFoVJ5lLOCXjR700mXXWD7to"
-);
+import { callApi } from "../axios-services";
+
+const getStripeKey = async () => {
+  const pubKey = await callApi({
+    url: "/stripe/pub-key",
+  });
+  const stripePromise = await loadStripe(pubKey);
+  return stripePromise;
+};
+
+const stripePromise = getStripeKey();
 
 const App = () => {
   const { setUser, setShoppingCart, setUserOrder } = useUser();
@@ -90,7 +98,7 @@ const App = () => {
           <Route path="/products/:productId" element={<Product />} />
         </Routes>
       </div>
-      {/* <Footer className="footer" /> */}
+      <Footer className="footer" />
     </>
   );
 };

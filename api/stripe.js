@@ -1,12 +1,16 @@
 const express = require("express");
 const stripeRouter = express();
 require("dotenv").config();
-const { STRIPE_TEST_KEY } = process.env;
+const { STRIPE_TEST_KEY, STRIPE_PUB_KEY } = process.env;
 const stripe = require("stripe")(STRIPE_TEST_KEY);
 
 const calculateOrderAmount = (total) => {
   return total * 100;
 };
+
+stripeRouter.get("/pub-key", async (req, res) => {
+  res.send(STRIPE_PUB_KEY);
+});
 
 stripeRouter.post("/create-payment-intent", async (req, res) => {
   const { total } = req.body;

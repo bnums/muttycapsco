@@ -12,7 +12,6 @@ const {
 } = require("../db");
 
 //GET gets all orders
-//TODO maybe think about making this get route available to only admins
 ordersRouter.get("/", async (req, res, next) => {
   try {
     const orders = await getAllOrders();
