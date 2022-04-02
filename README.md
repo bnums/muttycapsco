@@ -1,8 +1,14 @@
-# Pupper Hats E-commerce Site!
+# Welcome to MuttyCapsCo!
 
-This is a full stack app built by Aye Khine Bryan Num, Daisy Centeno, and Reuben Ramos!
+Hi there! We are Aye Khine Bryan Num, Daisy Centeno, and Reuben Ramos, and we are the founders and creators of MuttyCapsCo!
 
-# Local Development
+Do you struggle with finding the perfect outdoor wear for your furry best friend? Well look no further, here you can browse our selections
+of fine clothing for all your furry friends needs.
+
+Our application allows for both guests and signed up users to browse and search through our inventory. After seeing something that you would like to purchase,
+You are able to add it to your shopping cart. From there you may continue to shop or proceed to a checkout page to purchase your product.
+
+# Local Development (for developers)
 
 ## Getting Started
 
@@ -36,7 +42,12 @@ $ git init
 ├── db
 │   ├── client.js
 │   ├── index.js
-│   └── init_db.js
+│   ├── init_db.js
+│   ├── orderDetails.js
+│   ├── orders.js
+│   ├── products.js
+│   ├── reviews.js
+│   └── users.js
 │
 ├── public
 │   └── index.html
@@ -44,13 +55,17 @@ $ git init
 ├── src
 │   ├── axios-services
 │   │   └── index.js
+│   │ 
 │   ├── components
-│   │   ├── App.js
-│   │   └── index.js
+│   │   └── ... 
+│   │ 
 │   ├── style
-│   │   ├── App.css
-│   │   └── index.css
+│   │   └── ...
+│   │ 
 │   └── index.js
+│
+├── tests
+│   └── apiRouter.test.js
 │
 ├── .gitignore
 ├── index.js
