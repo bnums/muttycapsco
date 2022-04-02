@@ -3,13 +3,13 @@ import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import "../style/Header.css";
 
-const Header = ({ setSubTotal, setTax, setTotal }) => {
+const Header = (props) => {
   return (
     <div className="header container-fluid ">
       <Link to={"/"}>
         <div className="header__company__name ">MuttyCapsCo.</div>
       </Link>
-      <Navbar setTotal={setTotal} setTax={setTax} setSubTotal={setSubTotal} />
+      <Navbar {...props} />
     </div>
   );
 };

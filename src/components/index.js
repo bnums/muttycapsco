@@ -16,3 +16,5 @@ export { default as ProductImage } from "./ProductImage";
 export { default as ProductInfo } from "./ProductInfo";
 export { default as ProductReviews } from "./ProductReviews";
 export { default as SimilarProducts } from "./SimilarProducts";
+export { default as ReviewsForm } from "./ReviewsForm";
+export { default as RatingStart } from "./Ratingstar";

@@ -11,6 +11,7 @@ import {
   UserProfile,
   Cart,
   Checkout,
+  ReviewsForm,
 } from "./";
 import "../style/App.css";
 import useUser from "../hooks/useUser";
@@ -31,6 +32,7 @@ const App = () => {
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
+  const [productSearchStr, setProductSearchStr] = useState();
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
@@ -54,13 +56,15 @@ const App = () => {
 
   return (
     <>
-      <Header
-        className="header"
-        setSubTotal={setSubTotal}
-        setTax={setTax}
-        setTotal={setTotal}
-      />
       <div className="app_container">
+        <Header
+          className="header"
+          setSubTotal={setSubTotal}
+          setTax={setTax}
+          setTotal={setTotal}
+          setProductSearchStr={setProductSearchStr}
+          productSearchStr={productSearchStr}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/account/:method" element={<AccountForm />} />
@@ -89,8 +93,17 @@ const App = () => {
               />
             }
           />
-          <Route path="/products" element={<Products />} />
+          <Route
+            path="/products"
+            element={
+              <Products
+                productSearchStr={productSearchStr}
+                setProductSearchStr={setProductSearchStr}
+              />
+            }
+          />
           <Route path="/products/:productId" element={<Product />} />
+          <Route path="/products/:productId/review" element={<ReviewsForm />} />
         </Routes>
       </div>
       <Footer className="footer" />
