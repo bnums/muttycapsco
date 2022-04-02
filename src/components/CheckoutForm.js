@@ -8,11 +8,16 @@ import "../style/CheckoutForm.css";
 import useUser from "../hooks/useUser";
 import { callApi } from "../axios-services";
 import { useMutation, useQueryClient } from "react-query";
+import { PaymentSuccess } from ".";
 const SITE_URL = "http://localhost:3000";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const {
     userOrder,
     user: { token },
@@ -103,6 +108,7 @@ export default function CheckoutForm() {
 
     if (paymentIntent.status === "succeeded") {
       handleSuccess(token, userOrder.id);
+      handleShow();
       setMessage("Payment succeeded!");
     }
 
@@ -125,6 +131,7 @@ export default function CheckoutForm() {
         </button>
         {message && <div id="payment-message">{message}</div>}
       </form>
+      <PaymentSuccess show={show} handleClose={handleClose} />
     </>
   );
 }
