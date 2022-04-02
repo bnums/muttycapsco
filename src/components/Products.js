@@ -2,13 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import { callApi } from "../axios-services";
-import { useNavigate } from "react-router";
-import useUser from "../hooks/useUser";
 import "../style/Products.css";
 
 const Products = ({ productSearchStr, setProductSearchStr }) => {
-  const navigate = useNavigate();
-  const { shoppingCart } = useUser();
   const [products, setProducts] = useState([]);
 
   const getProducts = async () => {

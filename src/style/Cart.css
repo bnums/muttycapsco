@@ -51,14 +51,16 @@
     color: #232323;
   font-family: var(--headerFont);
   font-weight: 400;
-  font-size: 30px;
+  font-size: 25px;
   line-height: 45px;
+  color: #232323;
 }
 
 .single-product-line {
   padding-bottom: 50px;
   display: flex;
   justify-content: space-between;
+  text-align: left;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
@@ -79,15 +81,18 @@
   color: var(--lighterGreen);
   cursor: pointer;
 }
-
+.product-quantity label {
+  margin-right: 5px;
+}
 .product-price {
   float: right;
 }
 
 .checkoutBtn {
   display: inline-block;
-  margin: 15;
+  margin: 10px 15px auto auto;
   padding: 10px 15px;
+  max-width: 180px;
   border-radius: 35px;
   border-width: 1px;
   background-image: linear-gradient(
@@ -110,8 +115,8 @@
 .checkoutBtn a {
   text-decoration: none;
   font-family: var(--descriptionFont);
-  font-weight: 400;
-  font-size: 24px;
+  font-weight: 700;
+  font-size: 18px;
   align-items: center;
 }
 

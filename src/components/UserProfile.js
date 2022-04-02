@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useUser from "../hooks/useUser";
 import { useQuery } from "react-query";
 import { callApi } from "../axios-services";
@@ -43,7 +43,9 @@ const UserProfile = () => {
           createOrder();
         }
         localStorage.setItem("userOrder", JSON.stringify(activeOrder[0]));
-        setUserOrder(activeOrder[0]);
+        if (activeOrder[0]) {
+          setUserOrder(activeOrder[0]);
+        }
         setCurrentOrder(activeOrder);
         setCompletedOrders(userOrders.filter((order) => !order.isActive));
       } else {
