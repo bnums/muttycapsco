@@ -17,7 +17,7 @@ const AdminAddUser = () => {
   const [errors, setErrors] = useState([]);
   const [ isAdmin, setIsAdmin ] = useState(false);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, token) => {
     try {
       event.preventDefault();
       localStorage.clear();
@@ -27,24 +27,14 @@ const AdminAddUser = () => {
         body: { username, password, email },
       });
 
-      const token = user && user.token;
-      if (token) {
-        const username = await callApi({
-          url: `/users/me`,
-          method: "GET",
-          token,
-        });
         const users = username;
-        if (users) {
+        if (user) {
           setUsername("");
           setPassword("");
-          users.token = token;
-          setUser(users);
-          navigate('/admin-page');
+          navigate('/admin-page/users');
           localStorage.setItem("user", JSON.stringify(users));
         }
-
-      }
+        
     } catch (error) {
       setErrors(error.message);
     }

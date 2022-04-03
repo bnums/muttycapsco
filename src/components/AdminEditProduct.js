@@ -1,30 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import "../style/index.css";
-import { callApi, getAllUsers, getAllProducts, removeProduct, updateProduct, fetchProducts, createProduct } from "../axios-services";
+import { callApi} from "../axios-services";
 import { ProductImage, ProductInfo, ProductCard } from ".";
 import { Button, Card} from "react-bootstrap";
 import cardplaceholder from "../imgs/cardplaceholder.png";
 import useUser from "../hooks/useUser";
 
-const AdminEditForm = ({
+const AdminEditProduct = ({token
 
 }) => {
-  const {user:{token}}=useUser()
+  const {user}=useUser()
   const [products, setProducts] = useState([])
   const [productToEdit, setProductToEdit] = useState(null);
   const navigate = useNavigate();
   const { productId } = useParams();
   
 
-const getProducts = async () => {
-  const data = await callApi({ url: `/products` });
-  setProducts(data);
-};
-
-useEffect(() => {
-  getProducts();
-}, []);
+const handleProducts = async () =>{
+  try{
+    const products = await callApi({ method: 'get', url: `/products`, token:token })
+    console.log('this is all the products ', products)
+    setProducts(products)
+      }catch(error){
+        console.log(error)
+      }
+    }
+    
+    useEffect(() => {
+      handleProducts()
+      },[setProducts, token]);
 
   const handleEditProduct = async ({id,name, description, price, inventoryQTY, category, productImg}) => {
       try {
@@ -56,7 +61,7 @@ useEffect(() => {
   return (
     <>
       <div className="edit-a-product">
-        <div className="new-product-form-title"> EDIT YOUR PRODUCT </div>
+        <div className="new-product-form-title"> Edit Product</div>
         <form className="edit-product-form" >
           {products.map((product) => {
             const { id } = product;
@@ -142,7 +147,8 @@ useEffect(() => {
                       }
                       required
                     />
-                    <button id="submit-button" type="submit" onClick={(e)=>{e.preventDefault(); handleEditProduct(productToEdit)}}>Submit</button>
+                    <button id="submit-button" type="submit" onClick={(e)=>{e.preventDefault(); navigate(`/admin-page/products`);
+                     handleEditProduct(productToEdit)}}>Submit</button>
                   </>
                 )}
               </div>
@@ -154,4 +160,4 @@ useEffect(() => {
   );
 };
 
-export default AdminEditForm;
+export default AdminEditProduct;

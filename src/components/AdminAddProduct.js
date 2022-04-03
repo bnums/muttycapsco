@@ -12,8 +12,6 @@ const AdminAddProduct = ({token}) => {
   const { setUser } = useUser();
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
-  const [product, setProduct] = useState("");
-  const [products, setProducts] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -31,41 +29,14 @@ const AdminAddProduct = ({token}) => {
         body: { name, description, price, inventoryQTY, category, productImg},
       });
 
-    //   const token = product && product.token;
-    //   if (token) {
-    //     const product = await callApi({
-    //       url: `/product`,
-    //       method: "GET",
-    //       token,
-    //     });
-//         const products = product;
-//         if (products) {
-//           setName("");
-//           setDescription("");
-//           setPrice("");
-//           setInventoryQTY("");
-//           setCategory("");
-//           setProductImg("");
-//           navigate('/admin-page');
-//           localStorage.setItem("user", JSON.stringify(products));
-//         }
+        if (product) {
+          navigate('/admin-page/products');
+        }
 
-//     }
     } catch (error) {
       setErrors(error.message);
     }
   };
-
-// const handleProductSubmit = async (event ) => {
-//     try {
-//       event.preventDefault();
-//       const newProducts = await createProduct(name, description, price, inventoryQTY, category, productImg, token);
-//       console.log("newProduct", newProducts);
-//       setProducts([...products, newProducts]);
-//     } catch (error) {
-//       setErrors(error)
-//     }
-//   };
 
   return (
     <>
@@ -188,9 +159,15 @@ const AdminAddProduct = ({token}) => {
                     />
                 </Form.Group>
                 <Button
+                //   onClick={() => {
+                //     navigate(`/admin-page/`);
+                //   }}
                   style={{ background: "#557272", border: "none" }}
                   className="login-register-button"
                   type="submit"
+                //   onClick={() => {
+                //     navigate(`/admin-page/`);
+                //   }}
                 >
                   Create
                 </Button>
