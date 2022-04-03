@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import cardplaceholder from "../imgs/cardplaceholder.png";
 import "../style/ProductCard.css";
 import { useNavigate } from "react-router";
-
-const ProductCard = ({ id, productImg, name, price }) => {
+import RatingStar from "./Ratingstar";
+const ProductCard = ({ id, productImg, name, rating, price }) => {
   const navigate = useNavigate();
 
   return (
@@ -21,7 +21,10 @@ const ProductCard = ({ id, productImg, name, price }) => {
           alt="img of dog with yellow beanie"
         />
         <h3 className="product__card-title">{name}</h3>
-        {/* <p className="product__card-options">3 Colors</p> */}
+        <p>
+          {" "}
+          <RatingStar rating={rating} />
+        </p>
         <p className="product__card-price">{price}</p>
       </span>
     </>

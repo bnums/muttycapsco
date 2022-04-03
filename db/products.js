@@ -42,6 +42,7 @@ async function getProductByCategory() {
 async function createProducts({
   name,
   description,
+  rating,
   price,
   inventoryQTY,
   category,
@@ -52,11 +53,11 @@ async function createProducts({
       rows: [product],
     } = await client.query(
       `
-      INSERT INTO products(name, description, price, "inventoryQTY", category, "productImg")
-      VALUES($1,$2,$3,$4,$5,$6)
+      INSERT INTO products(name, description, rating, price, "inventoryQTY", category, "productImg")
+      VALUES($1,$2,$3,$4,$5,$6,$7)
       RETURNING*;
       `,
-      [name, description, price, inventoryQTY, category, productImg]
+      [name, description, rating, price, inventoryQTY, category, productImg]
     );
     return product;
   } catch (error) {

@@ -11,7 +11,7 @@ const {
   getAllUsers,
   getOrdersByUserId,
 } = require("../db");
-const { requireUser } = require("./utils");
+const { requireUser, requireAdmin } = require("./utils");
 
 //POST registers a user
 usersRouter.post("/register", async (req, res, next) => {

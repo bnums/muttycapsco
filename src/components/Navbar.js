@@ -40,7 +40,11 @@ const Navbar = ({
   }, [productSearchStr]);
 
   return (
+    <>
     <div className="navbar__container ">
+       {user.token && user.isAdmin ? <Link to="/admin-page">
+         <div className="navbar-admin">Administrator</div>
+       </Link>: null}
       {user.token && user.username ? (
         <div className="welcome">{`Welcome ${user.username}`}</div>
       ) : null}
@@ -92,7 +96,9 @@ const Navbar = ({
           <div className="navbar-logout">Logout</div>
         </Link>
       )}
+
     </div>
+    </>
   );
 };
 

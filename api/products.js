@@ -6,7 +6,7 @@ const {
   getAllProducts,
   getProductByCategory,
 } = require("../db");
-const { requireUser } = require("./utils");
+const { requireUser, requireAdmin } = require("./utils");
 const productRouter = require("express").Router();
 
 // GET/products
@@ -45,7 +45,7 @@ productRouter.post("/category", async (req, res, next) => {
 });
 
 //POST/products
-productRouter.post("/", requireUser, async (req, res, next) => {
+productRouter.post("/", async (req, res, next) => {
   try {
     const {
       name,
@@ -70,7 +70,7 @@ productRouter.post("/", requireUser, async (req, res, next) => {
 });
 
 //PATCH/products/:productId
-productRouter.patch("/:productId", requireUser, async (req, res, next) => {
+productRouter.patch("/:productId", async (req, res, next) => {
   const { productId } = req.params;
   try {
     const toUpdateProduct = { ...req.body, productId };
@@ -82,7 +82,7 @@ productRouter.patch("/:productId", requireUser, async (req, res, next) => {
 });
 
 // DELETE/products/:productId
-productRouter.delete("/:productId", requireUser, async (req, res, next) => {
+productRouter.delete("/:productId", async (req, res, next) => {
   const { productId } = req.params;
   //   const product = await getProductById(productId);
 
