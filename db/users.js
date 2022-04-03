@@ -106,6 +106,24 @@ async function getUser({ username, password }) {
     throw error;
   }
 }
+
+async function removeUser(userId) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+              DELETE FROM users
+              WHERE id=$1
+              RETURNING *;
+          `,
+      [userId]
+    );
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports = {
   // add your database adapter fns here
   getAllUsers,
@@ -113,4 +131,5 @@ module.exports = {
   getUserById,
   getUserByUsername,
   getUser,
+  removeUser,
 };

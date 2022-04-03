@@ -31,26 +31,10 @@ const AdminAddProduct = ({token}) => {
         body: { name, description, price, inventoryQTY, category, productImg},
       });
 
-    //   const token = product && product.token;
-    //   if (token) {
-    //     const product = await callApi({
-    //       url: `/product`,
-    //       method: "GET",
-    //       token,
-    //     });
-//         const products = product;
-//         if (products) {
-//           setName("");
-//           setDescription("");
-//           setPrice("");
-//           setInventoryQTY("");
-//           setCategory("");
-//           setProductImg("");
-//           navigate('/admin-page');
-//           localStorage.setItem("user", JSON.stringify(products));
-//         }
+        if (product) {
+          navigate('/admin-page');
+        }
 
-//     }
     } catch (error) {
       setErrors(error.message);
     }
@@ -188,9 +172,15 @@ const AdminAddProduct = ({token}) => {
                     />
                 </Form.Group>
                 <Button
+                //   onClick={() => {
+                //     navigate(`/admin-page/`);
+                //   }}
                   style={{ background: "#557272", border: "none" }}
                   className="login-register-button"
                   type="submit"
+                //   onClick={() => {
+                //     navigate(`/admin-page/`);
+                //   }}
                 >
                   Create
                 </Button>

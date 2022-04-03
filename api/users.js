@@ -10,6 +10,7 @@ const {
   getUser,
   getAllUsers,
   getOrdersByUserId,
+  removeUser,
 } = require("../db");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -97,6 +98,17 @@ usersRouter.get("/:userId/orders", async (req, res, next) => {
   try {
     const orders = await getOrdersByUserId(userId);
     res.send(orders);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+usersRouter.delete("/:userId", async (req, res, next) => {
+  const { userId } = req.params;
+
+  try {
+    const deletedUser = await removeUser(userId);
+    res.send(deletedUser);
   } catch ({ name, message }) {
     next({ name, message });
   }

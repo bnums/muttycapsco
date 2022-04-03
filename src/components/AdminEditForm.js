@@ -17,14 +17,19 @@ const AdminEditForm = ({
   const { productId } = useParams();
   
 
-const getProducts = async () => {
-  const data = await callApi({ url: `/products` });
-  setProducts(data);
-};
-
-useEffect(() => {
-  getProducts();
-}, []);
+const handleProducts = async () =>{
+  try{
+    const products = await callApi({ method: 'get', url: `/products`, token:token })
+    console.log('this is all the products ', products)
+    setProducts(products)
+      }catch(error){
+        console.log(error)
+      }
+    }
+    
+    useEffect(() => {
+      handleProducts()
+      },[setProducts, token]);
 
   const handleEditProduct = async ({id,name, description, price, inventoryQTY, category, productImg}) => {
       try {
@@ -142,7 +147,8 @@ useEffect(() => {
                       }
                       required
                     />
-                    <button id="submit-button" type="submit" onClick={(e)=>{e.preventDefault(); handleEditProduct(productToEdit)}}>Submit</button>
+                    <button id="submit-button" type="submit" onClick={(e)=>{e.preventDefault(); navigate(`/admin-page`);
+                     handleEditProduct(productToEdit)}}>Submit</button>
                   </>
                 )}
               </div>

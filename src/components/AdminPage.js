@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import "../style/index.css";
-import { callApi, getAllUsers, getAllProducts, removeProduct, getAllOrders, createProduct } from "../axios-services";
+import { callApi } from "../axios-services";
 import { ProductImage, ProductInfo, ProductCard } from ".";
 import { Button, Card} from "react-bootstrap";
 import cardplaceholder from "../imgs/cardplaceholder.png";
@@ -12,23 +12,11 @@ const AdminPage = ({token}) =>{
   const [users, setUsers] = useState([])
   const [products, setProducts] = useState([])
   const [orders, setOrders] = useState([])
-  const [product, setProduct] = useState({})
+  const [product, setProduct] = useState([])
   const navigate = useNavigate();
-  // const [isAdmin, setIsAdmin] = useState("");
-  // const [token, setToken] = useState("");
-  // const [user, setUser] = useState("");
-  const { userId} = useParams();
+  // const { userId} = useParams();
   console.log("this is admin", AdminPage)
-  const { setUser, setShoppingCart, setUserOrder } = useUser();
-  const [orderRender, setOrderRender] = useState([])
-  const [selectedOrder, setSelectedOrder] = useState('')
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [inventoryQTY, setInventoryQTY] = useState('');
-  const [category, setCategory] = useState('');
-  const [productImg, setProductImg] = useState('');
-  const [price, setPrice] = useState('');
-  
+  const { user, setUser, setShoppingCart, setUserOrder } = useUser();
 
 const handleUsers = async () =>{
     try{
@@ -95,7 +83,21 @@ const handleProducts = async () =>{
         } catch (error) {
           console.error(error);
         }
-        // navigate("/admin-page");
+        navigate("/admin-page");
+      };
+
+      const handleDeleteUser= async (event, userId) => {
+        event.preventDefault()
+        try {
+          
+            const deletedUser = await callApi({ method: 'delete', url: `/users/${userId}`,token:token})
+            console.log(deletedUser)
+            setUser(deletedUser)
+          
+        } catch (error) {
+          console.error(error);
+        }
+        navigate("/admin-page");
       };
 
 return (
@@ -110,11 +112,22 @@ return (
                       }}>Add User</Button>
       <div>
       {users.map(user => {
+        const { userId, isAdmin } = user;
            return (
+            <div key={user.id}>
            <div className="list-of-users" style={{background: "#557272"}} >
              {user.username}
              <Button className="user-edit-button">Edit</Button>
-          </div>)
+             <Button  className="delete-user-button"
+                      variant="dark"
+                      onClick={(event) => {
+                        handleDeleteUser(event, userId, isAdmin);
+                      }}>
+                        Delete
+            </Button>  
+          </div>
+          </div>
+          )
         })}
       </div>
       <h3 className="products-title">Products</h3>
@@ -126,6 +139,7 @@ return (
           {products.map(product => {
             const { id, productImg, name, price, isAdmin } = product;
           return (
+            <div key={product.id}>
           <Card className="product__card">
             <img
           className="product__card-img"
@@ -140,12 +154,16 @@ return (
                       }}>Edit</Button>
             <Button  className="delete-product-button"
                       variant="dark"
-                      onClick={(event) => {
+                    id="submit-button" type="submit" onClick={(e)=>{e.preventDefault(); navigate(`/admin-page`);
+                    handleDeleteProduct()}}>Submit
+                      {/* onClick={(event) => {
                         handleDeleteProduct(event, id, isAdmin);
-                      }}>
+                      }}> */}
                         Delete
             </Button>        
-          </Card>)
+          </Card>
+          </div>
+          )
           })}
       </div>
       <div>
@@ -154,10 +172,10 @@ return (
       {orders.map(order => {
            return (
             <div key={order.id}>
-            Order # {order.id}
-        <div>Made by User With ID {order.userId}</div>
+            Order #: {order.id}
+        <div>User ID: With ID {order.userId}</div>
         <div>Placed at {order.createdAt}</div>
-        <div>Status: {order.isActive}</div>
+        <div>Active: {order.isActive}</div>
           </div>
           )
         })}
