@@ -28,10 +28,10 @@ const AdminAddUser = () => {
       });
 
         const users = username;
-        if (users) {
+        if (user) {
           setUsername("");
           setPassword("");
-          navigate('/admin-page');
+          navigate('/admin-page/users');
           localStorage.setItem("user", JSON.stringify(users));
         }
         

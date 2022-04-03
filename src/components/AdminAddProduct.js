@@ -12,8 +12,6 @@ const AdminAddProduct = ({token}) => {
   const { setUser } = useUser();
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
-  const [product, setProduct] = useState("");
-  const [products, setProducts] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -32,24 +30,13 @@ const AdminAddProduct = ({token}) => {
       });
 
         if (product) {
-          navigate('/admin-page');
+          navigate('/admin-page/products');
         }
 
     } catch (error) {
       setErrors(error.message);
     }
   };
-
-// const handleProductSubmit = async (event ) => {
-//     try {
-//       event.preventDefault();
-//       const newProducts = await createProduct(name, description, price, inventoryQTY, category, productImg, token);
-//       console.log("newProduct", newProducts);
-//       setProducts([...products, newProducts]);
-//     } catch (error) {
-//       setErrors(error)
-//     }
-//   };
 
   return (
     <>

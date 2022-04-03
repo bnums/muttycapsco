@@ -28,7 +28,7 @@ async function createUser({ username, password, email, isAdmin }) {
 async function getAllUsers() {
   try {
     const { rows } = await client.query(
-      `SELECT username, email, "isAdmin"
+      `SELECT id, username, email, "isAdmin"
       FROM users;
     `
     );
@@ -107,7 +107,7 @@ async function getUser({ username, password }) {
   }
 }
 
-async function removeUser(userId) {
+async function deleteUser(userId) {
   try {
     const {
       rows: [user],
@@ -124,6 +124,31 @@ async function removeUser(userId) {
     throw error;
   }
 }
+
+async function updateUser({ userId, ...fields }) {
+  try {
+    const setString = Object.keys(fields)
+      .map((field, index) => {
+        return `"${field}"=$${index + 1}`;
+      })
+      .join(", ");
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+        UPDATE users
+        SET ${setString}
+        WHERE id = ${userId}
+        RETURNING *;
+      `,
+      Object.values(fields)
+    );
+    return user;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   // add your database adapter fns here
   getAllUsers,
@@ -131,5 +156,6 @@ module.exports = {
   getUserById,
   getUserByUsername,
   getUser,
-  removeUser,
+  deleteUser,
+  updateUser,
 };

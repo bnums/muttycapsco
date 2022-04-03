@@ -10,7 +10,9 @@ const {
   getUser,
   getAllUsers,
   getOrdersByUserId,
-  removeUser,
+  updateUser,
+  getUserById,
+  deleteUser,
 } = require("../db");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -92,6 +94,16 @@ usersRouter.get("/", async (req, res, next) => {
   }
 });
 
+// usersRouter.get("/:userId", async (req, res, next) => {
+//   const { userId } = req.params;
+//   try {
+//     const user = await getUserById(userId);
+//     res.send(user);
+//   } catch ({ name, message }) {
+//     next({ name, message });
+//   }
+// });
+
 //GET gets a user's orders
 usersRouter.get("/:userId/orders", async (req, res, next) => {
   const { userId } = req.params;
@@ -103,11 +115,22 @@ usersRouter.get("/:userId/orders", async (req, res, next) => {
   }
 });
 
+usersRouter.patch("/:userId", async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const toUpdateUser = { ...req.body, userId };
+    const updatedUser = await updateUser(toUpdateUser);
+    res.send(updatedUser);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
 usersRouter.delete("/:userId", async (req, res, next) => {
   const { userId } = req.params;
 
   try {
-    const deletedUser = await removeUser(userId);
+    const deletedUser = await deleteUser(userId);
     res.send(deletedUser);
   } catch ({ name, message }) {
     next({ name, message });

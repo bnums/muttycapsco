@@ -5,17 +5,23 @@ import {
   Home,
   Header,
   Footer,
-  // Products,
-  // Product,
-  // AccountForm,
   UserProfile,
   Cart,
   Checkout,
   ReviewsForm,
+  Product, 
+  AdminPage, 
+  AdminUsers, 
+  AdminEditProduct, 
+  AdminAddUser,  
+  AdminAddProduct, 
+  AdminEditUser, 
+  AdminProducts,
+  AdminOrders,
+  Products,
 } from "./";
 import "../style/App.css";
 import AccountForm from "./AccountForm";
-import { Products, Product, AdminPage, AdminEdit, AdminEditForm, AdminAddUser,  AdminAddProduct} from ".";
 import { callApi} from "../axios-services";
 import useUser from "../hooks/useUser";
 
@@ -30,7 +36,7 @@ const getStripeKey = async () => {
 const stripePromise = getStripeKey();
 
 const App = () => {
-  const { setUser, setShoppingCart, setUserOrder } = useUser();
+  const { setUsers, setUser, setShoppingCart, setUserOrder } = useUser();
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
@@ -108,9 +114,13 @@ const App = () => {
           <Route path="/products/:productId" element={<Product />} />
           <Route path="/admin-page/users/add" element={<AdminAddUser />} />
           <Route path="/admin-page/products/add" element={<AdminAddProduct/>} />
-          <Route path="/admin-page" element={<AdminPage /*token={token} user={user} product={product} setProduct={setProduct} products={products} setProducts={setProducts}*//>} />
-        <Route path="/products/:productId/edit" element={<AdminEditForm />}/>
+          <Route path="/admin-page" element={<AdminPage />} />
+        <Route path="/products/:productId/edit" element={<AdminEditProduct />}/>
+        <Route path="/users/:userId/edit" element={<AdminEditUser />}/>
           <Route path="/products/:productId/review" element={<ReviewsForm />} />
+          <Route path="/admin-page/users" element={<AdminUsers />} />
+          <Route path="/admin-page/products" element={<AdminProducts />} />
+          <Route path="/admin-page/orders" element={<AdminOrders/>} />
         </Routes>
       </div>
       <Footer className="footer" />
