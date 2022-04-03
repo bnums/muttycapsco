@@ -8,6 +8,7 @@
     background-size: cover;
     background-position: 50% 20%;
     height: 60vh;
+    padding-left: 20px;
   }
 
   .each-user{
@@ -17,4 +18,5 @@
   .list-of-users{
     display: flex;
     align-self: auto;
+    overflow-x: auto;
   } 

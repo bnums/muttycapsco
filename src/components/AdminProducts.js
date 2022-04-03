@@ -48,6 +48,7 @@ const AdminProducts = ({token}) =>{
                 <div className="products-backdrop">
             <h3 className="products-title">Products</h3>
                   <Button  className="add-product-button"
+                                  variant="dark"
                                   onClick={() => {
                                     navigate(`/admin-page/products/add`);
                                   }}>Add Product</Button>
@@ -55,7 +56,7 @@ const AdminProducts = ({token}) =>{
                       {products.map(product => {
                         const { id, description, productImg, name, price, isAdmin} = product;
                       return (
-                        <div key={product.id}>
+                        <div className="first-product" key={product.id}>
                       <div className="product_card">
                         <img
                       className="product_card-img"

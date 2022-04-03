@@ -15,7 +15,6 @@ const AdminUsers = ({token}) =>{
   const [product, setProduct] = useState({})
   const navigate = useNavigate();
   const { userId} = useParams();
-//   console.log("this is admin", AdminPage)
   const { user, setUser, setShoppingCart, setUserOrder } = useUser();
 
 const handleUsers = async () =>{
@@ -49,6 +48,7 @@ const handleUsers = async () =>{
         <div className="admin-users-backdrop">
         <h3 className="users-title">Active Users</h3>
       <Button  className="add-product-button"
+                      variant="dark"
                       onClick={() => {
                         navigate(`/admin-page/users/add`);
                       }}>Add User</Button>
@@ -60,6 +60,7 @@ const handleUsers = async () =>{
            <div className="each-user" >
              <div>{user.username}</div>
              <Button className="user-edit-button"
+             variant="dark"
              onClick={() => {
               navigate(`/users/${id}/edit`);
             }}
