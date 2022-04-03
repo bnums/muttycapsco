@@ -36,6 +36,7 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) UNIQUE NOT NULL,
       description TEXT NOT NULL,
+      rating INTEGER DEFAULT 0,
       price DECIMAL (10, 2),
       "inventoryQTY" DECIMAL (10, 2),
       category VARCHAR(255) NOT NULL,
@@ -166,6 +167,7 @@ async function populateInitialProducts() {
         name: " Winter Warm Knitted Hat ",
         description:
           "Small Medium Dogs Pets Winter Warm Knitted Hat with Ear Holes",
+        rating: 0,
         price: 16.99,
         inventoryQTY: 40,
         category: "Dog Hats",
@@ -176,6 +178,7 @@ async function populateInitialProducts() {
         name: "Christmas Dog Hat ",
         description:
           "Christmas Dog Hat Crocheted Snood Funny Pet Cap with Pompon Red Green Warm Winter Dog Hat Knit Snood Headwear for Pets & Women & Men (Red, XS) ",
+        rating: 5,
         price: 14.89,
         inventoryQTY: 50,
         category: "Dog Hats",
@@ -186,67 +189,84 @@ async function populateInitialProducts() {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap1",
         description:
           "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
+        rating: 4,
         price: 10.99,
         inventoryQTY: 10,
-        category: "Hamster Hats",
+        category: "Small Pets Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap2",
         description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+          "These are simple handmade kitty or other small animal accessories that some of which can be worn for long time if it is an indoor animal, but would not leave on it is an if outside cat because they are not break away accessories.",
+        rating: 5,
+        price: 11.99,
+        inventoryQTY: 30,
+        category: "Cat Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap3",
         description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+
+          "This kitty sombrero was designed to be both cute and comfortable.",
+        rating: 4,
+        price: 14.95,
+        inventoryQTY: 15,
+        category: "Cat Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap4",
+
+        name: "Handmade Birthday Cake Small Pets Hat",
         description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+          "The hat is suitable for pet hedgehogs, hamsters, sugar gliders, rats, squirrels, rabbits, guinea pigs, ferret, bird, or other small animals.",
+        rating: 3,
+        price: 14.99,
+        inventoryQTY: 20,
+        category: "Small Pets Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap5",
         description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
+
+          "This knit hat for pets is handmade, perfect for daily wear, weekend parties, Halloween. The hat is suitable for pet hedgehogs, hamsters, sugar gliders, rats, squirrels, rabbits, guinea pigs, ferret, or other small animals.",
+        rating: 2,
+        price: 13.99,
         inventoryQTY: 10,
-        category: "Hamster Hats",
+        category: "Small Pets Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap6",
-        description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+
+        name: "Cowboy Hat for Birdies",
+        description: "Parrot-Bird-Hat-cockatoo-Macaw-Conure cowboy costume hat",
+        rating: 4,
+        price: 12.95,
+        inventoryQTY: 15,
+        category: "Bird Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap7",
-        description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
+
+        name: "Fancy Hat for Birds",
+        description: "Costumes for your birds cockatoo Macaw pet ",
+        rating: 3,
+        price: 12.95,
+
         inventoryQTY: 10,
         category: "Hamster Hats",
         productImg:
@@ -255,68 +275,84 @@ async function populateInitialProducts() {
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap8",
         description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
+
+          "A gorgeous accessory for your lizard, reptile, amphibian or snake! OR not just for our scaly friends, also perfect for , rabbits, guinea pigs, hamsters, gerbils, hedgehogs and many more!",
+        rating: 5,
+        price: 3.43,
         inventoryQTY: 10,
-        category: "Hamster Hats",
+        category: "Small Pets Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap9",
         description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
+
+          "comfortable elastic band keeps the hat secure on your pup's head ",
+        rating: 3,
+        price: 18.0,
+
         inventoryQTY: 10,
         category: "Hamster Hats",
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap10",
-        description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
+
+        name: "Baseball Cap  for Dog",
+        description: "Protect your pets' eyes from the sunshine in summer.",
+        rating: 5,
+        price: 19.99,
+
         inventoryQTY: 10,
         category: "Hamster Hats",
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap11",
-        description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+
+        name: "Dog Baseball Cap",
+        description: "Handmade baseball cap for dog",
+        rating: 3,
+        price: 19.99,
+        inventoryQTY: 13,
+        category: "Dog Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap12",
-        description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+
+        name: "Easter Hat for Cat",
+        description: "Cute Costume Pet Bunny Rabbit Hat with Ears for Cats ",
+        rating: 2,
+        price: 8.99,
+        inventoryQTY: 5,
+        category: "Cat Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap13",
-        description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+
+        name: "Cat Santa Hat ",
+        description: "Adorable Christmas costume for your cats",
+        rating: 1,
+        price: 6.99,
+        inventoryQTY: 7,
+        category: "Cat Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap14",
-        description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
+
+        name: "Crochet Dog Fruit Sun Hats ",
+        description: "Adorable Sun Hats for the dog and it is handmade.",
+        rating: 3,
+        price: 19.99,
+
         inventoryQTY: 10,
         category: "Hamster Hats",
         productImg:
@@ -325,40 +361,50 @@ async function populateInitialProducts() {
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap15",
         description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+
+          "The perfect cozy accessory you need this winter! All hats come with an adjustable strap",
+        rating: 2,
+        price: 20.95,
+        inventoryQTY: 14,
+        category: "Cat Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap16",
-        description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+
+        name: "Lion Mane Costume Hat for Cat",
+        description: " A life-like Lion fur hat with cute ears",
+        rating: 5,
+        price: 9.99,
+        inventoryQTY: 6,
+        category: "Cat Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap17k",
         description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+
+          "This hat for pets is handmade, perfect for daily wear, weekend parties, Halloween.",
+        rating: 3,
+        price: 12.99,
+        inventoryQTY: 8,
+        category: "Small Pets Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap18",
-        description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Hamster Hats",
+
+        name: "Cowboy Hat for Bird",
+        description: "Handmade hat for Birds, it made with elastic",
+        rating: 5,
+        price: 11.99,
+        inventoryQTY: 5,
+        category: "Bird Hats",
+
         productImg:
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
