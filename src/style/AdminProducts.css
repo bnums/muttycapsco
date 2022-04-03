@@ -1,0 +1,61 @@
+.products-backdrop{
+    background-image: linear-gradient(
+        rgba(196, 196, 196, 0.178),
+        rgba(49, 49, 49, 0.2)
+      ),
+      url("../imgs/homebanner.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 20%;
+    height: 60vh;
+    padding-left: 20px;
+  }
+
+  .list-of-products{
+    align-self: auto;
+    overflow-x: auto;
+    visibility: visible;
+  } 
+
+  .product_card{
+    transition: 0.3s;
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 7px;
+    font-family: "Urbanist", sans-serif;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 8px;
+    width: 300px;
+    border: 1px solid hsl(180, 15%, 39%);
+    height: 410px;
+    background: #557272;
+  }
+
+  .product_card-img{
+    height: 200px;
+    width: 100%;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .product_card-name {
+    margin: 2px;
+    font-size: 15px;
+    line-height: 2;
+  }
+
+  .product_card-price {
+    font-size: 15px;
+    margin-top: 2px;
+  }
+
+  /* .edit-product-button{
+    background:black;
+  }
+
+  .delete-product-button{
+    background:black;
+      
+} */

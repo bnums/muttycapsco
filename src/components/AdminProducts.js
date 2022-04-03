@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import "../style/index.css";
+import "../style/AdminProducts.css";
 import { callApi } from "../axios-services";
 import { ProductImage, ProductInfo, ProductCard } from ".";
 import { Button, Card, Navbar, Container, Nav} from "react-bootstrap";
@@ -45,7 +45,7 @@ const AdminProducts = ({token}) =>{
         };
 
         return (
-                <div>
+                <div className="products-backdrop">
             <h3 className="products-title">Products</h3>
                   <Button  className="add-product-button"
                                   onClick={() => {
@@ -56,15 +56,16 @@ const AdminProducts = ({token}) =>{
                         const { id, description, productImg, name, price, isAdmin} = product;
                       return (
                         <div key={product.id}>
-                      <Card className="product__card">
+                      <div className="product_card">
                         <img
-                      className="product__card-img"
+                      className="product_card-img"
                       src={productImg || cardplaceholder}
                       alt="img of dog with yellow beanie"
                     />
-                        <h3 className="product__card-name">{name}</h3>
-                        <p className="product__card-price">{price}</p>
+                        <h3 className="product_card-name">{name}</h3>
+                        <p className="product_card-price">{price}</p>
                         <Button  className="edit-product-button"
+                                  variant="dark"
                                   onClick={() => {
                                     navigate(`/products/${id}/edit`);
                                   }}>Edit</Button>
@@ -75,7 +76,7 @@ const AdminProducts = ({token}) =>{
                                   }}>
                                     Delete
                         </Button>        
-                      </Card>
+                      </div>
                       </div>
                       )
                       })}

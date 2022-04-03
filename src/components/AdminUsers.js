@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import "../style/index.css";
+import "../style/AdminUsers.css";
 import { callApi } from "../axios-services";
 import { ProductImage, ProductInfo, ProductCard } from ".";
 import { Button, Card} from "react-bootstrap";
@@ -46,19 +46,19 @@ const handleUsers = async () =>{
       };
 
       return (
-        <div className="admin-page-backdrop">
-                  <h3 className="users-title">Active Users</h3>
+        <div className="admin-users-backdrop">
+        <h3 className="users-title">Active Users</h3>
       <Button  className="add-product-button"
                       onClick={() => {
                         navigate(`/admin-page/users/add`);
                       }}>Add User</Button>
-      <div>
+      <div className="list-of-users" >
       {users.map(user => {
         const { id, username, password, email, isAdmin } = user;
            return (
             <div key={user.id}>
-           <div className="list-of-users" style={{background: "#557272"}} >
-             {user.username}
+           <div className="each-user" >
+             <div>{user.username}</div>
              <Button className="user-edit-button"
              onClick={() => {
               navigate(`/users/${id}/edit`);

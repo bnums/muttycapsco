@@ -6,6 +6,7 @@ import { ProductImage, ProductInfo, ProductCard } from ".";
 import { Button, Card, Navbar, Container, Nav} from "react-bootstrap";
 import cardplaceholder from "../imgs/cardplaceholder.png";
 import useUser from "../hooks/useUser";
+import "../style/AdminOrders.css";
 
 
 const AdminOrders = ({token}) =>{
@@ -32,7 +33,7 @@ const AdminOrders = ({token}) =>{
         },[setOrders, token]);
 
 return(
-    <div>
+    <div className="orders-backdrop">
       <h3 className="orders-title">Orders</h3>
       <div>
       {orders.map(order => {
