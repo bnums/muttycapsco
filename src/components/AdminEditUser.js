@@ -167,7 +167,7 @@ const AdminEditUser = ({token
                     style={{ background: "#557272", border: "none" }}
                     className ="edit-user-button"
                     onClick={(e)=>{e.preventDefault(); navigate(`/admin-page/users`);
-                     handleEditUser(userToEdit)}}>Create</Button>
+                     handleEditUser(userToEdit)}}>Edit</Button>
                      </Form>
         </Col>
           </Row>
