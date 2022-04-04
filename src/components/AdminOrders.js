@@ -17,6 +17,7 @@ const AdminOrders = ({token}) =>{
   const navigate = useNavigate();
   const { userId} = useParams();
   const { user, setUser, setShoppingCart, setUserOrder } = useUser();
+  const [errors, setErrors] = useState([]);
 
   const handleOrders = async () =>{
     try{
@@ -24,6 +25,7 @@ const AdminOrders = ({token}) =>{
       setOrders(orders)
       console.log('this is all the orders ', orders)
         }catch(error){
+        setErrors(error.message);
           console.log(error)
         }
       }
@@ -35,10 +37,10 @@ const AdminOrders = ({token}) =>{
 return(
     <div className="orders-backdrop">
       <h3 className="orders-title">Orders</h3>
-      <div>
+      <div className="orders-orders">
       {orders.map(order => {
            return (
-            <div key={order.id}>
+            <div className="orders-completed-card" key={order.id}>
             Order #: {order.id}
         <div>User {order.userId}</div>
         <div>Placed at {order.createdAt}</div>

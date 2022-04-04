@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import "../style/AdminProducts.css";
 import { callApi } from "../axios-services";
-import { ProductImage, ProductInfo, ProductCard } from ".";
 import { Button, Card, Navbar, Container, Nav} from "react-bootstrap";
 import cardplaceholder from "../imgs/cardplaceholder.png";
 import useUser from "../hooks/useUser";
@@ -16,6 +15,7 @@ const AdminProducts = ({token}) =>{
   const navigate = useNavigate();
   const { userId} = useParams();
   const { user, setUser, setShoppingCart, setUserOrder } = useUser();
+  const [errors, setErrors] = useState([]);
 
   const handleProducts = async () =>{
     try{
@@ -23,6 +23,7 @@ const AdminProducts = ({token}) =>{
       console.log('this is all the products ', products)
       setProducts(products)
         }catch(error){
+            setErrors(error.message);
           console.log(error)
         }
       }
@@ -40,6 +41,7 @@ const AdminProducts = ({token}) =>{
               console.log(deletedProduct)
               handleProducts()
           } catch (error) {
+            setErrors(error.message);
             console.error(error);
           }
         };
@@ -47,6 +49,10 @@ const AdminProducts = ({token}) =>{
         return (
                 <div className="products-backdrop">
             <h3 className="products-title">Products</h3>
+            {errors && (<div style={{ marginTop: "1em", color: "red" }}>
+                      {errors}
+                    </div>
+                  )}
                   <Button  className="add-product-button"
                                   variant="dark"
                                   onClick={() => {

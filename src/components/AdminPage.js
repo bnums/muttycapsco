@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import "../style/index.css";
-import { callApi } from "../axios-services";
-import { ProductImage, ProductInfo, ProductCard } from ".";
-import { Button, Card, Navbar, Container, Nav} from "react-bootstrap";
-import cardplaceholder from "../imgs/cardplaceholder.png";
-import useUser from "../hooks/useUser";
 import "../style/AdminPage.css";
 
 
@@ -14,14 +8,21 @@ const AdminPage = ({token}) =>{
 return (
   <div className="admin-background" bg="light" variant="light">
   <div>
-    <h3 >Administrator Page</h3>
+    <h3 id="admin-title" className="text-title text-center"
+    >Administrator Page</h3>
     <div className="nav-items">
-      <div className="users-image" ></div>
-     <Link to="/admin-page/users">Users</Link>
-     <div className="products-image" ></div>
-     <Link to="/admin-page/products">Products</Link>
-     <div className="orders-image" ></div>
-     <Link to="/admin-page/orders">Orders</Link>
+    <div className="users-items">
+    <Link to="/admin-page/users"><img className="users-image"/></Link>
+     <Link id="users-title" className="text-title" to="/admin-page/users">Users</Link>
+     </div>
+     <div className="products-items">
+     <Link to="/admin-page/products"><div className="products-image"></div></Link>
+     <Link id="products-title" className="text-title" to="/admin-page/products">Products</Link>
+     </div>
+     <div className="orders-items">
+     <Link to="/admin-page/orders"><div className="orders-image"></div></Link>
+     <Link id="orders-title" className="text-title" to="/admin-page/orders">Orders</Link>
+    </div>
     </div>
   </div>
 </div>

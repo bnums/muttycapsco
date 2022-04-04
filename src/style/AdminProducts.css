@@ -1,4 +1,5 @@
 .products-backdrop{
+
     background-image: linear-gradient(
         rgba(196, 196, 196, 0.178),
         rgba(49, 49, 49, 0.2)
@@ -7,16 +8,13 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 20%;
-    height: 60vh;
     padding-left: 20px;
   }
 
-  .list-of-products{
-    /* align-self: auto; */
-    /* position: absolute; */
-    /* visibility: visible; */
-    overflow-x: scroll;
-  } 
+   .list-of-products{ 
+     display: flex;
+     flex-wrap: wrap;
+  }  
 
   .product_card{
     transition: 0.3s;
@@ -24,18 +22,18 @@
     max-width: 100%;
     border-radius: 7px;
     font-family: "Urbanist", sans-serif;
-    display: flex;
-    flex-direction: column; 
     padding: 10px; 
     margin: 8px; 
-    width: 300px; 
+    width: 280px; 
     border: 1px solid hsl(180, 15%, 39%);
-    height: 410px;
+    height: 360px;
     background: #557272;
     align-self: auto;
-    position: relative;
+    border: 3px solid black;
+  } 
+  .first-product{
+      align-content: center;
   }
-
   .product_card-img{
     height: 200px;
     width: 100%;
@@ -47,22 +45,45 @@
     margin: 2px;
     font-size: 15px;
     line-height: 2;
+    font-family: "Urbanist", sans-serif;
+    color:white;
   }
 
   .product_card-price {
     font-size: 15px;
     margin-top: 2px;
-  }
+    color:white;
+  } 
 
-  .first-product{
-    /* overflow-x: scroll; */
-  }
+.products-title{
+    font-family: "Reem Kufi", sans-serif;
+    font-size:50px;
+    color:white;
+    text-shadow: 0 0 10px black;
+    margin-left: 10px; 
+    }
 
-  /* .edit-product-button{
-    background:black;
+.add-product-button{
+background:#557272;
+font-family: "Reem Kufi", sans-serif;
+margin-left: 10px; 
+margin-bottom: 10px;
+border: 2px solid black;
+}
+
+   .edit-product-button{
+    background:#557272;
+    font-family: "Reem Kufi", sans-serif; 
+    margin: 8px; 
+    margin-top: 10px;
+    border: 1px solid black;
+    
   }
 
   .delete-product-button{
-    background:black;
-      
-} */
+    background:#557272; 
+    margin-left: 10px;  
+    margin-top: 2px;
+    border: 1px solid black;
+    font-family: "Reem Kufi", sans-serif;
+} 

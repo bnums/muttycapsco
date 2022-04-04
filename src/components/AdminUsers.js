@@ -16,6 +16,7 @@ const AdminUsers = ({token}) =>{
   const navigate = useNavigate();
   const { userId} = useParams();
   const { user, setUser, setShoppingCart, setUserOrder } = useUser();
+  const [errors, setErrors] = useState([]);
 
 const handleUsers = async () =>{
     try{
@@ -23,6 +24,7 @@ const handleUsers = async () =>{
     setUsers(users);
     console.log('this is all the users ', users)
     }catch(error){
+        setErrors(error.message);
       console.log(error)
     }
   }
@@ -40,6 +42,7 @@ const handleUsers = async () =>{
           console.log(deletedUser)
           handleUsers()
         } catch (error) {
+            setErrors(error.message);
           console.error(error);
         }
       };
@@ -47,7 +50,11 @@ const handleUsers = async () =>{
       return (
         <div className="admin-users-backdrop">
         <h3 className="users-title">Active Users</h3>
-      <Button  className="add-product-button"
+         {errors && (<div style={{ marginTop: "1em", color: "red" }}>
+                      {errors}
+                    </div>
+                  )}
+      <Button  className="add-user-button"
                       variant="dark"
                       onClick={() => {
                         navigate(`/admin-page/users/add`);
@@ -58,7 +65,7 @@ const handleUsers = async () =>{
            return (
             <div key={user.id}>
            <div className="each-user" >
-             <div>{user.username}</div>
+             <div className="username-title" >{user.username}</div>
              <Button className="user-edit-button"
              variant="dark"
              onClick={() => {
