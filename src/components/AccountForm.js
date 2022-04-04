@@ -3,9 +3,9 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import { callApi } from "../axios-services";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import useUser from "../hooks/useUser";
-// import { Form } from "react-bootstrap";
-// import { Container, Row, Col, Button } from "react-bootstrap";
-import "../style/index.css";
+import {toast} from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import "../style/AccountForm.css";
 
 const AccountForm = () => {
   const params = useParams();
@@ -57,7 +57,7 @@ const AccountForm = () => {
   return (
     <>
       <div className="register-login-backdrop">
-        <Container>
+        <Container className="login-window">
           <Row className="window1 m-auto">
             <Col lg={5} md={6} sm={12} className="window p-5 m-auto shadow-lg">
               <h3

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import "../style/index.css";
+import "../style/AdminProducts.css";
 import { callApi } from "../axios-services";
-import { ProductImage, ProductInfo, ProductCard } from ".";
 import { Button, Card, Navbar, Container, Nav} from "react-bootstrap";
 import cardplaceholder from "../imgs/cardplaceholder.png";
 import useUser from "../hooks/useUser";
@@ -16,6 +15,7 @@ const AdminProducts = ({token}) =>{
   const navigate = useNavigate();
   const { userId} = useParams();
   const { user, setUser, setShoppingCart, setUserOrder } = useUser();
+  const [errors, setErrors] = useState([]);
 
   const handleProducts = async () =>{
     try{
@@ -23,6 +23,7 @@ const AdminProducts = ({token}) =>{
       console.log('this is all the products ', products)
       setProducts(products)
         }catch(error){
+            setErrors(error.message);
           console.log(error)
         }
       }
@@ -40,14 +41,20 @@ const AdminProducts = ({token}) =>{
               console.log(deletedProduct)
               handleProducts()
           } catch (error) {
+            setErrors(error.message);
             console.error(error);
           }
         };
 
         return (
-                <div>
+                <div className="products-backdrop">
             <h3 className="products-title">Products</h3>
+            {errors && (<div style={{ marginTop: "1em", color: "red" }}>
+                      {errors}
+                    </div>
+                  )}
                   <Button  className="add-product-button"
+                                  variant="dark"
                                   onClick={() => {
                                     navigate(`/admin-page/products/add`);
                                   }}>Add Product</Button>
@@ -55,16 +62,17 @@ const AdminProducts = ({token}) =>{
                       {products.map(product => {
                         const { id, description, productImg, name, price, isAdmin} = product;
                       return (
-                        <div key={product.id}>
-                      <Card className="product__card">
+                        <div className="first-product" key={product.id}>
+                      <div className="product_card">
                         <img
-                      className="product__card-img"
+                      className="product_card-img"
                       src={productImg || cardplaceholder}
                       alt="img of dog with yellow beanie"
                     />
-                        <h3 className="product__card-name">{name}</h3>
-                        <p className="product__card-price">{price}</p>
+                        <h3 className="product_card-name">{name}</h3>
+                        <p className="product_card-price">{price}</p>
                         <Button  className="edit-product-button"
+                                  variant="dark"
                                   onClick={() => {
                                     navigate(`/products/${id}/edit`);
                                   }}>Edit</Button>
@@ -75,7 +83,7 @@ const AdminProducts = ({token}) =>{
                                   }}>
                                     Delete
                         </Button>        
-                      </Card>
+                      </div>
                       </div>
                       )
                       })}

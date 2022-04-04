@@ -6,6 +6,7 @@ const HomeBanner = () => {
   return (
     <div className="homebanner container-fluid">
       <div className="homebanner-content container">
+      <div className="preload-images"></div>
         <div className="homebanner-title row">Welcome to MuttyCapsCo!</div>
         <div className="homebanner-subtitle row">
           We have never been more ready for the outdoors.

@@ -3,9 +3,7 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import { callApi } from "../axios-services";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import useUser from "../hooks/useUser";
-// import { Form } from "react-bootstrap";
-// import { Container, Row, Col, Button } from "react-bootstrap";
-import "../style/index.css";
+import "../style/AdminAddUser.css";
 
 const AdminAddUser = () => {
 
@@ -45,11 +43,16 @@ const AdminAddUser = () => {
       <div className="register-login-backdrop">
         <Container>
           <Row className="window1 m-auto">
-            <Col lg={5} md={6} sm={12} className="window p-5 m-auto shadow-lg">
+          {errors && (<div style={{ marginTop: "1em", color: "red" }}>
+                      {errors}
+                    </div>
+                  )}
+            <Col className="add-user-title" lg={5} md={6} sm={12} 
+            className="window p-5 m-auto shadow-lg">
               <h3
                 className="text-title text-center"
                 style={{ overflowY: "hidden" }}
-              >
+              >Add a User
               </h3>
               <Form className="login-register-form" onSubmit={handleSubmit}>
                 <Form.Group
@@ -119,15 +122,10 @@ const AdminAddUser = () => {
                         setIsAdmin(event.target.value);
                       }}
                     />
-                      {errors && (
-                    <div style={{ marginTop: "1em", color: "red" }}>
-                      {errors}
-                    </div>
-                  )}
                 </Form.Group>
                 <Button
                   style={{ background: "#557272", border: "none" }}
-                  className="login-register-button"
+                  className="create-button"
                   type="submit"
                 >
                   Create

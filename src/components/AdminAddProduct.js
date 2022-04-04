@@ -3,9 +3,7 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import { callApi, createProduct } from "../axios-services";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import useUser from "../hooks/useUser";
-// import { Form } from "react-bootstrap";
-// import { Container, Row, Col, Button } from "react-bootstrap";
-import "../style/index.css";
+import "../style/AdminAddProduct.css";
 
 const AdminAddProduct = ({token}) => {
 
@@ -14,6 +12,7 @@ const AdminAddProduct = ({token}) => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [rating, setRating] = useState("");
   const [price, setPrice] = useState("");
   const [inventoryQTY, setInventoryQTY] = useState("");
   const [category, setCategory] = useState("");
@@ -26,7 +25,7 @@ const AdminAddProduct = ({token}) => {
       const product = await callApi({
         url: `/products`,
         method: "POST",
-        body: { name, description, price, inventoryQTY, category, productImg},
+        body: { name, description, price, inventoryQTY, category, productImg, rating},
       });
 
         if (product) {
@@ -43,11 +42,16 @@ const AdminAddProduct = ({token}) => {
       <div className="new-product-backdrop">
         <Container>
           <Row className="window1 m-auto">
+          {errors && (
+                    <div style={{ marginTop: "1em", color: "red" }}>
+                      {errors}
+                    </div>
+                  )}
             <Col lg={5} md={6} sm={12} className="window p-5 m-auto shadow-lg">
               <h3
                 className="text-title text-center"
                 style={{ overflowY: "hidden" }}
-              >
+              > Add Product
               </h3>
               <Form className="new-product-form" onSubmit={handleSubmit}>
                 <Form.Group
@@ -117,12 +121,6 @@ const AdminAddProduct = ({token}) => {
                         setInventoryQTY(event.target.value);
                       }}
                     />
-                    
-                      {errors && (
-                    <div style={{ marginTop: "1em", color: "red" }}>
-                      {errors}
-                    </div>
-                  )}
                 </Form.Group>
                 <Form.Group
                   className="form-Basic-category"
@@ -157,24 +155,34 @@ const AdminAddProduct = ({token}) => {
                         setProductImg(event.target.value);
                       }}
                     />
+                    <Form.Group
+                  className="form-Basic-rating"
+                  controlId="formBasicRating"
+                >
+                  <Form.Control
+                    className="rating-box"
+                    required
+                    placeholder="rating"
+                    label="rating"
+                    type="rating"
+                    variant="outlined"
+                    value={rating}
+                    onChange={(event) => {
+                      setRating(event.target.value);
+                    }}
+                  />
+                </Form.Group>
                 </Form.Group>
                 <Button
-                //   onClick={() => {
-                //     navigate(`/admin-page/`);
-                //   }}
                   style={{ background: "#557272", border: "none" }}
-                  className="login-register-button"
+                  className="add-product-button"
                   type="submit"
-                //   onClick={() => {
-                //     navigate(`/admin-page/`);
-                //   }}
                 >
                   Create
                 </Button>
               </Form>
             </Col>
           </Row>
-
         </Container>
       </div>
     </>

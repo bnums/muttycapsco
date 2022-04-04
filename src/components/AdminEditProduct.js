@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import "../style/index.css";
+import "../style/AdminEditProduct.css";
 import { callApi} from "../axios-services";
-import { ProductImage, ProductInfo, ProductCard } from ".";
-import { Button, Card} from "react-bootstrap";
-import cardplaceholder from "../imgs/cardplaceholder.png";
 import useUser from "../hooks/useUser";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 
 const AdminEditProduct = ({token
 
@@ -15,6 +13,7 @@ const AdminEditProduct = ({token
   const [productToEdit, setProductToEdit] = useState(null);
   const navigate = useNavigate();
   const { productId } = useParams();
+  const [errors, setErrors] = useState([]);
   
 
 const handleProducts = async () =>{
@@ -23,6 +22,7 @@ const handleProducts = async () =>{
     console.log('this is all the products ', products)
     setProducts(products)
       }catch(error){
+        setErrors(error.message);
         console.log(error)
       }
     }
@@ -31,18 +31,19 @@ const handleProducts = async () =>{
       handleProducts()
       },[setProducts, token]);
 
-  const handleEditProduct = async ({id,name, description, price, inventoryQTY, category, productImg}) => {
+  const handleEditProduct = async ({id,name, description, price, inventoryQTY, category, productImg, rating}) => {
       try {
       localStorage.clear();
       const editProduct = await callApi({
         url: `/products/${id}`,
         method: "patch",
         token:token,
-        body: { name, description, price, inventoryQTY, category, productImg},
+        body: { name, description, price, inventoryQTY, category, productImg, rating},
       });
       console.log("editProduct", editProduct);
         } catch (error) {
-    console.error(error);
+          setErrors(error.message);
+        console.error(error);
   }
 };
 
@@ -60,18 +61,38 @@ const handleProducts = async () =>{
 
   return (
     <>
+    <div className="edit-a-product-backdrop">
       <div className="edit-a-product">
-        <div className="new-product-form-title"> Edit Product</div>
-        <form className="edit-product-form" >
           {products.map((product) => {
             const { id } = product;
             return (
               <div key={product.id}>
                 {id == productId && (
                   <>
-                    <input
-                      id="name-input"
+                  <Container>
+        <Row className="window1 m-auto">
+        {errors && (<div style={{ marginTop: "1em", color: "red" }}>
+                      {errors}
+                    </div>
+                  )}
+            <Col lg={5} md={6} sm={12} 
+            className="window p-5 m-auto shadow-lg">
+              <h3
+                className="text-title text-center"
+                style={{ overflowY: "hidden" }}
+              >Edit Product
+              </h3>
+        <Form className="edit-product-form" >
+                   <Form.Group
+                  className="form-Basic-name"
+                  controlId="formBasicName"
+                >
+                    <Form.Control
+                      className="name-input"
                       type="text"
+                      label="name"
+                      variant="outlined"
+                      required
                       placeholder="name"
                       value={productToEdit.name}
                       onChange={(event) =>
@@ -80,11 +101,18 @@ const handleProducts = async () =>{
                           name: event.target.value,
                         })
                       }
-                      required
-                    />
-                    <input
-                      id="description-input"
+                  />
+                  </Form.Group>
+                <Form.Group
+                  className="form-Basic-description"
+                  controlId="formBasicDescription"
+                >
+                  <Form.Control
+                      className="description-input"
                       type="text"
+                      required
+                      label="description"
+                      variant="outlined"
                       placeholder="description"
                       value={productToEdit.description}
                       onChange={(event) =>
@@ -93,11 +121,18 @@ const handleProducts = async () =>{
                           description: event.target.value,
                         })
                       }
-                      required
                     />
-                    <input
-                      id="price-input"
+                     </Form.Group>
+                <Form.Group
+                  className="form-Basic-price"
+                  controlId="formBasicPrice"
+                >
+                  <Form.Control
+                      className="price-input"
                       type="text"
+                      required
+                      label="price"
+                      variant="outlined"
                       placeholder="price"
                       value={productToEdit.price}
                       onChange={(event) =>
@@ -106,11 +141,18 @@ const handleProducts = async () =>{
                           price: event.target.value,
                         })
                       }
-                      required
                     />
-                     <input
-                      id="inventoryQTY-input"
+                </Form.Group>
+                <Form.Group
+                  className="form-Basic-inventoryQTY"
+                  controlId="formBasicInventoryQTY"
+                >
+                  <Form.Control
+                      className="inventoryQTY-input"
                       type="text"
+                      required
+                      label="inventoryQTY"
+                      variant="outlined"
                       placeholder="inventoryQTY"
                       value={productToEdit.inventoryQTY}
                       onChange={(event) =>
@@ -121,9 +163,17 @@ const handleProducts = async () =>{
                       }
                       required
                     />
-                        <input
-                      id="category-input"
+                      </Form.Group>
+                <Form.Group
+                  className="form-Basic-category"
+                  controlId="formBasicCategory"
+                >
+                  <Form.Control
+                      className="category-input"
                       type="text"
+                      required
+                      label="category"
+                      variant="outlined"
                       placeholder="category"
                       value={productToEdit.category}
                       onChange={(event) =>
@@ -132,11 +182,18 @@ const handleProducts = async () =>{
                           category: event.target.value,
                         })
                       }
-                      required
                     />
-                       <input
-                      id="productImg-input"
+                  </Form.Group>
+                <Form.Group
+                  className="form-Basic-productImg"
+                  controlId="formBasicProductImg"
+                >
+                  <Form.Control
+                      className="productImg-input"
                       type="text"
+                      required
+                      label="productImg"
+                      variant="outlined"
                       placeholder="productImg"
                       value={productToEdit.productImg}
                       onChange={(event) =>
@@ -145,19 +202,44 @@ const handleProducts = async () =>{
                           productImg: event.target.value,
                         })
                       }
-                      required
                     />
-                    <button id="submit-button" type="submit" onClick={(e)=>{e.preventDefault(); navigate(`/admin-page/products`);
-                     handleEditProduct(productToEdit)}}>Submit</button>
-                  </>
-                )}
-              </div>
-            );
-          })}
-        </form>
+                    </Form.Group>
+                  <Form.Group
+                  className="form-Basic-rating"
+                  controlId="formBasicRating"
+                >
+                  <Form.Control
+                      className="rating-input"
+                      type="text"
+                      required
+                      label="productImg"
+                      variant="outlined"
+                      placeholder="rating"
+                      value={productToEdit.rating}
+                      onChange={(event) =>
+                        setProductToEdit({
+                          ...productToEdit,
+                          rating: event.target.value,
+                        })
+                      }
+                    />
+                     </Form.Group>
+                    <Button id="submit-button" type="submit" 
+                    style={{ background: "#557272", border: "none" }}
+                    className="edit-product-button"
+                      onClick={(e)=>{e.preventDefault(); navigate(`/admin-page/products`);
+                     handleEditProduct(productToEdit)}}>Edit</Button>
+        </Form>
+        </Col>
+          </Row>
+        </Container>
+        </>
+        )}
       </div>
+      )})}
+    </div>
+    </div>
     </>
   );
-};
-
+}; 
 export default AdminEditProduct;
