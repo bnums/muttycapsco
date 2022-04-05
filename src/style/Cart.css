@@ -9,13 +9,31 @@
   --headerFont: Reem Kufi;
 }
 
-.checkout-content {
-  font-family: var(--descriptionFont);
-  color: #333;
-  margin: 25px auto 25px auto;
+.row1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 100px 0;
 }
 
-h1 {
+.col1 {
+  flex-basis: 50%;
+  position: relative;
+  margin: 0 25px 0 50px;
+  padding-bottom: 50px;
+  /* border-bottom: 2px solid #C7C7C7; */
+}
+
+.col2 {
+  margin: 0 50px 0 25px;
+  flex-basis: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.summary h1, .col1 h1 {
   height: 72px;
   top: 215px;
   left: 117px;
@@ -29,7 +47,8 @@ h1 {
   margin-bottom: 0px;
 }
 
-h3 {
+.productOrder-name h3 {
+    color: #232323;
   font-family: var(--headerFont);
   font-weight: 400;
   font-size: 25px;
@@ -69,7 +88,7 @@ h3 {
   float: right;
 }
 
-button {
+.checkoutBtn {
   display: inline-block;
   margin: 10px 15px auto auto;
   padding: 10px 15px;
@@ -89,11 +108,11 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.checkoutBtn:hover {
   background-position: 100% 0%;
 }
 
-button a {
+.checkoutBtn a {
   text-decoration: none;
   font-family: var(--descriptionFont);
   font-weight: 700;

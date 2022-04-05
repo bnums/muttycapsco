@@ -1,11 +1,4 @@
-.products-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 16px;
-}
-
-.products-backdrop{
+.new-product-backdrop{
         background-image: linear-gradient(
             rgba(196, 196, 196, 0.178),
             rgba(49, 49, 49, 0.2)
@@ -14,5 +7,6 @@
         background-repeat: no-repeat;
         background-size: cover;
         background-position: 50% 20%;
-        padding-left: 20px;
+        height: 60vh;
+    
 }

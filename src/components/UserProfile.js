@@ -4,6 +4,11 @@ import { useQuery } from "react-query";
 import { callApi } from "../axios-services";
 import { useParams } from "react-router";
 import { OrderCard } from "./";
+import "../style/UserProfile.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog} from '@fortawesome/free-solid-svg-icons';
+
+
 const UserProfile = () => {
   const params = useParams();
   const { userId } = params;
@@ -54,22 +59,44 @@ const UserProfile = () => {
   useQuery("getUserOrders", fetchUserOrders);
 
   return (
-    <div className="container pt-5 pb-5">
-      <h2>{`Welcome to ${user.username}'s page`}</h2>
-      <h3>Your Current Order</h3>
-      {currentOrder && currentOrder.length > 0
-        ? currentOrder.map((order) => {
-            return <OrderCard key={order.id} order={order} />;
-          })
-        : null}
-      <h3>Your Previous Orders</h3>
-      {completedOrders && completedOrders.length > 0 ? (
-        completedOrders.map((order) => {
-          return <OrderCard key={order.id} order={order} />;
-        })
-      ) : (
-        <div>You have not made any orders yet</div>
-      )}
+    <div className="">
+      <div className="userprofile-container">
+        <div className="profile-box">
+          <FontAwesomeIcon className="setting-icon" icon={faCog}></FontAwesomeIcon>
+          <img className="profile-pic" src='https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png' alt=''></img>
+          <h2>{`Welcome to ${user.username}'s page`}</h2>
+        </div>
+          <div className="profile-bottom">
+
+            <div className="header-info">
+              <h3>Your Current Order</h3>
+            </div>
+            
+            {currentOrder && currentOrder.length > 0 ? (
+              currentOrder.map((order) => {
+                return <OrderCard key={order.id} order={order} />;
+              })
+            ) : (
+              <div className="all-orders-container">Your cart is currently empty</div>
+            )}
+
+            <div className="header-info">
+              <h3>Your Previous Orders</h3>
+            </div>
+
+            {completedOrders && completedOrders.length > 0 ? (
+              completedOrders.map((order) => {
+                return <OrderCard key={order.id} order={order} />;
+              })
+            ) : (
+              <div className="all-orders-container">You have not made any orders yet</div>
+            )}
+
+          </div>
+
+
+      </div>
+
     </div>
   );
 };

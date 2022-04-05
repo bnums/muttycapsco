@@ -1,0 +1,116 @@
+.admin-background{
+    background-image: linear-gradient(
+        rgba(196, 196, 196, 0.178),
+        rgba(49, 49, 49, 0.2)
+      ),
+      url("../imgs/homebanner.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 20%;
+    height: 60vh;
+  }
+  #admin-title{
+      color:white;
+      text-shadow: 0 0 10px black;
+      font-size:70px;
+  }
+
+  .users-items{
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    width: 120px;
+  }
+
+  .users-image{
+    background-image: url("../imgs/user.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 200px;
+    width:200px;
+    margin-right:20px;
+    border-radius:50%;
+    position: relative;
+    border: 3px solid black
+  }
+
+  #users-title{
+    display: block;
+    color:white;
+    text-shadow: 0 0 10px black;
+    font-size:40px;
+    margin-top:25%;
+    margin-left:35%;
+  }
+
+  .users-image:hover{
+    opacity: 0.5;
+  }
+
+  .products-items{
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    width: 120px;
+  }
+
+  .products-image{
+    background-image: url("../imgs/products.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 200px;
+    width:200px;
+    margin-right:20px;
+    border-radius:50%;
+    position: relative;
+    border: 3px solid black
+  }
+
+  #products-title{
+    display: block;
+    color:white;
+    text-shadow: 0 0 10px black;
+    font-size:40px;
+    margin-top:25%;
+    margin-left:20%;
+  }
+
+  .products-image:hover{
+    opacity: 0.5;
+  }
+
+  .orders-items{
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    width: 120px;
+  }
+
+  .orders-image{
+    background-image: url("../imgs/orders.jpeg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 200px;
+    width:200px;
+    margin-right:20px;
+    border-radius:50%;
+    position: relative;
+    border: 3px solid black
+  }
+  .orders-image:hover{
+    opacity: 0.5;
+  }
+
+  #orders-title{
+    display: block;
+    color:white;
+    text-shadow: 0 0 10px black;
+    font-size:40px;
+    margin-top:25%;
+    margin-left:35%;
+  }
+
+  .nav-items{
+    display:flex;
+    justify-content: space-evenly;
+  }

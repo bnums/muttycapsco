@@ -17,12 +17,13 @@ async function requireAdmin(req, res, next) {
     if (!req.user.isAdmin) {
       next({
         name: "AdminNotLoggedIn",
-        message: "You must an Administrator to hperform this action!",
+        message: "You must an Administrator to perform this action!",
       });
       return;
     }
     next();
   } catch (error) {
+    console.log("admin", requireAdmin)
     next(error);
   }
 }

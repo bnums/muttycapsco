@@ -1,0 +1,12 @@
+.create-button{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+}
+
+.email-box,
+.username-box,
+.password-box {
+  margin-bottom: 20px;
+}

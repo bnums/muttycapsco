@@ -93,7 +93,7 @@ const Cart = ({ tax, total, subTotal, setSubTotal, setTotal, setTax }) => {
 
   return (
     <div className="checkout-content container">
-      <div className="row">
+      <div className="row1">
         <div className="col-lg-8">
           <h1>Shopping Cart</h1>
           {user.username && userOrder.items && userOrder.items.length > 0

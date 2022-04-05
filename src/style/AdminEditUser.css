@@ -1,0 +1,24 @@
+.form-control
+{
+    margin-bottom: 5px;
+}
+
+.edit-a-user{
+    background-image: linear-gradient(
+        rgba(196, 196, 196, 0.178),
+        rgba(49, 49, 49, 0.2)
+      ),
+      url("../imgs/homebanner.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 20%;
+    height: 60vh; 
+}
+
+.edit-user-button{
+display: block;
+margin-left: auto;
+margin-right: auto;
+margin-top: 40px;
+font-family: "Reem Kufi", sans-serif;
+}
