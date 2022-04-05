@@ -3,52 +3,36 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import { callApi } from "../axios-services";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import useUser from "../hooks/useUser";
-import {toast} from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-import "../style/AccountForm.css";
+import "../style/AdminAddUser.css";
 
-const AccountForm = () => {
-  const params = useParams();
-  const { setUser, setShoppingCart } = useUser();
-  let { method } = params;
-  const loginRegister = method === "login" ? "Log in" : "Register";
-  const accountTitle =
-    method === "login" ? "Lets Explore Together" : "Join the Adventure";
+const AdminAddUser = () => {
+
+  const { setUser } = useUser();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState([]);
+  const [ isAdmin, setIsAdmin ] = useState(false);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, token) => {
     try {
       event.preventDefault();
       localStorage.clear();
       const user = await callApi({
-        url: `/users/${method}`,
+        url: `/users/register`,
         method: "POST",
         body: { username, password, email },
       });
 
-      const token = user && user.token;
-      if (token) {
-        const username = await callApi({
-          url: `/users/me`,
-          method: "GET",
-          token,
-        });
         const users = username;
-        if (users) {
+        if (user) {
           setUsername("");
           setPassword("");
-          users.token = token;
-          setUser(users);
-          setShoppingCart([]);
-          navigate(`/${users.username}/profile/${users.id}`);
+          navigate('/admin-page/users');
           localStorage.setItem("user", JSON.stringify(users));
         }
-
-      }
+        
     } catch (error) {
       setErrors(error.message);
     }
@@ -57,14 +41,18 @@ const AccountForm = () => {
   return (
     <>
       <div className="register-login-backdrop">
-        <Container className="login-window">
+        <Container>
           <Row className="window1 m-auto">
-            <Col lg={5} md={6} sm={12} className="window p-5 m-auto shadow-lg">
+          {errors && (<div style={{ marginTop: "1em", color: "red" }}>
+                      {errors}
+                    </div>
+                  )}
+            <Col className="add-user-title" lg={5} md={6} sm={12} 
+            className="window p-5 m-auto shadow-lg">
               <h3
                 className="text-title text-center"
                 style={{ overflowY: "hidden" }}
-              >
-                {accountTitle}
+              >Add a User
               </h3>
               <Form className="login-register-form" onSubmit={handleSubmit}>
                 <Form.Group
@@ -105,7 +93,6 @@ const AccountForm = () => {
                   className="form-Basic-Email"
                   controlId="formBasicEmail"
                 >
-                  {method === "register" ? (
                     <Form.Control
                       className="email-box"
                       required
@@ -118,31 +105,31 @@ const AccountForm = () => {
                         setEmail(event.target.value);
                       }}
                     />
-                  ) : null}
-                  {errors && (
-                    <div style={{ marginTop: "1em", color: "red" }}>
-                      {errors}
-                    </div>
-                  )}
+                </Form.Group>
+                 <Form.Group
+                  className="form-Basic-isAdmin"
+                  controlId="formBasicIsAdmin"
+                >
+                    <Form.Control
+                      className="isAdmin-box"
+                      required
+                      placeholder="isAdmin"
+                      label="isAdmin"
+                      type="isAdmin"
+                      variant="outlined"
+                      value={isAdmin}
+                      onChange={(event) => {
+                        setIsAdmin(event.target.value);
+                      }}
+                    />
                 </Form.Group>
                 <Button
                   style={{ background: "#557272", border: "none" }}
-                  className="login-register-button"
+                  className="create-button"
                   type="submit"
                 >
-                  {loginRegister}
+                  Create
                 </Button>
-                <div className="login-register-text">
-                  {method === "login" ? (
-                    <Link to={`/account/register`}>
-                      Don't have an account ? Create One
-                    </Link>
-                  ) : (
-                    <Link to={`/account/login`}>
-                      Already have an account ? Log In
-                    </Link>
-                  )}
-                </div>
               </Form>
             </Col>
           </Row>
@@ -153,4 +140,4 @@ const AccountForm = () => {
   );
 };
 
-export default AccountForm;
+export default AdminAddUser;
