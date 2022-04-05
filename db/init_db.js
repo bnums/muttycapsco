@@ -212,7 +212,6 @@ async function populateInitialProducts() {
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap3",
         description:
-
           "This kitty sombrero was designed to be both cute and comfortable.",
         rating: 4,
         price: 14.95,
@@ -223,7 +222,6 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-
         name: "Handmade Birthday Cake Small Pets Hat",
         description:
           "The hat is suitable for pet hedgehogs, hamsters, sugar gliders, rats, squirrels, rabbits, guinea pigs, ferret, bird, or other small animals.",
@@ -238,7 +236,6 @@ async function populateInitialProducts() {
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap5",
         description:
-
           "This knit hat for pets is handmade, perfect for daily wear, weekend parties, Halloween. The hat is suitable for pet hedgehogs, hamsters, sugar gliders, rats, squirrels, rabbits, guinea pigs, ferret, or other small animals.",
         rating: 2,
         price: 13.99,
@@ -249,7 +246,6 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-
         name: "Cowboy Hat for Birdies",
         description: "Parrot-Bird-Hat-cockatoo-Macaw-Conure cowboy costume hat",
         rating: 4,
@@ -261,7 +257,6 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-
         name: "Fancy Hat for Birds",
         description: "Costumes for your birds cockatoo Macaw pet ",
         rating: 3,
@@ -275,7 +270,6 @@ async function populateInitialProducts() {
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap8",
         description:
-
           "A gorgeous accessory for your lizard, reptile, amphibian or snake! OR not just for our scaly friends, also perfect for , rabbits, guinea pigs, hamsters, gerbils, hedgehogs and many more!",
         rating: 5,
         price: 3.43,
@@ -288,7 +282,6 @@ async function populateInitialProducts() {
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap9",
         description:
-
           "comfortable elastic band keeps the hat secure on your pup's head ",
         rating: 3,
         price: 18.0,
@@ -299,7 +292,6 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-
         name: "Baseball Cap  for Dog",
         description: "Protect your pets' eyes from the sunshine in summer.",
         rating: 5,
@@ -311,7 +303,6 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-
         name: "Dog Baseball Cap",
         description: "Handmade baseball cap for dog",
         rating: 3,
@@ -323,7 +314,6 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-
         name: "Easter Hat for Cat",
         description: "Cute Costume Pet Bunny Rabbit Hat with Ears for Cats ",
         rating: 2,
@@ -335,7 +325,6 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-
         name: "Cat Santa Hat ",
         description: "Adorable Christmas costume for your cats",
         rating: 1,
@@ -347,7 +336,6 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-
         name: "Crochet Dog Fruit Sun Hats ",
         description: "Adorable Sun Hats for the dog and it is handmade.",
         rating: 3,
@@ -361,7 +349,6 @@ async function populateInitialProducts() {
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap15",
         description:
-
           "The perfect cozy accessory you need this winter! All hats come with an adjustable strap",
         rating: 2,
         price: 20.95,
@@ -372,7 +359,6 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-
         name: "Lion Mane Costume Hat for Cat",
         description: " A life-like Lion fur hat with cute ears",
         rating: 5,
@@ -386,7 +372,6 @@ async function populateInitialProducts() {
       {
         name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap17k",
         description:
-
           "This hat for pets is handmade, perfect for daily wear, weekend parties, Halloween.",
         rating: 3,
         price: 12.99,
@@ -397,7 +382,6 @@ async function populateInitialProducts() {
           "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
       },
       {
-
         name: "Cowboy Hat for Bird",
         description: "Handmade hat for Birds, it made with elastic",
         rating: 5,
