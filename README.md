@@ -1,14 +1,14 @@
-# Let's Build a Full Stack Application
+# Welcome to MuttyCapsCo!
 
-This full stack app boilerplate consists of:
+Hi there! We are Aye Khine Bryan Num, Daisy Centeno, and Reuben Ramos, and we are the founders and creators of MuttyCapsCo!
 
-- an Express web server,
-- a PostgreSQL database instance,
-- and a React front-end
+Do you struggle with finding the perfect outdoor wear for your furry best friend? Well look no further, here you can browse our selections
+of fine clothing for all your furry friends needs.
 
-You'll also find a bunch of convenient commands and workflows that will allow you to develop your app locally and deploy it to heroku. Let's dive in!
+Our application allows for both guests and signed up users to browse and search through our inventory. After seeing something that you would like to purchase,
+You are able to add it to your shopping cart. From there you may continue to shop or proceed to a checkout page to purchase your product.
 
-# Local Development
+# Local Development (for developers)
 
 ## Getting Started
 
@@ -37,16 +37,17 @@ $ git init
 │   └── heroku-deploy.yaml
 │  
 ├── api
-│   ├── apiRouter.test.js
 │   └── index.js
 │
 ├── db
-│   ├── models
-│   │   ├── index.js
-│   │   └── user.js
 │   ├── client.js
 │   ├── index.js
-│   └── init_db.js
+│   ├── init_db.js
+│   ├── orderDetails.js
+│   ├── orders.js
+│   ├── products.js
+│   ├── reviews.js
+│   └── users.js
 │
 ├── public
 │   └── index.html
@@ -54,13 +55,17 @@ $ git init
 ├── src
 │   ├── axios-services
 │   │   └── index.js
+│   │ 
 │   ├── components
-│   │   ├── App.js
-│   │   └── index.js
+│   │   └── ... 
+│   │ 
 │   ├── style
-│   │   ├── App.css
-│   │   └── index.css
+│   │   └── ...
+│   │ 
 │   └── index.js
+│
+├── tests
+│   └── apiRouter.test.js
 │
 ├── .gitignore
 ├── index.js
