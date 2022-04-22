@@ -5,7 +5,7 @@ import "../style/Header.css";
 
 const Header = (props) => {
   return (
-    <div className="header container-fluid ">
+    <div className="header">
       <Link to={"/"}>
         <div className="header__company__name ">MuttyCapsCo.</div>
       </Link>

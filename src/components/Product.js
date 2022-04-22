@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { callApi } from "../axios-services";
 import { Modal, Container, Col, Row } from "react-bootstrap";
-import cardplaceholder from "../imgs/cardplaceholder.png";
+import yellobeanie from "../imgs/yello-beanie.png";
 
 const Product = ({ token }) => {
   const { productId } = useParams();
@@ -61,7 +61,7 @@ const Product = ({ token }) => {
             <Row>
               <Col>
                 <img
-                  src={product.productImg || cardplaceholder}
+                  src={product.productImg || yellobeanie}
                   style={{ width: "128px", height: "128px" }}
                 ></img>
               </Col>

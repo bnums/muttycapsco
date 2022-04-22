@@ -1,6 +1,5 @@
 import React from "react";
 import { ProductCard } from ".";
-import cardplaceholder from "../imgs/cardplaceholder.png";
 import "../style/ProductImage.css";
 import "../style/SimilarProducts.css";
 import { useState, useEffect } from "react";
