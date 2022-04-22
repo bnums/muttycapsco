@@ -1,7 +1,6 @@
 .homebanner {
   display: flex;
   justify-content: center;
-  background-color: #eed5c6;
 }
 
 .homebanner-content {
@@ -54,4 +53,12 @@
   width: 110px;
   height: 40px;
   color: white;
+}
+
+/* Responsive Stylings*/
+@media screen and (max-width: 912px) {
+  .homebanner-nav-box {
+    gap: 1em;
+    margin: 1em 0.2em 0 40%;
+  }
 }

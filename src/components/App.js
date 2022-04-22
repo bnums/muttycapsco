@@ -36,7 +36,7 @@ const getStripeKey = async () => {
 const stripePromise = getStripeKey();
 
 const App = () => {
-  const { setUsers, setUser, setShoppingCart, setUserOrder } = useUser();
+  const { setUser, setShoppingCart, setUserOrder } = useUser();
   const [subTotal, setSubTotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);

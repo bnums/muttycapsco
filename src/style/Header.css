@@ -4,18 +4,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 .header__company__name {
   color: white;
   font-style: normal;
   font-family: "Reem Kufi", sans-serif;
-  font-size: 30px;
 }
 
 @media screen and (max-width: 320px) {
-  .header__company__name {
-    font-size: 15px;
-  }
 }

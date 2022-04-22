@@ -2,6 +2,7 @@
   background: hsl(180, 15%, 39%);
   font-family: "Reem Kufi", sans-serif;
   flex-shrink: 0;
+  height: 40vh;
 }
 
 .footer-title {

@@ -1,21 +1,47 @@
 .homepage {
   font-family: "Reem Kufi", sans-serif;
+  background-color: #eed5c6;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
 }
 
-.homepage__products-title {
-  flex-basis: 100%;
-  text-align: left;
-  font-weight: 400;
-  font-size: 40px;
-}
-.homepage__products__container {
+/* Homepage Products Styling*/
+.homepage-products {
   display: flex;
+  justify-content: center;
+}
+
+.homepage-products-container {
+  width: 100%;
+  padding: 6em;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  align-content: center;
+  background-color: white;
+}
+
+.homepage-products-gallery {
+  width: 90%;
+  margin: 3em 0 5em 0;
+  display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 3rem 5rem;
-  margin: 10rem;
-  margin-top: 15px;
-  justify-content: space-around;
-  max-width: 1500px;
+}
+
+.template-product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.see-more-button {
+  color: white;
+  background-color: black;
+  height: 41px;
+  width: 152px;
+  border-radius: 18.5px;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 400;
 }
