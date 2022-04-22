@@ -11,15 +11,25 @@
 
 :root {
   /* define variables here */
-  --green: green;
-  --red: red;
-  --blue: blue;
+  --titleFont: "Reem Kufi";
+  --subtitleFont: "Urbanist";
+  --primaryGreen: #557272;
+  --secondaryGreen: #adc3c3;
+  --primaryGrey: #949494;
+  --secondaryGrey: #c7c7c7;
+  --black: #232323;
 }
 
 html,
 body {
   touch-action: manipulation;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.max-width {
+  max-width: 1440px;
 }
 
 a,
@@ -27,13 +37,3 @@ a:hover {
   color: unset;
   text-decoration: none;
 }
-
-body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-}
-

@@ -1,5 +1,12 @@
 .homebanner {
-  font-family: "Reem Kufi", sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.homebanner-content {
+  height: 30vh;
+  width: 1440px;
+  font-family: var(--titleFont);
   font-size: 20px;
   background-image: linear-gradient(
       rgba(196, 196, 196, 0.178),
@@ -8,23 +15,16 @@
     url("../imgs/homebanner.svg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 50% 5%;
+  background-position: center;
   color: white;
-  height: 70vh;
-  animation:slide 100s infinite;
-  animation-name: dogs;
 }
 
 .homebanner-title {
   font-size: 36px;
-  overflow-wrap: break-word;
-  min-width: 50%;
-  padding-top: 10%;
   text-shadow: 0 0 10px black;
 }
 
 .homebanner-subtitle {
-  overflow-wrap: break-word;
   text-shadow: 0 0 10px black;
 }
 
@@ -33,94 +33,5 @@
   border-radius: 18.5px;
   font-size: 15px;
   width: 100px;
-  margin-top: 2.5rem;
   color: white;
-}
-
-@keyframes dogs{
-10%{
-    background: url("../imgs/dog 1.jpeg");
-    background-repeat: no-repeat;
-    background-position: 50% 5%;
-    background-size: cover;
-    height: 70vh;
-  }
-
-20%{
-  background: url("../imgs/dog 2.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 5%;
-  height: 70vh;
-}
-30%{
-  background: url("../imgs/dog 3.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 5%;
-  height: 70vh;
-}
-40%{
-  background: url("../imgs/dog 4.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 5%;
-  height: 70vh;
-}
-50%{
-  background: url("../imgs/dog 5.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 5%;
-  height: 70vh;
-}
-60%{
-  background: url("../imgs/dog 6.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 5%;
-  height: 70vh;
-}
-70%{
-  background: url("../imgs/dog 7.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 5%;
-  height: 70vh;
-}
-80%{
-  background: url("../imgs/dog 8.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 5%;
-  height: 70vh;
-}
-90%{
-  background: url("../imgs/dog 9.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 5%;
-  height: 70vh;
-}
-
-100%{
-  background: url("../imgs/dog 10.jpeg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 5%;
-  height: 70vh;
-}
-}
-.preload-images{
-  background: url("../imgs/homebanner.svg") no-repeat -9999px -9999px;
-  background: url("../imgs/dog 1.jpeg") no-repeat -9999px -9999px,
-  url("../imgs/dog 2.jpeg") no-repeat -9999px -9999px,
-  url("../imgs/dog 3.jpeg") no-repeat -9999px -9999px,
-  url("../imgs/dog 4.jpeg")no-repeat -9999px -9999px,
-  url("../imgs/dog 5.jpeg") no-repeat -9999px -9999px,
-  url("../imgs/dog 6.jpeg") no-repeat -9999px -9999px,
-  url("../imgs/dog 7.png") no-repeat -9999px -9999px,
-  url("../imgs/dog 8.jpeg") no-repeat -9999px -9999px,
-  url("../imgs/dog 9.jpg") no-repeat -9999px -9999px,
-  url("../imgs/dog 10.jpeg") no-repeat -9999px -9999px;
 }

@@ -1,9 +1,5 @@
 .homepage {
   font-family: "Reem Kufi", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* justify-content: center; */
 }
 
 .homepage__products-title {
