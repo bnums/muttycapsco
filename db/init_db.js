@@ -5,8 +5,6 @@ const {
   createOrders,
   addProductToOrder,
   createReview,
-  // declare your model imports here
-  // for example, User
 } = require("./");
 
 async function buildTables() {
@@ -105,49 +103,61 @@ async function populateInitialUsers() {
         isAdmin: true,
       },
       {
-        username: "sugi",
+        username: "Sugi",
         password: "controllers",
         email: "remotecontrollers1@gmail.com",
         isAdmin: false,
       },
       {
-        username: "brad",
+        username: "Brad",
         password: "controllers",
         email: "remotecontrollers2@gmail.com",
         isAdmin: false,
       },
       {
-        username: "stephen",
+        username: "Stephen",
         password: "controllers",
         email: "remotecontrollers3@gmail.com",
         isAdmin: false,
       },
       {
-        username: "lily",
+        username: "Lily",
         password: "controllers",
         email: "remotecontrollers4@gmail.com",
         isAdmin: false,
       },
       {
-        username: "daniel",
+        username: "Daniel",
         password: "controllers",
         email: "remotecontrollers5@gmail.com",
         isAdmin: false,
       },
       {
-        username: "monica",
+        username: "Michael",
         password: "controllers",
         email: "remotecontrollers6@gmail.com",
         isAdmin: false,
       },
       {
-        username: "carly",
+        username: "Jim",
         password: "controllers",
         email: "remotecontrollers7@gmail.com",
         isAdmin: false,
       },
       {
-        username: "kristen",
+        username: "Pam",
+        password: "controllers",
+        email: "remotecontrollers7@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "Angela",
+        password: "controllers",
+        email: "remotecontrollers7@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "Dwight",
         password: "controllers",
         email: "remotecontrollers8@gmail.com",
         isAdmin: false,
