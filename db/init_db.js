@@ -13,10 +13,11 @@ async function buildTables() {
 
     // drop tables in correct order
     await client.query(`
-    DROP TABLE IF EXISTS reviews ;
+    DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS orderDetails;
     DROP TABLE IF EXISTS orders;
     DROP TABLE IF EXISTS products; 
+    DROP TABLE IF EXISTS userAddress;
     DROP TABLE IF EXISTS users;
     
     `);
@@ -28,6 +29,17 @@ async function buildTables() {
       password VARCHAR(255) NOT NULL,
       email VARCHAR(255) UNIQUE NOT NULL,
       "isAdmin" BOOLEAN DEFAULT FALSE
+    );
+
+    CREATE TABLE userAddress(
+      id SERIAL PRIMARY KEY,
+      "userId" INTEGER REFERENCES users(id),
+      "addressLine1" VARCHAR(255),
+      "addressLine2" VARCHAR(255),
+      city VARCHAR(255),
+      state VARCHAR(255),
+      "postalCode" INTEGER,
+      phone VARCHAR(255)
     );
 
     CREATE TABLE products(
