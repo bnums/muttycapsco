@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import cardplaceholder from "../imgs/cardplaceholder.png";
+import cardplaceholder from "../imgs/yello-beanie.png";
 import "../style/ProductCard.css";
 import { useNavigate } from "react-router";
 import RatingStar from "./Ratingstar";

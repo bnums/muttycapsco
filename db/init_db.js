@@ -5,8 +5,6 @@ const {
   createOrders,
   addProductToOrder,
   createReview,
-  // declare your model imports here
-  // for example, User
 } = require("./");
 
 async function buildTables() {
@@ -105,51 +103,63 @@ async function populateInitialUsers() {
         isAdmin: true,
       },
       {
-        username: "sugi",
+        username: "Sugi",
         password: "controllers",
         email: "remotecontrollers1@gmail.com",
         isAdmin: false,
       },
       {
-        username: "brad",
+        username: "Brad",
         password: "controllers",
         email: "remotecontrollers2@gmail.com",
         isAdmin: false,
       },
       {
-        username: "stephen",
+        username: "Stephen",
         password: "controllers",
         email: "remotecontrollers3@gmail.com",
         isAdmin: false,
       },
       {
-        username: "lily",
+        username: "Lily",
         password: "controllers",
         email: "remotecontrollers4@gmail.com",
         isAdmin: false,
       },
       {
-        username: "daniel",
+        username: "Daniel",
         password: "controllers",
         email: "remotecontrollers5@gmail.com",
         isAdmin: false,
       },
       {
-        username: "monica",
+        username: "Michael",
         password: "controllers",
         email: "remotecontrollers6@gmail.com",
         isAdmin: false,
       },
       {
-        username: "carly",
+        username: "Jim",
         password: "controllers",
         email: "remotecontrollers7@gmail.com",
         isAdmin: false,
       },
       {
-        username: "kristen",
+        username: "Pam",
         password: "controllers",
         email: "remotecontrollers8@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "Angela",
+        password: "controllers",
+        email: "remotecontrollers9@gmail.com",
+        isAdmin: false,
+      },
+      {
+        username: "Dwight",
+        password: "controllers",
+        email: "remotecontrollers10@gmail.com",
         isAdmin: false,
       },
     ];
@@ -164,215 +174,113 @@ async function populateInitialProducts() {
   try {
     const productsToCreate = [
       {
-        name: " Winter Warm Knitted Hat ",
+        name: "Yellow Beanie",
         description:
-          "Small Medium Dogs Pets Winter Warm Knitted Hat with Ear Holes",
+          "A yellow beanie made with cotton and designed for all dogs by Loumineux",
         rating: 0,
-        price: 16.99,
+        price: 10.0,
         inventoryQTY: 40,
-        category: "Dog Hats",
+        category: "Beanie",
         productImg:
-          "https://m.media-amazon.com/images/I/61jkrNhaRhL._AC_SX466_.jpg",
+          "https://images.unsplash.com/photo-1517423568366-8b83523034fd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
       },
       {
-        name: "Christmas Dog Hat ",
+        name: "Red Beret",
         description:
-          "Christmas Dog Hat Crocheted Snood Funny Pet Cap with Pompon Red Green Warm Winter Dog Hat Knit Snood Headwear for Pets & Women & Men (Red, XS) ",
+          "A red beret designed and knitted by designers of Loui Laboui",
         rating: 5,
-        price: 14.89,
+        price: 10.0,
         inventoryQTY: 50,
-        category: "Dog Hats",
+        category: "Hats",
         productImg:
-          "https://m.media-amazon.com/images/I/51F61OnYBwL._AC_SX466_.jpg",
+          "https://images.unsplash.com/photo-1529088363398-8efc64a0eb95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1584&q=80",
       },
       {
-        name: "Mini Cute Pet Hat with Adjustable Elastic Chin Strap1",
+        name: "Crimson Hood",
         description:
-          "8 Pieces Mini Cute Pet Hat with Adjustable Elastic Chin Strap, Snake Hamster Lizard Guinea Pig Knitted Hat Small Reptile Animal Decoration Supplies Lovely Accessories",
-        rating: 4,
-        price: 10.99,
-        inventoryQTY: 10,
-        category: "Small Pets Hats",
-        productImg:
-          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
-      },
-      {
-        name: "Green knitted yarn frog hat for cat",
-        description:
-          "These are simple handmade kitty or other small animal accessories that some of which can be worn for long time if it is an indoor animal, but would not leave on it is an if outside cat because they are not break away accessories.",
+          "A red cover hood that is perfect for keeping your best friend warm in cold weather conditions ",
         rating: 5,
-        price: 11.99,
-        inventoryQTY: 30,
-        category: "Cat Hats",
+        price: 7.0,
+        inventoryQTY: 50,
+        category: "Hats",
         productImg:
-          "https://i.etsystatic.com/24057414/r/il/2b2ba6/2584411373/il_1588xN.2584411373_9xk1.jpg",
+          "https://images.unsplash.com/photo-1513656972721-194d61556970?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1587&q=80",
       },
       {
-        name: "Sombrero Hat with Ear Holes for Cats ",
+        name: "Blue Beanie",
         description:
-          "This kitty sombrero was designed to be both cute and comfortable.",
-        rating: 4,
-        price: 14.95,
-        inventoryQTY: 15,
-        category: "Cat Hats",
-        productImg:
-          "https://i.etsystatic.com/10692466/r/il/ffef56/1464651589/il_1588xN.1464651589_rbck.jpg",
-      },
-      {
-        name: "Handmade Birthday Cake Small Pets Hat",
-        description:
-          "The hat is suitable for pet hedgehogs, hamsters, sugar gliders, rats, squirrels, rabbits, guinea pigs, ferret, bird, or other small animals.",
-        rating: 3,
-        price: 14.99,
-        inventoryQTY: 20,
-        category: "Small Pets Hats",
-        productImg:
-          "https://i.etsystatic.com/27232651/r/il/848ee4/3391112841/il_1588xN.3391112841_hzbb.jpg",
-      },
-      {
-        name: "Pikachu Hat",
-        description:
-          "This knit hat for pets is handmade, perfect for daily wear, weekend parties, Halloween. The hat is suitable for pet hedgehogs, hamsters, sugar gliders, rats, squirrels, rabbits, guinea pigs, ferret, or other small animals.",
-        rating: 2,
-        price: 13.99,
-        inventoryQTY: 10,
-        category: "Small Pets Hats",
-        productImg:
-          "https://i.etsystatic.com/27232651/r/il/0e6bfe/3120964364/il_794xN.3120964364_r9dl.jpg",
-      },
-      {
-        name: "Cowboy Hat for Birdies",
-        description: "Parrot-Bird-Hat-cockatoo-Macaw-Conure cowboy costume hat",
-        rating: 4,
-        price: 12.95,
-        inventoryQTY: 15,
-        category: "Bird Hats",
-        productImg:
-          "https://i.etsystatic.com/15987207/r/il/96f876/1369897720/il_1588xN.1369897720_cd5y.jpg",
-      },
-      {
-        name: "Fancy Hat for Birds",
-        description: "Costumes for your birds cockatoo Macaw pet ",
-        rating: 3,
-        price: 12.95,
-        inventoryQTY: 10,
-        category: "Bird Hats",
-        productImg:
-          "https://i.etsystatic.com/15987207/r/il/264150/1744987108/il_794xN.1744987108_eim4.jpg",
-      },
-      {
-        name: "King/Queen Hat for the day",
-        description:
-          "A gorgeous accessory for your lizard, reptile, amphibian or snake! OR not just for our scaly friends, also perfect for , rabbits, guinea pigs, hamsters, gerbils, hedgehogs and many more!",
+          "A yellow beanie made with cotton and designed for all dogs by Loumineux",
         rating: 5,
-        price: 3.43,
-        inventoryQTY: 10,
-        category: "Small Pets Hats",
+        price: 9.0,
+        inventoryQTY: 50,
+        category: "Beanie",
         productImg:
-          "https://i.etsystatic.com/29591258/r/il/03b3da/3497313715/il_1588xN.3497313715_s4h3.jpg",
+          "https://images.unsplash.com/photo-1636666429444-b34e8b9ffc24?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1528&q=80",
       },
       {
-        name: "Mini Beret Hat for Dogs",
+        name: "Flower Fedora",
         description:
-          "comfortable elastic band keeps the hat secure on your pup's head ",
-        rating: 3,
-        price: 18.0,
-        inventoryQTY: 10,
-        category: "Dog Hats",
-        productImg:
-          "https://i.etsystatic.com/8171270/r/il/85cc34/2835595429/il_794xN.2835595429_250e.jpg",
-      },
-      {
-        name: "Baseball Cap  for Dog",
-        description: "Protect your pets' eyes from the sunshine in summer.",
+          "The latest addition to the line by Phénomène, an elegant and classy design for styling and beautifying all types of fits",
         rating: 5,
-        price: 19.99,
-        inventoryQTY: 10,
-        category: "Dog Hats",
+        price: 15.0,
+        inventoryQTY: 50,
+        category: "Hats",
         productImg:
-          "https://i.etsystatic.com/26657623/r/il/1b738b/2959204422/il_1588xN.2959204422_sqvi.jpg",
+          "https://images.unsplash.com/photo-1595414350619-5fe202d99eb0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
       },
       {
-        name: "Dog Baseball Cap",
-        description: "Handmade baseball cap for dog",
-        rating: 3,
-        price: 19.99,
-        inventoryQTY: 13,
-        category: "Dog Hats",
-        productImg:
-          "https://i.etsystatic.com/26067675/r/il/10dbbd/3290806681/il_1588xN.3290806681_fsl6.jpg",
-      },
-      {
-        name: "Easter Hat for Cat",
-        description: "Cute Costume Pet Bunny Rabbit Hat with Ears for Cats ",
-        rating: 2,
-        price: 8.99,
-        inventoryQTY: 5,
-        category: "Cat Hats",
-        productImg:
-          "https://m.media-amazon.com/images/I/61T5RTpioIL._AC_SX679_.jpg",
-      },
-      {
-        name: "Cat Santa Hat ",
-        description: "Adorable Christmas costume for your cats",
-        rating: 1,
-        price: 6.99,
-        inventoryQTY: 7,
-        category: "Cat Hats",
-        productImg:
-          "https://m.media-amazon.com/images/I/61WtfM-LxqL._AC_SX679_.jpg",
-      },
-      {
-        name: "Crochet Dog Fruit Sun Hats ",
-        description: "Adorable Sun Hats for the dog and it is handmade.",
-        rating: 3,
-        price: 19.99,
-        inventoryQTY: 10,
-        category: "Dog Hats",
-        productImg:
-          "https://m.media-amazon.com/images/I/81t9RCQT3NL._AC_SY355_.jpg",
-      },
-      {
-        name: "Cat Bucket Hat",
+        name: "Orange Beanie",
         description:
-          "The perfect cozy accessory you need this winter! All hats come with an adjustable strap",
-        rating: 2,
-        price: 20.95,
-        inventoryQTY: 14,
-        category: "Cat Hats",
-        productImg:
-          "https://i.etsystatic.com/18476449/r/il/e085a2/3700798969/il_1588xN.3700798969_pp0a.jpg",
-      },
-      {
-        name: "Lion Mane Costume Hat for Cat",
-        description: " A life-like Lion fur hat with cute ears",
+          "An orange beanie made with cotton and designed for all dogs by Loumineux",
         rating: 5,
-        price: 9.99,
-        inventoryQTY: 6,
-        category: "Cat Hats",
+        price: 9.0,
+        inventoryQTY: 50,
+        category: "Hats",
         productImg:
-          "https://m.media-amazon.com/images/I/71tdXcBszhL._AC_SX679_.jpg",
+          "https://images.unsplash.com/photo-1641069203366-12db9d0831d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1586&q=80",
       },
       {
-        name: "Cute Handmade Hat for Small Pets",
+        name: "Green Feather Cap",
         description:
-          "This hat for pets is handmade, perfect for daily wear, weekend parties, Halloween.",
-        rating: 3,
-        price: 12.99,
-        inventoryQTY: 8,
-        category: "Small Pets Hats",
+          "An orange beanie made with cotton and designed for all dogs by Loumineux",
+        rating: 5,
+        price: 10.0,
+        inventoryQTY: 50,
+        category: "Hats",
         productImg:
-          "https://i.etsystatic.com/27232651/r/il/5df1e2/3390883543/il_1588xN.3390883543_qeet.jpg",
+          "https://images.unsplash.com/photo-1628976558388-73413979e22d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1426&q=80",
       },
       {
-        name: "Cowboy Hat for Bird",
-        description: "Handmade hat for Birds, it made with elastic",
+        name: "Grey Fedora",
+        description:
+          "A classic old-timey look by designed and manufactured by Phénomène",
         rating: 5,
-        price: 11.99,
-        inventoryQTY: 5,
-        category: "Bird Hats",
+        price: 15.0,
+        inventoryQTY: 50,
+        category: "Hats",
         productImg:
-          "https://i.etsystatic.com/15987207/r/il/9d591f/1744982648/il_1588xN.1744982648_8262.jpg",
+          "https://images.unsplash.com/photo-1612637306950-fd33786d912e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1506&q=80",
+      },
+      {
+        name: "Black and Orange Beanie with Puffball",
+        description:
+          "A classic black and orange beanie with a puffball on top.",
+        rating: 5,
+        price: 15.0,
+        inventoryQTY: 50,
+        category: "Beanie",
+        productImg:
+          "https://images.unsplash.com/photo-1551308075-d5f542da6386?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1587&q=80",
+      },
+      {
+        name: "Sombroro",
+        description: "A yellow somberero for your dog bro",
+        rating: 5,
+        price: 8.0,
+        inventoryQTY: 50,
+        category: "Beanie",
+        productImg:
+          "https://images.unsplash.com/photo-1609910063430-33fc20be9f88?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1530&q=80",
       },
     ];
     await Promise.all(productsToCreate.map(createProducts));
@@ -509,6 +417,7 @@ buildTables()
   .then(populateInitialOrders)
   .then(populateInitialOrderDetails)
   .then(populateInitialReviews)
+  .then(console.log("... Finished building DB"))
   .catch(console.error)
   .finally(() => client.end());
 

@@ -1,5 +1,5 @@
 import React from "react";
-import cardplaceholder from "../imgs/cardplaceholder.png";
+import cardplaceholder from "../imgs/yello-beanie.png";
 import "../style/ProductImage.css";
 
 const ProductImage = ({ productImg }) => {
