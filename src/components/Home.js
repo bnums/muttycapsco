@@ -20,7 +20,9 @@ const Home = () => {
             <TemplateProductCard />
             <TemplateProductCard />
           </div>
-          <button className="see-more-button">See More</button>
+          <div className="button-container">
+            <button className="see-more-button">See More</button>
+          </div>
         </div>
       </section>
     </div>

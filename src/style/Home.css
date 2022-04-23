@@ -10,6 +10,7 @@
 .homepage-products {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .homepage-products-container {
@@ -17,22 +18,27 @@
   padding: 6em;
   display: flex;
   flex-direction: column;
-  align-items: center;
   background-color: white;
 }
 
 .homepage-products-gallery {
-  width: 90%;
-  margin: 3em 0 5em 0;
+  width: 100%;
+  margin: 3em 0px 5em 0px;
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
 }
 
 .template-product-card {
   display: flex;
   flex-direction: column;
-  gap: 0.3em;
+  max-width: fit-content;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
 }
 
 .see-more-button {
