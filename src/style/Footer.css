@@ -2,7 +2,16 @@
   background: hsl(180, 15%, 39%);
   font-family: "Reem Kufi", sans-serif;
   flex-shrink: 0;
-  height: 40vh;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-container {
+  width: 100%;
+  padding: 6em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .footer-title {
@@ -16,4 +25,10 @@
   font-family: "Urbanist", sans-serif;
   color: #adc3c3;
   font-size: 19px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  min-width: 200px;
 }

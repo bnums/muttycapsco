@@ -25,7 +25,7 @@ const HomeBanner = () => {
           <h1 className="homebanner-title">Welcome to</h1>
           <h1 className="homebanner-title">MuttyCapsCo!</h1>
           <h3 className="homebanner-subtitle">
-            We have never been more ready for the outdoors.
+            We have never been more ready for the outdoors
           </h3>
           <button
             className="homebanner-button"

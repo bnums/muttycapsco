@@ -21,6 +21,10 @@
   margin: 1em 0.2em 0 65%;
 }
 
+.homebanner-nav-box a:hover {
+  text-decoration: underline;
+}
+
 .homebanner-text-box {
   display: flex;
   flex-direction: column;
@@ -49,6 +53,10 @@
   width: 110px;
   height: 40px;
   color: white;
+}
+
+.homebanner-button:hover {
+  text-decoration: underline;
 }
 
 @keyframes slide {

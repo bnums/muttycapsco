@@ -6,14 +6,14 @@ import "../style/Header.css";
 
 const Header = (props) => {
   return (
-    <div className="header">
+    <header className="header">
       <Link to={"/"}>
         <div className="header__company__name ">
           <img src={logo}></img>
         </div>
       </Link>
       <Navbar {...props} />
-    </div>
+    </header>
   );
 };
 
