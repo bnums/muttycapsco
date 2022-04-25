@@ -43,7 +43,7 @@
     "stripe": "^8.215.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.15",
     "supertest": "^6.2.1"
   },
   "proxy": "http://localhost:4000",

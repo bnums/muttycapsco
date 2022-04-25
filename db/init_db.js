@@ -16,6 +16,8 @@ async function buildTables() {
     DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS orderDetails;
     DROP TABLE IF EXISTS orders;
+    DROP TABLE IF EXISTS cartItems;
+    DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS products; 
     DROP TABLE IF EXISTS userAddress;
     DROP TABLE IF EXISTS users;
@@ -53,6 +55,32 @@ async function buildTables() {
       "productImg" VARCHAR(255) NOT NULL
     );
 
+    CREATE TABLE reviews(
+      id SERIAL PRIMARY KEY,
+      "creatorId" INTEGER REFERENCES users(id) NOT NULL, 
+      "productId" INTEGER REFERENCES products(id) NOT NULL,
+      UNIQUE("creatorId","productId"), 
+      title VARCHAR(255) DEFAULT NULL,
+      UNIQUE("productId",title),
+      rating INTEGER DEFAULT 0,
+      comment TEXT NOT NULL
+    );
+
+    CREATE TABLE cart(
+      id SERIAL PRIMARY KEY,
+      "userId" INTEGER REFERENCES users(id),
+      status VARCHAR(255)
+    );
+
+    CREATE TABLE cartItems(
+      id SERIAL PRIMARY KEY,
+      "productId" INTEGER REFERENCES products(id) NOT NULL,
+      "cartId" INTEGER REFERENCES cart(id) NOT NULL,
+      price FLOAT NOT NULL DEFAULT 0,
+      quantity INTEGER NOT NULL DEFAULT 0,
+      UNIQUE("productId","cartId")
+    );
+
     CREATE TABLE orders(
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id),
@@ -69,17 +97,6 @@ async function buildTables() {
       quantity INTEGER, 
       "unitPrice" DECIMAL(10, 2),
       "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-
-    CREATE TABLE reviews(
-      id SERIAL PRIMARY KEY,
-      "creatorId" INTEGER REFERENCES users(id) NOT NULL, 
-      "productId" INTEGER REFERENCES products(id) NOT NULL,
-      UNIQUE("creatorId","productId"), 
-      title VARCHAR(255) DEFAULT NULL,
-      UNIQUE("productId",title),
-      rating INTEGER DEFAULT 0,
-      comment TEXT NOT NULL
     );
     `);
   } catch (error) {
@@ -210,7 +227,7 @@ async function populateInitialProducts() {
       {
         name: "Crimson Hood",
         description:
-          "A red cover hood that is perfect for keeping your best friend warm in cold weather conditions ",
+          "A red cover hood that is perfect for keeping your best friend warm in cold weather conditions",
         rating: 5,
         price: 7.0,
         inventoryQTY: 50,

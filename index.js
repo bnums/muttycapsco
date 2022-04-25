@@ -1,25 +1,25 @@
-// This is the Web Server
+// This is the Web app
 const express = require("express");
-const server = express();
+const app = express();
 const cors = require("cors");
-server.use(cors());
+app.use(cors());
 
 // create logs for everything
 const morgan = require("morgan");
-server.use(morgan("dev"));
+app.use(morgan("dev"));
 
 // handle application/json requests
-server.use(express.json());
+app.use(express.json());
 
 // here's our static files
 const path = require("path");
-server.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(path.join(__dirname, "build")));
 
 // here's our API
-server.use("/api", require("./api"));
+app.use("/api", require("./api"));
 
 // by default serve up the react app if we don't recognize the route
-server.use((req, res, next) => {
+app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
@@ -29,15 +29,15 @@ const { client } = require("./db");
 // connect to the server
 const PORT = process.env.PORT || 4000;
 
-server.use(({ name, message }, req, res, next) => {
+app.use(({ name, message }, req, res, next) => {
   res.status(500).send({ name: name, message: message });
 });
 
 // define a server handle to close open tcp connection after unit tests have run
-const handle = server.listen(PORT, async () => {
-  console.log(`Server is running on ${PORT}`);
+const handle = app.listen(PORT, async () => {
+  console.log(`server is running on ${PORT}`);
 
-  // if server is running in github actions context skip db connection
+  // if app is running in github actions context skip db connection
   if (!process.env.CI) {
     try {
       await client.connect();
@@ -49,4 +49,4 @@ const handle = server.listen(PORT, async () => {
 });
 
 // export server and handle for routes/*.test.js
-module.exports = { server, handle };
+module.exports = { app, handle };

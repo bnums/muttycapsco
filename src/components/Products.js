@@ -31,7 +31,7 @@ const Products = ({ productSearchStr, setProductSearchStr }) => {
   }, [productSearchStr]);
 
   return (
-    <div className= "products-backdrop">
+    <div className="products-backdrop">
       <div className="products-container container">
         <div className="row mt-1">
           {productSearchStr ? (
